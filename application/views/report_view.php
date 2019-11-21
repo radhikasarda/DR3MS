@@ -57,8 +57,7 @@
 			</div>
 			<div class = "col-sm-6" style = "text-align: right;  height: 25px;background-color: #FFB700;">
 				<form action="<?php echo base_url("login/logout");?>">
-				
-				<input type="submit" class="logoutbutton" value="LOGOUT">
+					<input type="submit" class="logoutbutton" value="LOGOUT">
 				</form>
 			</div>
 		</div>
@@ -171,21 +170,10 @@
 						</div>
 					</div>
 					<div class="col-xs-2">
-					<button type="button" class="btn btn-primary" onclick="return GetSelectedData();">SUBMIT</button>					
+					<button type="button" class="btn btn-primary" onclick="return GetSelectedData();" style="margin-top:25px;">SUBMIT</button>					
 					<script>
 						function GetSelectedData()
 						{
-							/*var circle_id=$('#circles').val();
-							var block_id=$('#blocks').val();
-							var gp_id=$('#gp').val();
-							var resource_id=$('#resources').val();
-							if(circle_id == '' && block_id == '' && gp_id == '' && resource_id == '')
-							{
-								document.getElementById('circles').value='All';
-								document.getElementById('blocks').value='All';
-								document.getElementById('gp').value='All';
-								document.getElementById('resources').value='All';
-							}*/
 							$.ajax({
 											url:"<?php echo site_url('reports/onClickSubmit');?>",
 											method:"POST",

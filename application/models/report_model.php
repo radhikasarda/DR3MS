@@ -59,7 +59,7 @@
 		
 		public function get_resources_names()
 		{
-			$query = $this->db->query("SELECT sno,tname as resource FROM selection");
+			$query = $this->db->query("SELECT sno,actual_name as resource FROM selection");
 			return $query;
 		}
 		
@@ -121,7 +121,7 @@
 								'circle_name' => $row->circle_name,
 								'block' => $row->block,
 								'gp'  => $row->gp_name,
-								'resource_type' =>$row1->tname,
+								'resource_type' =>$row1->actual_name,
 								'resource_quantity' =>$row2->count_res
 								);
 								$data_list[$i]  = $list;
@@ -261,7 +261,7 @@
 			{
 				$cir = $cir ." AND g.gp_no = '$gp_no'";
 			}
-			$q= "SELECT * from gp g join block b on b.b_s_no = g.b_s_no JOIN circle c on c.c_s_no = b.c_s_no where ".$cir;
+			$q= "SELECT * from gp g join block b on b.b_s_no = g.b_s_no JOIN circle c on c.c_s_no = b.c_s_no where ".$cir." ORDER BY circle_name, block , gp_name";
 			$query = $this->db->query($q);
 			log_message('info','##########INSIDE get_all_gp_details QUERY::::::: '.$q);	
 			return $query;
