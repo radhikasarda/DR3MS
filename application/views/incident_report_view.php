@@ -4,8 +4,7 @@
 		<meta name="viewport" content="width=device-width, initial-scale=1">
 		<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/css/bootstrap.min.css" type="text/css">
 		<style>
-			
-			.logoutbutton 
+		.logoutbutton 
 			{
 				background-color: #FF0000;
 				border: none;
@@ -18,27 +17,25 @@
 				margin: 4px 2px;
 				cursor: pointer;
 			}
-			
 		</style>
-		<title>DR3MS::Resource Reports</title>
+		<title>DR3MS::Incident Reports</title>
 		
-	</head>
+		</head>
 	
-	<body style="overflow-x:auto;overflow-y:auto;">
-	
+		<body style="overflow-x:auto;overflow-y:auto;">	
+		
 		<script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
 		<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
-		<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.8.0/Chart.js"></script>
 		<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/js/bootstrap.min.js"></script>
 		<script src="https://kit.fontawesome.com/a076d05399.js"></script>
-		<script type="text/javascript" src="<?php echo base_url().'assets/js/jquery-3.3.1.js'?>"></script>		
-
+		<script type="text/javascript" src="<?php echo base_url().'assets/js/jquery-3.3.1.js'?>"></script>
 		
 		<div class= "header-container" >
 			<div class = "header">
 				<?php $this->load->view('header_view');?>
 			</div>
 		</div>
+		
 		<div class = "row" style="margin-right:0px;">
 			<div class = "col-sm-6" style = "text-align: left; background-color: #FFB700;height: 25px;">
 				<i class="fas fa-user"></i>
@@ -66,7 +63,7 @@
 		<nav class="navbar navbar-inverse" id="selection-bar" style="background-color: #FFB700;margin-top:-20px;">
 			<div class="container-fluid">
 				<div class="col-sm-12" style="padding-top:8px;">
-					<div class="col-xs-2">
+					<div class="col-xs-3">
 						<div class = "row">
 						<label>Select Circle:</label>
 						</div>
@@ -143,7 +140,7 @@
 							});
 						</script>
 					</div>
-					<div class="col-xs-2">	
+					<div class="col-xs-3">	
 						<div class = "row">
 						<label>Select Block:</label>
 						</div>
@@ -153,7 +150,7 @@
 						</select>
 						</div>
 					</div>
-					<div class="col-xs-2">
+					<div class="col-xs-3">
 						<div class = "row">
 						<label>Select GP:</label>
 						</div>
@@ -163,40 +160,23 @@
 						</select>
 						</div>
 					</div>
-					<div class="col-xs-2">
-						<div class = "row">
-						<label>Select Resource:</label>
-						</div>
-						<div class = "row">
-						<select class="form-control" name = "resources" id="resources" >
-							<option value="All">All</option>
-							<?php
-							foreach($resources as $row)
-							{
-							 echo '<option value="'.$row->resource.'">'.$row->resource.'</option>';
-							}
-							?>						
-						</select>
-						</div>
-					</div>
-					<div class="col-xs-2">
+					<div class="col-xs-3">
 					<button type="button" class="btn btn-primary" onclick="return GetSelectedData();" style="margin-top:25px;">SUBMIT</button>					
 					<script>
 						function GetSelectedData()
 						{
 							$.ajax({
-											url:"<?php echo site_url('Resource_Report/onClickSubmit');?>",
+											url:"<?php echo site_url('Incident_Report/onClickSubmit');?>",
 											method:"POST",
 											data:{block_id:$('#blocks').val(),circle_id:$('#circles').val(),gp_id:$('#gp').val(),resource_id:$('#resources').val()},
 											type: "POST",
 											cache: false,
-											success: function(data){
-												//alert(data);
-												$('#report-table').html(data); 
+											success: function(data){												
+												$('#incident-report-table').html(data); 
 											}
 
 							});
-							//$("#report-circlewise-all-resource").show();  
+
 						}				 
 					</script>
 					</div>
@@ -206,15 +186,14 @@
 		<div class= "row" id="back-button" style="display:none;">
 				<button type="button"  class="btn btn-primary" onclick="onClickBack();" style="margin-left:900px;margin-bottom:10px;">BACK</button>
 		</div>
-		<div id ="report-circlewise-all-resource">
+		<div id ="incident-report-circlewise-all-resource">
 			<div class="container">
 				<!--<h2>View data</h2>-->
-					<table id ="report-table" class="table table-striped table-bordered" >
+					<table id ="incident-report-table" class="table table-striped table-bordered" >
 						
 					</table>
 			</div>
 		</div>
-		
 		<div id ="detailed-info">
 			
 			<div class="container">
@@ -226,17 +205,16 @@
 			</div>
 		</div>
 		<script>
-
 		function onClickBack()
 		{
-			$("#report-circlewise-all-resource").show();  
+			$("#incident-report-circlewise-all-resource").show();  
 			$("#selection-bar").show(); 
 			$("#back-button").hide();
 			$('#row-detail-table').hide(); 
 		}
-		function OnClickViewDetails() {
-			
-		var table = document.getElementById("report-table");
+		function OnClickIncidentReportViewDetails()
+		{
+			var table = document.getElementById("incident-report-table");
 	
 			var rows = table.getElementsByTagName("tr");
 		
@@ -246,19 +224,11 @@
 					function(row) 
 					{
 						return function() {
-							var circle = row.getElementsByClassName("circle")[0];
-                            var circle_name = circle.innerHTML;
-							
-							var block = row.getElementsByClassName("block")[0];
-                            var block_name = block.innerHTML;
-							
-							var gp = row.getElementsByClassName("gp")[0];
-                            var gp_name = gp.innerHTML;
           
-							var resource = row.getElementsByClassName("resource")[0];
-                            var resource_name = resource.innerHTML; 
+							var incident_id = row.getElementsByClassName("incident_id")[0];
+                            var incident_id = incident_id.innerHTML; 
 							
-							sendRowData(circle_name,block_name,gp_name,resource_name);
+							sendRowData(incident_id);
                         };
 					};
 
@@ -266,17 +236,16 @@
 			}
 		}
 		window.onload = addRowHandlers();
- 
-		function sendRowData(circle_name,block_name,gp_name,resource_name)
+		function sendRowData(incident_id)
 		{
 			$.ajax({
-											url:"<?php echo site_url('Resource_Report/onRowClick');?>",
+											url:"<?php echo site_url('Incident_Report/onRowClick');?>",
 											method:"POST",
-											data:{circle:circle_name,block:block_name,gp:gp_name,resource:resource_name},
+											data:{incident_id:incident_id},
 											type: "POST",
 											cache: false,
 											success: function(data){		
-												$("#report-circlewise-all-resource").hide();  
+												$("#incident-report-circlewise-all-resource").hide();  
 												$("#selection-bar").hide(); 
 												$("#back-button").show();
 												$('#row-detail-table').html(data);
@@ -286,5 +255,5 @@
 							});
 		}
 		</script>
-	</body>
+		</body>
 </html>

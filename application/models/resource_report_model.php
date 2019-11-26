@@ -132,7 +132,7 @@
 					}
 					
 				}
-				$data['data_report'] = $data_list;
+				$data['data_resource_report'] = $data_list;
 
 				return $data;
 			

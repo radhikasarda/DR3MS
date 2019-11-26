@@ -8,12 +8,13 @@
 					echo "<th>"; echo "<strong>Circle</strong>"; echo "</th>";
 					echo "<th>"; echo "<strong>Block</strong>"; echo "</th>";
 					echo "<th>"; echo "<strong>GP</strong>"; echo "</th>";
-					echo "<th>"; echo "<strong>Resource Type</strong>"; echo "</th>";
-					echo "<th>"; echo "<strong>Quantity of Resource Available</strong>"; echo "</th>";
+					echo "<th>"; echo "<strong>Location</strong>"; echo "</th>";
+					echo "<th>"; echo "<strong>Incident Date</strong>"; echo "</th>";
+					echo "<th style= 'display:none;'>"; echo "<strong>Incident Id</strong>";	echo "</th>";
 					echo "<th>";	echo "</th>";
 				echo "</tr>";
 				
-				foreach($data_resource_report as $row)
+				foreach($data_incident_report as $row)
 				{
 					echo "<tr>";
 
@@ -43,26 +44,33 @@
 					{
 						echo "<td class = 'gp'>".$row['gp']."</td>";
 					}
-					
-					if(is_null($row['resource_type']))
+										
+					if(is_null($row['location']))
 					{
-						echo "<td class = 'resource'>".$blank."</td>";
+						echo "<td class = 'location'>".$blank."</td>";
 					}
 					else
 					{
-						echo "<td class = 'resource'>".$row['resource_type']."</td>";
+						echo "<td class = 'location'>".$row['location']."</td>";
 					}
 					
-					if(is_null($row['resource_quantity']))
+					if(is_null($row['incident_date']))
 					{
-						echo "<td>".$blank."</td>";
+						echo "<td class = 'incident_date'>".$blank."</td>";
 					}
 					else
 					{
-						echo "<td>".$row['resource_quantity']."</td>";
+						echo "<td class = 'incident_date'>".$row['incident_date']."</td>";
 					}
-					
-					echo "<td><button onClick=\"OnClickViewDetails();\"><strong>View In Details</strong></button></td>";
+					if(is_null($row['incident_id']))
+					{
+						echo "<td class = 'incident_id' style= 'display:none;'>".$blank."</td>";
+					}
+					else
+					{
+						echo "<td class = 'incident_id' style= 'display:none;'>".$row['incident_id']."</td>";
+					}
+					echo "<td><button onClick=\"OnClickIncidentReportViewDetails();\"><strong>View In Details</strong></button></td>";
 					echo "</tr>";
 				}
 					echo "</tbody>";
