@@ -123,7 +123,7 @@
 									
 									
 								 } else {?>
-									<th><strong><?php echo $this->session->userdata('circle_name'); ;?></strong></th>
+									<th><strong><?php echo $this->session->userdata('circle_name');?></strong></th>
 								<?php } ?>
 								
 								</tr> 

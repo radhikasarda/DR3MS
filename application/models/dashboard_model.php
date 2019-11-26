@@ -9,13 +9,9 @@
 		public function get_resources_data()
 		{
 			$userid = $this->session->userdata('userid');
-			if ($userid == "Admin" ||$userid == "DC" || $userid == "ADC" || $userid == "NDRF"){
-				$circle_name = null;				
-			}
-			else
-			{
-				$circle_name = $this->session->userdata('circle_name');
-			}						
+			
+			//get Jurisdiction 
+			$circle_name  = $this->session->userdata('circle_name');
 			
 			//Getting assets
 			$query=$this->get_assets($circle_name);
@@ -83,13 +79,9 @@
 		public function get_resources_data_numeric()		
 		{
 			$userid = $this->session->userdata('userid');
-			if ($userid == "Admin" ||$userid == "DC" || $userid == "ADC" || $userid == "NDRF"){
-				$circle_name = null;				
-			}
-			else
-			{
-				$circle_name = $this->session->userdata('circle_name');
-			}
+			
+			//get Jurisdiction
+			$circle_name  = $this->session->userdata('circle_name');
 			
 			//Circle Details
 			$query=$this->get_circles();
@@ -134,6 +126,8 @@
 			return $data_resource;
 		}
 		
+		
+		
 		public function get_inbox_messages()
 		{
 				
@@ -164,12 +158,14 @@
 		public function get_assets($circle_name)
 		{	
 			log_message('info','##########INSIDE dashboard get_assets()');	
-			if(is_null($circle_name))
+			if($circle_name == 'All')
 			{
 			$query = $this->db->query("SELECT sum(nos_of_items) as no_of_assets,c.circle_name as circle_name FROM circle c LEFT JOIN block b ON b.c_s_no= c.c_s_no LEFT JOIN gp g ON g.b_s_no=b.b_s_no LEFT JOIN assets a ON a.gp_no=g.gp_no GROUP by c.circle_name");
 			}
 			else
 			{
+			$q = "SELECT sum(nos_of_items) as no_of_assets,c.circle_name as circle_name FROM circle c LEFT JOIN block b ON b.c_s_no= c.c_s_no LEFT JOIN gp g ON g.b_s_no=b.b_s_no LEFT JOIN assets a ON a.gp_no=g.gp_no WHERE c.circle_name LIKE ".$circle_name;
+			log_message('info','##########INSIDE dashboard get_assets() QUERY:::'.$q);	
 			$query = $this->db->query("SELECT sum(nos_of_items) as no_of_assets,c.circle_name as circle_name FROM circle c LEFT JOIN block b ON b.c_s_no= c.c_s_no LEFT JOIN gp g ON g.b_s_no=b.b_s_no LEFT JOIN assets a ON a.gp_no=g.gp_no WHERE c.circle_name LIKE '$circle_name'");	
 			}
 			return $query;			
@@ -177,7 +173,7 @@
 		
 		public function get_community_hall($circle_name)
 		{
-			if(is_null($circle_name))
+			if($circle_name == 'All')
 			{
 			$query = $this->db->query("SELECT sum(if(ch.community_hall NOT LIKE '0',1,0)) as no_of_community_hall, c.circle_name as circle_name FROM circle c LEFT JOIN block b ON b.c_s_no= c.c_s_no LEFT JOIN gp g ON g.b_s_no=b.b_s_no LEFT JOIN community_hall ch ON ch.gp_no=g.gp_no  GROUP BY c.circle_name");
 			}
@@ -190,7 +186,7 @@
 		
 		public function get_health_centre($circle_name)
 		{
-			if(is_null($circle_name))
+			if($circle_name == 'All')
 			{
 			$query = $this->db->query("SELECT sum(if(hc.name_of_health_centre NOT LIKE '0',1,0)) as no_of_health_centre, c.circle_name as circle_name FROM circle c LEFT JOIN block b ON b.c_s_no= c.c_s_no LEFT JOIN gp g ON g.b_s_no=b.b_s_no LEFT JOIN health_centre hc ON hc.gp_no=g.gp_no  GROUP BY c.circle_name");
 			}
@@ -203,20 +199,20 @@
 		
 		public function get_institution($circle_name)
 		{
-			if(is_null($circle_name))
+			if($circle_name == 'All')
 			{
-			$query = $this->db->query("SELECT count(*) as no_of_institution, c.circle_name as circle_name FROM circle c LEFT JOIN block b ON b.c_s_no= c.c_s_no LEFT JOIN gp g ON g.b_s_no=b.b_s_no LEFT JOIN institution i ON i.gp_no=g.gp_no GROUP BY c.circle_name");
+			$query = $this->db->query("SELECT Sum(total_lp_School)+sum(total_me_School)+sum(total_high_school)+sum(total_hs_School)+sum(total_nos_of_college)+sum(others) as no_of_institution, c.circle_name as circle_name FROM circle c LEFT JOIN block b ON b.c_s_no= c.c_s_no LEFT JOIN gp g ON g.b_s_no=b.b_s_no LEFT JOIN institution i ON i.gp_no=g.gp_no GROUP BY c.circle_name");
 			}
 			else
 			{
-			$query = $this->db->query("SELECT count(*) as no_of_institution, c.circle_name as circle_name FROM circle c LEFT JOIN block b ON b.c_s_no= c.c_s_no LEFT JOIN gp g ON g.b_s_no=b.b_s_no LEFT JOIN institution i ON i.gp_no=g.gp_no WHERE c.circle_name LIKE '$circle_name'");	
+			$query = $this->db->query("SELECT Sum(total_lp_School)+sum(total_me_School)+sum(total_high_school)+sum(total_hs_School)+sum(total_nos_of_college)+sum(others) as no_of_institution, c.circle_name as circle_name FROM circle c LEFT JOIN block b ON b.c_s_no= c.c_s_no LEFT JOIN gp g ON g.b_s_no=b.b_s_no LEFT JOIN institution i ON i.gp_no=g.gp_no WHERE c.circle_name LIKE '$circle_name'");	
 			}
 			return $query;
 		}
 		
 		public function get_embankment($circle_name)
 		{	
-			if(is_null($circle_name))
+			if($circle_name == 'All')
 			{
 			$query=$this->db->query("SELECT sum(if(e.name_of_embankment NOT LIKE '0',1,0)) as no_of_embankment, c.circle_name as circle_name FROM circle c LEFT JOIN block b ON b.c_s_no= c.c_s_no LEFT JOIN gp g ON g.b_s_no=b.b_s_no LEFT JOIN embankment e ON e.gp_no=g.gp_no  GROUP BY c.circle_name");
 			}
@@ -229,7 +225,7 @@
 		
 		public function get_handpump($circle_name)
 		{
-			if(is_null($circle_name))
+			if($circle_name == 'All')
 			{
 			$query = $this->db->query("SELECT sum(if(h.village_name NOT LIKE '0',1,0)) as no_of_hand_pump_ring_well, c.circle_name as circle_name FROM circle c LEFT JOIN block b ON b.c_s_no= c.c_s_no LEFT JOIN gp g ON g.b_s_no=b.b_s_no LEFT JOIN hand_pump_ring_well h ON h.gp_no=g.gp_no  GROUP BY c.circle_name");
 			}
@@ -242,7 +238,7 @@
 		
 		public function get_inaccessible($circle_name)
 		{
-			if(is_null($circle_name))
+			if($circle_name == 'All')
 			{
 			$query = $this->db->query("SELECT sum(if(i.inaccessible_area NOT LIKE '0',1,0)) as no_of_inaccessible_area, c.circle_name as circle_name FROM circle c LEFT JOIN block b ON b.c_s_no= c.c_s_no LEFT JOIN gp g ON g.b_s_no=b.b_s_no LEFT JOIN inaccessible i ON i.gp_no=g.gp_no  GROUP BY c.circle_name");
 			}

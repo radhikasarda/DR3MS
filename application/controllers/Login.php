@@ -106,11 +106,13 @@
 				log_message('info','##########USER VALIDATED ID:: '.$userid);
 				
 				$this->session->set_userdata('userid', $userid);
-				$circle_name = substr($userid,3);
-				$arraydata = array('circle_name'  => $circle_name);
-				$this->session->set_userdata($arraydata);
-				//$this->load->view('dashboard_view_admin',$data);
 				
+				$circle_name  = $this->get_jurisdiction($userid);
+				
+				$arraydata = array('circle_name'  => $circle_name);
+				
+				$this->session->set_userdata($arraydata);
+
 				redirect('/Dashboard');
 			 
 				/*$data['userid'] = $userid; 
@@ -129,6 +131,14 @@
 			}
 		}
 	
+		public function get_jurisdiction($userid)
+		{
+			$this->db->select('jurisdiction');
+			$this->db->from('user');
+			$this->db->where('uid', $userid);
+			$query = $this->db->get();	
+			return $query->row()->jurisdiction;
+		}
 		public function insert()
 		{
 			

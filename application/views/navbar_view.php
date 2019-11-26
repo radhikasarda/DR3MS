@@ -25,7 +25,7 @@
 						</li>
 						<li class="dropdown"><a class="dropdown-toggle" data-toggle="dropdown" href="#"><b>Reports</b><span class="caret"></span></a>
 							<ul class="dropdown-menu">
-								<li><a href="<?php echo base_url("Reports/");?>">Resources Report</a></li>
+								<li><a href="<?php echo base_url("Resource_Report/");?>">Resources Report</a></li>
 								<li><a href="#">Incident Report</a></li>
 								<li><a href="#">Miscellaneous Report</a></li>
 							</ul>

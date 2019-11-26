@@ -3,7 +3,6 @@
 		<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />	
 		<meta name="viewport" content="width=device-width, initial-scale=1">
 		<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/css/bootstrap.min.css" type="text/css">
-
 		<style>
 			
 			.logoutbutton 
@@ -19,10 +18,13 @@
 				margin: 4px 2px;
 				cursor: pointer;
 			}
-			
+			.selected {
+    background-color: brown;
+    color: #FFF;
+}
 			
 		</style>
-		<title>DR3MS::Reports</title>
+		<title>DR3MS::Resource Reports</title>
 		
 	</head>
 	
@@ -34,6 +36,7 @@
 		<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/js/bootstrap.min.js"></script>
 		<script src="https://kit.fontawesome.com/a076d05399.js"></script>
 		<script type="text/javascript" src="<?php echo base_url().'assets/js/jquery-3.3.1.js'?>"></script>		
+
 		
 		<div class= "report-container" >
 			<div class = "header">
@@ -64,7 +67,7 @@
 		<div>
 		<?php $this->load->view('navbar_view');?>
 		</div>	
-		<nav class="navbar navbar-inverse" style="background-color: #FFB700;margin-top:-20px;">
+		<nav class="navbar navbar-inverse" id="selection-bar" style="background-color: #FFB700;margin-top:-20px;">
 			<div class="container-fluid">
 				<div class="col-sm-12" style="padding-top:8px;">
 					<div class="col-xs-2">
@@ -73,7 +76,13 @@
 						</div>
 						<div class = "row">				
 						<select class="form-control" name = "circles" id="circles"  >
-							<option value="All">All</option>
+							<?php $circle_name = $this->session->userdata('circle_name');
+							if($circle_name == 'All'){
+							?><option value="All">All</option>
+							<?php
+							}
+							?>
+							
 							<?php
 							foreach($circles as $row)
 							{
@@ -84,14 +93,14 @@
 						</select>
 						</div>
 						<script type="text/javascript">
-							$(document).ready(function(){
-
-								$('#circles').change(function(){ 
-									var circle_id=$('#circles').val();
+							
+							function set_block_names(){
+								
+								var circle_id=$('#circles').val();
 									if(circle_id != '')
 									{
 											$.ajax({
-											url : "<?php echo site_url('reports/get_blocks');?>",
+											url : "<?php echo site_url('Resource_Report/get_blocks');?>",
 											method : "POST",
 											data : {circle_id: circle_id},
 											success: function(data)
@@ -106,6 +115,11 @@
 										  $('#blocks').html('<option value="All">All</option>');
 										  $('#gp').html('<option value="All">All</option>');
 									}
+							}
+							$(document).ready(function(){
+								set_block_names();
+								$('#circles').change(function(){ 
+									set_block_names();	
 										
 								}); 
 								
@@ -115,7 +129,7 @@
 									  if(block_id != '')
 									  {
 									   $.ajax({
-										url:"<?php echo site_url('reports/get_gp');?>",
+										url:"<?php echo site_url('Resource_Report/get_gp');?>",
 										method:"POST",
 										data:{block_id:block_id},
 										success:function(data)
@@ -175,7 +189,7 @@
 						function GetSelectedData()
 						{
 							$.ajax({
-											url:"<?php echo site_url('reports/onClickSubmit');?>",
+											url:"<?php echo site_url('Resource_Report/onClickSubmit');?>",
 											method:"POST",
 											data:{block_id:$('#blocks').val(),circle_id:$('#circles').val(),gp_id:$('#gp').val(),resource_id:$('#resources').val()},
 											type: "POST",
@@ -184,31 +198,97 @@
 												//alert(data);
 												$('#report-table').html(data); 
 											}
-											
-										
-											
-
-											
 
 							});
-							$("#report-circlewise-all-resource").show();  
+							//$("#report-circlewise-all-resource").show();  
 						}				 
 					</script>
 					</div>
 				</div>
 			</div>
 		</nav>
-		<div id ="report-circlewise-all-resource" style="display:none;">
+		<div class= "row" id="back-button" style="display:none;">
+				<button type="button"  class="btn btn-primary" onclick="onClickBack();" style="margin-left:900px;margin-bottom:10px;">BACK</button>
+		</div>
+		<div id ="report-circlewise-all-resource">
 			<div class="container">
 				<!--<h2>View data</h2>-->
-					<table class="table table-bordered table-sm" >
-					<tbody id="report-table">
-					  
-					</tbody>
+					<table id ="report-table" class="table table-striped table-bordered" >
+						
 					</table>
 			</div>
 		</div>
 		
+		<div id ="detailed-info">
+			
+			<div class="container">
+				
+					<table id ="row-detail-table" class="table table-striped table-bordered" >
+						
+					</table>
+					
+			</div>
+		</div>
+		<script>
+
+		function onClickBack()
+		{
+			$("#report-circlewise-all-resource").show();  
+			$("#selection-bar").show(); 
+			$("#back-button").hide();
+			$('#row-detail-table').hide(); 
+		}
+		function OnClickViewDetails() {
+			
+		var table = document.getElementById("report-table");
+	
+			var rows = table.getElementsByTagName("tr");
 		
+			for (i = 0; i < rows.length; i++) {
+					var currentRow = table.rows[i];
+					var createClickHandler = 
+					function(row) 
+					{
+						return function() {
+							var circle = row.getElementsByClassName("circle")[0];
+                            var circle_name = circle.innerHTML;
+							
+							var block = row.getElementsByClassName("block")[0];
+                            var block_name = block.innerHTML;
+							
+							var gp = row.getElementsByClassName("gp")[0];
+                            var gp_name = gp.innerHTML;
+          
+							var resource = row.getElementsByClassName("resource")[0];
+                            var resource_name = resource.innerHTML; 
+							
+							sendRowData(circle_name,block_name,gp_name,resource_name);
+                        };
+					};
+
+					currentRow.onclick = createClickHandler(currentRow);
+			}
+		}
+		window.onload = addRowHandlers();
+ 
+		function sendRowData(circle_name,block_name,gp_name,resource_name)
+		{
+			$.ajax({
+											url:"<?php echo site_url('Resource_Report/onRowClick');?>",
+											method:"POST",
+											data:{circle:circle_name,block:block_name,gp:gp_name,resource:resource_name},
+											type: "POST",
+											cache: false,
+											success: function(data){		
+												$("#report-circlewise-all-resource").hide();  
+												$("#selection-bar").hide(); 
+												$("#back-button").show();
+												$('#row-detail-table').html(data);
+												$('#row-detail-table').show(); 												
+											}
+
+							});
+		}
+		</script>
 	</body>
 </html>
