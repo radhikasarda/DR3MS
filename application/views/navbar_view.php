@@ -30,7 +30,7 @@
 								<li><a href="#">Miscellaneous Report</a></li>
 							</ul>
 						</li>
-						<!--<li><a href="#"><b>Reports</b></a></li>-->
+						<li><a href="<?php echo base_url("Message/");?>"><b>Message</b></a></li>
 					</ul>
 				</div>
 			</nav>	
