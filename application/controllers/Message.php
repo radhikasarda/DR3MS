@@ -60,12 +60,11 @@
 		public function onDraftClick()
 		{
 			$save_draft_msg = $this->message_model->save_draft_msg();
-			log_message('info','##########INSIDE onDraftClick FUNC::'.$save_draft_msg);
-			if($save_draft_msg == '1')
-			{
-			log_message('info','##########INSIDE INSIDE IFFF FUNC::'.$save_draft_msg);	
-			redirect('Message');
-			}
+		}
+		
+		public function onSendClick()
+		{
+			$send_msg = $this->message_model->send_msg();
 		}
    }
    

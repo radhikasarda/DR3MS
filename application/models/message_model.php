@@ -123,5 +123,25 @@
 				
 				return ($this->db->affected_rows() != 1) ? false : true;
 			}
+			
+			public function send_msg()
+			{
+				$recipient_id_list = $this->input->post('recipient_id_list');
+				$subject = $this->input->post('subject');
+				$msg = $this->input->post('msg');	
+				$recipient_id_array = explode (",", $recipient_id_list);  
+				
+				foreach($recipient_id_array as $value)
+				{
+						log_message('info','##########INSIDE send_msg FUNC::RECIPIENTS ID:: '.$value);
+						$this->db->set('recipient_id', $value);
+						$this->db->set('subject', $subject);
+						$this->db->set('msg_body', $msg);
+						$this->db->insert('message_comm');				
+						
+				}
+
+				return ($this->db->affected_rows() != 1) ? false : true;
+			}
 		}
 ?>

@@ -144,15 +144,33 @@
 			<script>		
 			function onClickSend()
 			{
-				if($('#framework').val() == ''){
-					alert("Please Select Atleast 1 Recipient");
+				var recipient_id_list = $('#framework').val().toString();
+				var subject = $('#subject').val();
+				var msg = $('#message').val();	
+				
+				if(recipient_id_list == ''){
+					iqwerty.toast.Toast('Please Select Atleast 1 Recipient !!');
 					return;
 				}
-				if($('#subject').val() == ''){
-					alert("Please add a subject");	
+				if(subject == ''){
+					iqwerty.toast.Toast('Please add a Subject !!');	
 					return;
 				}			
-				
+				$.ajax({
+											url:"<?php echo site_url('Message/onSendClick');?>",
+											method:"POST",
+											data:{recipient_id_list:recipient_id_list,subject:subject,msg:msg},
+											type: "POST",
+											cache: false,
+											success: function(data){
+												window.location.href="<?php echo base_url('Message/');?>";
+												iqwerty.toast.Toast('Message Sent Successfully !!');													
+											},
+											error: function() {
+												iqwerty.toast.Toast('Internal Server error!! Please Send Again !!');
+											}
+
+						});
 			}
 			
 			function onClickDraft()
@@ -174,10 +192,10 @@
 											cache: false,
 											success: function(data){
 												window.location.href="<?php echo base_url('Message/');?>";
-												iqwerty.toast.Toast('Message saved as Draft Successfully!!');													
+												iqwerty.toast.Toast('Message saved as Draft Successfully !!');													
 											},
 											error: function() {
-												iqwerty.toast.Toast('Internal Server error!! Please SAVE Again!!');
+												iqwerty.toast.Toast('Internal Server error!! Please SAVE Again !!');
 											}
 
 						});
