@@ -1,0 +1,96 @@
+/*
+	Toast.js stylesheet
+	v 1.4
+	Jirka Vrba
+	(jirkavrbis)
+*/
+
+@font-face{
+	font-family: Roboto;
+	src:url('Roboto-Regular.ttf');
+}
+@font-face{
+	font-family: RobotoBold;
+	src:url('Roboto-Bold.ttf');
+}
+
+#toastBg{
+	position:fixed;
+	width:100%;
+	height:100%;
+	left:0px;
+	top:0px;
+	background-color:rgba(0,0,0,0.6);
+	animation:loadBg 0.3s;
+	transition:0.3s all;
+}
+
+@keyframes loadBg{
+	from{opacity:0}
+	to{opacity:1}
+}
+
+#toastBody{
+	position:relative;
+	min-width:400px;
+	width:400px;
+	min-height:150px;
+	border-radius:15px;
+	background-color:#fff;
+   margin:auto;
+	margin-top:30px;
+	animation:loadBody 0.5s;
+}
+
+@keyframes loadBody{
+	from{opacity:0;margin-top:150px;}
+	to{opacity:1;margin-top:30px;}
+}
+
+#toastClose{
+	width:25px;
+	height:25px;
+	background-color:#ddd;
+	position:absolute;
+	right:5px;
+	top:7px;
+	border-radius:50%;
+	font-family:Arial;
+	text-align:center;
+	line-height:25px;
+	color:#fff;
+	transition:0.3s all;
+}
+#toastClose:hover{
+	background-color:#c00;
+	cursor:pointer;
+}
+
+#toastTitle{
+	width:375px;
+	padding-left: 25px;
+	padding-bottom: 5px;
+	min-height:30px;
+	padding-top: 10px;
+	line-height: 20px;
+	background-color: #eee;
+	border-radius: 15px 15px 0px 0px;
+	font-family: RobotoBold;
+	font-size: 20px;
+}
+#toastText{
+	width:380px;
+	padding-right:10px;
+	padding-left:10px;
+	padding-top:10px;
+	padding-bottom: 10px;
+	font-family: Roboto;
+}
+#toastTextFull{
+	width:380px;
+	padding-right:10px;
+	padding-left:10px;
+	padding-top:10px;
+	padding-bottom: 10px;
+	font-family: Roboto;
+}

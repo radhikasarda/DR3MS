@@ -56,6 +56,17 @@
 			$data_sent_msg_details_view = $this->load->view('data_sent_msg_details_view',$data_sent_msg_details,TRUE);
 			echo $data_sent_msg_details_view;
 		}
+		
+		public function onDraftClick()
+		{
+			$save_draft_msg = $this->message_model->save_draft_msg();
+			log_message('info','##########INSIDE onDraftClick FUNC::'.$save_draft_msg);
+			if($save_draft_msg == '1')
+			{
+			log_message('info','##########INSIDE INSIDE IFFF FUNC::'.$save_draft_msg);	
+			redirect('Message');
+			}
+		}
    }
    
 ?>

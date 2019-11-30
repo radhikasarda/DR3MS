@@ -3,6 +3,7 @@
 		<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />	
 		<meta name="viewport" content="width=device-width, initial-scale=1">
 		<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/css/bootstrap.min.css" type="text/css">
+		<link rel="stylesheet" href="<?php echo base_url().'assets/css/toast.css'?>" type="text/css">
 		<style>
 			
 			.logoutbutton 
@@ -48,7 +49,8 @@
 		<script type="text/javascript" src="<?php echo base_url().'assets/js/jquery-3.3.1.js'?>"></script>
 		<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-select/1.12.2/css/bootstrap-select.min.css">
 		<script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-select/1.12.2/js/bootstrap-select.min.js"></script>
-		
+		<script type="text/javascript" src="<?php echo base_url().'assets/js/toast.js'?>"></script>
+
 		<div class= "header-container" >
 			<div class = "header">
 				<?php $this->load->view('header_view');?>
@@ -89,7 +91,7 @@
 		<div class = "col-sm-2">
 		</div>
 		<div class="col-sm-10" style="margin-top:-10px;margin-left:200px;">
-			<div class="container" style="overflow-x:auto;overflow-y:auto;height:800px;width:auto !important;">  
+			<div id="compose-msg-div" class="container" style="overflow-x:auto;overflow-y:auto;height:800px;width:auto !important;">  
 					<div class="panel panel-default">
 						<div class="panel-body message">
 							<form id="myForm" class="form-horizontal" role="form" >
@@ -127,8 +129,8 @@
 							</div>
 							<div class="col-sm-11 col-sm-offset-1">
 							<div class="form-group" >	
-							<button type="submit" class="btn btn-success" onClick="onClickSend();">Send&nbsp;<i class='fa fa-paper-plane' aria-hidden='true'></i></button>
-							<button type="submit" class="btn btn-default">Draft&nbsp;<i class='fa fa-pen-square' aria-hidden='true'></i></button>
+							<button type="button" class="btn btn-success" onClick="onClickSend();">Send&nbsp;<i class='fa fa-paper-plane' aria-hidden='true'></i></button>
+							<button type="button" class="btn btn-default" onClick="onClickDraft();">Draft&nbsp;<i class='fa fa-pen-square' aria-hidden='true'></i></button>
 							<button type="button" class="btn btn-danger" onClick="onClickReset();">Reset&nbsp;<i class='fa fa-undo' aria-hidden='true'></i></button>
 							</div>
 							</div>
@@ -138,15 +140,8 @@
 			</div>
 			</div>
 			</div>
-			<script>
-			function onClickReset()
-			{
-				$("#framework").selectpicker("deselectAll");
-				$('#subject').val('');
-				$('#message').val('');
-			}
 			
-			
+			<script>		
 			function onClickSend()
 			{
 				if($('#framework').val() == ''){
@@ -156,11 +151,44 @@
 				if($('#subject').val() == ''){
 					alert("Please add a subject");	
 					return;
+				}			
+				
+			}
+			
+			function onClickDraft()
+			{
+				
+				var recipient_id_list = $('#framework').val().toString();
+				var subject = $('#subject').val();
+				var msg = $('#message').val();	
+				if(recipient_id_list == '' && subject == '' && msg == '')
+				{
+					window.location.href="<?php echo base_url('Message/');?>";
 				}
-				
-				
-				
-				
+				else{
+				$.ajax({
+											url:"<?php echo site_url('Message/onDraftClick');?>",
+											method:"POST",
+											data:{recipient_id_list:recipient_id_list,subject:subject,msg:msg},
+											type: "POST",
+											cache: false,
+											success: function(data){
+												window.location.href="<?php echo base_url('Message/');?>";
+												iqwerty.toast.Toast('Message saved as Draft Successfully!!');													
+											},
+											error: function() {
+												iqwerty.toast.Toast('Internal Server error!! Please SAVE Again!!');
+											}
+
+						});
+				}			
+			}
+			
+			function onClickReset()
+			{
+				$("#framework").selectpicker("deselectAll");
+				$('#subject').val('');
+				$('#message').val('');
 			}
 			</script>
 	</body>

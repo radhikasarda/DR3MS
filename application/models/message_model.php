@@ -108,5 +108,20 @@
 				return $query->row()->recipient_id;
 			}
 			
+			public function save_draft_msg()
+			{
+				$userid = $this->session->userdata('userid');
+				$recipient_id_list = $this->input->post('recipient_id_list');
+				$subject = $this->input->post('subject');
+				$msg = $this->input->post('msg');	
+
+				$this->db->set('recipient_id', $recipient_id_list);
+				$this->db->set('subject', $subject);
+				$this->db->set('msg_from', $userid);
+				$this->db->set('msg_body', $msg);
+				$this->db->insert('draft_message');				
+				
+				return ($this->db->affected_rows() != 1) ? false : true;
+			}
 		}
 ?>
