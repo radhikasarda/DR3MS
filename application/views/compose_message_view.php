@@ -78,7 +78,7 @@
 		<div>
 		<?php $this->load->view('navbar_view');?>
 		</div>	
-		<div id ="sidebar" class="sidebar" style="margin:0;padding:0;width:200px;background-color:#FFB700;height:100%;margin-top:-20px;position:relative;">			
+		<div id ="sidebar" class="sidebar" style="margin:0;padding:0;width:200px;background-color:#FFB700;position:absolute;height:100%;margin-top:-20px;">			
 		    <a class="inbox" href="<?php echo base_url("Message/");?>"><b><i class="fa fa-inbox" aria-hidden="true"></i>&ensp;Inbox</b></a>
 			<a class="sent" href="<?php echo base_url("Message/getSentMsg");?>"><b><i class="fa fa-paper-plane" aria-hidden="true"></i>&ensp;Sent Messages</b></a>
 			<a href="#draft"><b><i class="fa fa-pen-square" aria-hidden="true"></i>&ensp;Draft Mesages</b></a>
@@ -88,7 +88,8 @@
 		<div class="row">
 		<div class = "col-sm-2">
 		</div>
-		<div class="col-sm-10" style="margin-left:250px;margin-top:-900px;position:absolute;" id="compose-msg-div">
+		<div class="col-sm-10" style="margin-top:-10px;margin-left:200px;">
+			<div class="container" style="overflow-x:auto;overflow-y:auto;height:800px;width:auto !important;">  
 					<div class="panel panel-default">
 						<div class="panel-body message">
 							<form class="form-horizontal" role="form">
@@ -127,13 +128,16 @@
 								<textarea class="form-control" id="message" name="body" rows="12" placeholder="Write your message here"></textarea>
 							</div>
 							</div>
-							<div class="form-group" style="padding-left:145px;">	
+							<div class="col-sm-11 col-sm-offset-1">
+							<div class="form-group" >	
 							<button type="submit" class="btn btn-success" onClick="onClickSend();">Send</button>
 							<button type="submit" class="btn btn-default">Draft</button>
 							<button type="submit" class="btn btn-danger">Discard</button>
 							</div>
+							</div>
 					</div>
 				</div>
+			</div>
 			</div>
 			</div>
 			<script>
