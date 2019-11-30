@@ -11,13 +11,13 @@
 				$i = 0;
 				$data_list = array();
 				$user = $this->session->userdata('userid');
-				$query = $this->db->query("SELECt * from message_comm where msg_from like '$user' ORDER BY `msg_create_date` DESC;");
+				$query = $this->db->query("SELECT * from message_comm where msg_from like '$user' ORDER BY `msg_saved_date` DESC;");
 				$sent_msg_details = $query->result();
 				$data['sent_msg_details'] = $sent_msg_details;
 				foreach($sent_msg_details as $row)
 				{
 					$list =  array(
-								'msg_create_date' => $row->msg_create_date,
+								'msg_create_date' => $row->msg_saved_date,
 								'subject' => $row->subject,
 								'msg_id' => $row->message_id
 								);
@@ -56,7 +56,7 @@
 					$list =  array(
 								'subject' => $row->subject,
 								'msg_from' => $row->msg_from,
-								'date' => $row->msg_create_date,
+								'date' => $row->msg_saved_date,
 								'msg_body' => $row->msg_body
 								);
 								$data_recieved_msg_details_list[$i]  = $list;
@@ -72,6 +72,7 @@
 			public function get_sent_msg_details()
 			{
 				$msg_id = $this->input->post('msg_id');
+				$recipient_id = " ";
 				$i = 0;
 				$data_sent_msg_details_list = array();
 				log_message('info','##########INSIDE get_msg_details FUNC::MSG ID:: '.$msg_id);
@@ -84,7 +85,7 @@
 					$list =  array(
 								'subject' => $row->subject,
 								'to' => $recipient_id,
-								'date' => $row->msg_create_date,
+								'date' => $row->msg_saved_date,
 								'msg_body' => $row->msg_body
 								);
 								$data_sent_msg_details_list[$i]  = $list;

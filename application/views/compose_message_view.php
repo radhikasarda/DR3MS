@@ -92,14 +92,13 @@
 			<div class="container" style="overflow-x:auto;overflow-y:auto;height:800px;width:auto !important;">  
 					<div class="panel panel-default">
 						<div class="panel-body message">
-							<form class="form-horizontal" role="form">
+							<form id="myForm" class="form-horizontal" role="form" >
 								<div class="form-group" style="padding-left:18px;padding-right:18px;">
 									<label for="to" class="col-sm-1 control-label">To:</label>
 									<div class="col-sm-11" >
 										<form method="post" id="multiple_select_form">
-												<select name="framework" id="framework" class="form-control selectpicker" data-live-search="true" multiple>
+												<select name="framework" id="framework" class="selectpicker form-control " data-live-search="true" multiple>
 												<?php
-
 												foreach($users as $user){
 												?>
 												<option value="<?php echo strtolower($user); ?>"><?php echo $user; ?>
@@ -117,9 +116,7 @@
 								<div class="col-sm-11">
 									<input type="text" class="form-control select2-offscreen" name="subject" id="subject" placeholder="Type subject" >
 								</div>
-								</div>
-							  
-							</form>
+								</div>							  						
 							<br>
 							<br>
 							<br>
@@ -130,17 +127,26 @@
 							</div>
 							<div class="col-sm-11 col-sm-offset-1">
 							<div class="form-group" >	
-							<button type="submit" class="btn btn-success" onClick="onClickSend();">Send</button>
-							<button type="submit" class="btn btn-default">Draft</button>
-							<button type="submit" class="btn btn-danger">Discard</button>
+							<button type="submit" class="btn btn-success" onClick="onClickSend();">Send&nbsp;<i class='fa fa-paper-plane' aria-hidden='true'></i></button>
+							<button type="submit" class="btn btn-default">Draft&nbsp;<i class='fa fa-pen-square' aria-hidden='true'></i></button>
+							<button type="button" class="btn btn-danger" onClick="onClickReset();">Reset&nbsp;<i class='fa fa-undo' aria-hidden='true'></i></button>
 							</div>
 							</div>
+							</form>
 					</div>
 				</div>
 			</div>
 			</div>
 			</div>
 			<script>
+			function onClickReset()
+			{
+				$("#framework").selectpicker("deselectAll");
+				$('#subject').val('');
+				$('#message').val('');
+			}
+			
+			
 			function onClickSend()
 			{
 				if($('#framework').val() == ''){

@@ -80,7 +80,7 @@
 		</div>	
 		<div id ="sidebar" class="sidebar" style="margin:0;padding:0;width:200px;background-color:#FFB700;position:absolute;height:100%;margin-top:-20px;">			
 		    <a class="inbox" href="<?php echo base_url("Message/");?>"><b><i class="fa fa-inbox" aria-hidden="true"></i>&ensp;Inbox</b></a>
-			<a class="active" href="#" onClick="getSentMsg();"><b><i class="fa fa-paper-plane" aria-hidden="true"></i>&ensp;Sent Messages</b></a>
+			<a class="active" href="<?php echo base_url("Message/getSentMsg");?>"><b><i class="fa fa-paper-plane" aria-hidden="true"></i>&ensp;Sent Messages</b></a>
 			<a href="#draft"><b><i class="fa fa-pen-square" aria-hidden="true"></i>&ensp;Draft Mesages</b></a>
 			<a class="compose" href="<?php echo base_url("Message/compose");?>"><b><i class="fa fa-plus" aria-hidden="true"></i>&ensp;Compose Message</b></a>
 			<a class="bin" href="<?php echo base_url("Message/bin");?>"><b><i class="fa fa-trash" aria-hidden="true"></i>&ensp;Deleted Messages</b></a>

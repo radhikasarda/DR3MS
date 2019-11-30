@@ -132,7 +132,7 @@
 		{
 				
 			$user = $this->session->userdata('userid');
-			$query = $this->db->query("SELECT a.*,b.*,c.* FROM message_comm a JOIN message_recipient b on a.message_id=b.message_id LEFT JOIN incident_report c on c.incident_id=a.incident_id WHERE b.recipient_id LIKE '$user' ORDER BY a.`msg_create_date` DESC");
+			$query = $this->db->query("SELECT a.*,b.*,c.* FROM message_comm a JOIN message_recipient b on a.message_id=b.message_id LEFT JOIN incident_report c on c.incident_id=a.incident_id WHERE b.recipient_id LIKE '$user' ORDER BY a.`msg_saved_date` DESC");
 			$data_inbox['user_msg'] = null;	
 			$data_inbox['user_msg'] =  $query->result();
 			return $data_inbox;				
