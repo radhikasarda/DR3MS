@@ -1,6 +1,5 @@
 <?php			
-		//if((isset($data_report_circlewise)) && (!is_null($data_report_circlewise)))
-		//{
+
 				echo "<tbody style ='cursor:pointer;'>";
 				$blank = "0";
 				echo "<tr>";

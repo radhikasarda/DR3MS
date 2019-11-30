@@ -155,7 +155,7 @@
 					</div>
 					<div class="col-xs-2">
 						<div class = "row">
-						<label>Select GP:</label>
+						<label>Select &ensp; GP:</label>
 						</div>
 						<div class = "row">
 						<select class="form-control" name = "gp" id="gp" >
@@ -180,6 +180,7 @@
 						</div>
 					</div>
 					<div class="col-xs-2">
+
 					<button type="button" class="btn btn-primary" onclick="return GetSelectedData();" style="margin-top:25px;">SUBMIT</button>					
 					<script>
 						function GetSelectedData()
@@ -203,13 +204,15 @@
 				</div>
 			</div>
 		</nav>
-		<div class= "row" id="back-button" style="display:none;">
-				<button type="button"  class="btn btn-primary" onclick="onClickBack();" style="margin-left:900px;margin-bottom:10px;">BACK</button>
+		<div class= "row">
+				<div class="text-center" >
+				<button  id="back-button" type="button"  class="btn btn-primary" onclick="onClickBack();" style="display:none;">BACK</button>
+				</div>
 		</div>
 		<div id ="report-circlewise-all-resource">
-			<div class="container">
+			<div class="container" style="overflow-x:auto;overflow-y:auto;">
 				<!--<h2>View data</h2>-->
-					<table id ="report-table" class="table table-striped table-bordered" >
+					<table id ="report-table" class="table table-striped table-bordered">
 						
 					</table>
 			</div>
@@ -217,7 +220,7 @@
 		
 		<div id ="detailed-info">
 			
-			<div class="container">
+			<div class="container" style="overflow-x:auto;overflow-y:auto;">
 				
 					<table id ="row-detail-table" class="table table-striped table-bordered" >
 						

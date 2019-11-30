@@ -183,25 +183,22 @@
 				</div>
 			</div>
 		</nav>
-		<div class= "row" id="back-button" style="display:none;">
-				<button type="button"  class="btn btn-primary" onclick="onClickBack();" style="margin-left:900px;margin-bottom:10px;">BACK</button>
+		<div class= "row">
+				<div class="text-center" >
+				<button  id="back-button" type="button"  class="btn btn-primary" onclick="onClickBack();" style="display:none;">BACK</button>
+				</div>
 		</div>
 		<div id ="incident-report-circlewise-all-resource">
-			<div class="container">
-				<!--<h2>View data</h2>-->
+			<div class="container" style="overflow-x:auto;overflow-y:auto;">
 					<table id ="incident-report-table" class="table table-striped table-bordered" >
 						
 					</table>
 			</div>
 		</div>
-		<div id ="detailed-info">
-			
-			<div class="container">
-				
-					<table id ="row-detail-table" class="table table-striped table-bordered" >
-						
-					</table>
-					
+		<div id ="detailed-info">			
+			<div class="container" style="overflow-x:auto;overflow-y:auto;">			
+					<table id ="row-detail-table" class="table table-striped table-bordered" >						
+					</table>					
 			</div>
 		</div>
 		<script>

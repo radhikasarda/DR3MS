@@ -94,12 +94,7 @@
 			}
 			
 			$selected_resource = $this->input->post('resource_id');
-			
-			log_message('info','##########selected_circle:: '.$selected_circle);
-			log_message('info','##########selected_gp:: '.$selected_gp);
-			log_message('info','##########selected_block:: '.$selected_block);
-			log_message('info','##########NUMBERS:: '.$c_s_no .' '.$b_s_no .' '.$gp_no );
-			
+
 				$query = $this->get_gp_details($c_s_no,$b_s_no,$gp_no);
 				$gp_details = $query->result();
 				$data['gp_details'] = $gp_details;
