@@ -78,19 +78,17 @@
 		<div>
 		<?php $this->load->view('navbar_view');?>
 		</div>	
-		<div id ="sidebar" class="sidebar" style="margin:0;padding:0;width:200px;background-color:#FFB700;position:absolute;height: 100%;margin-top:-20px;">			
+
+		<div id ="sidebar" class="sidebar" style="margin:0;padding:0;width:200px;background-color:#FFB700;position:absolute;height:100%;margin-top:-20px;">			
 		    <a class="active" href="<?php echo base_url("Message/");?>"><b><i class="fa fa-inbox" aria-hidden="true"></i>&ensp;Inbox</b></a>
 			<a class="sent" href="<?php echo base_url("Message/getSentMsg");?>"><b><i class="fa fa-paper-plane" aria-hidden="true"></i>&ensp;Sent Messages</b></a>
 			<a href="#draft"><b><i class="fa fa-pen-square" aria-hidden="true"></i>&ensp;Draft Mesages</b></a>
 			<a class="compose" href="<?php echo base_url("Message/compose");?>"><b><i class="fa fa-plus" aria-hidden="true"></i>&ensp;Compose Message</b></a>
 			<a class="bin" href="<?php echo base_url("Message/bin");?>"><b><i class="fa fa-trash" aria-hidden="true"></i>&ensp;Deleted Messages</b></a>
-		</div>
-		
-		<div class="col-sm-10 "style="margin-top:-10px;margin-left:200px;" id="inbox-table-div">
-				<div class="messages-container" >
-					<div class="container" style="width:100%;">                                                                            
-						<div class="table-responsive" style="width:109%;height:750px;">          
-							<table class="table table-bordered table-hover" id="recieved-message-table">
+		</div>		
+		<div class ="col-sm-10" style="margin-top:-10px;margin-left:200px;">
+		<div id="inbox-table-div" class="container" style="overflow-x:auto;overflow-y:auto;height:800px;width:auto !important;">                                                                                     
+						<table class="table table-striped table-bordered table-hover" id="recieved-message-table">
 							<tbody style ="cursor:pointer;">							
 							<thead style="background-color: black;color: white;">
 								<th style="display:none;"><strong>MSG ID</strong></th>							
@@ -106,12 +104,10 @@
 								<td><button onClick="return OnClickViewDetails();"><strong>View In Detail</strong></button></td>
 								</tr>
 								<?php }?>
-								</tbody>
-							</table>
-						</div>
-					</div>
-				</div>
-			</div>
+							</tbody>
+				</table>
+		</div>
+		</div>
 			<div class="col-sm-10 "style="margin-top:-10px;margin-left:200px;display:none;" id="message-details">
 				<div class ="message-details-container">
 					<div class="container"> 

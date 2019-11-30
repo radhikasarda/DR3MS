@@ -211,21 +211,15 @@
 		</div>
 		<div id ="report-circlewise-all-resource">
 			<div class="container" style="overflow-x:auto;overflow-y:auto;">
-				<!--<h2>View data</h2>-->
-					<table id ="report-table" class="table table-striped table-bordered">
-						
+					<table id ="report-table" class="table table-striped table-bordered">					
 					</table>
 			</div>
 		</div>
 		
-		<div id ="detailed-info">
-			
-			<div class="container" style="overflow-x:auto;overflow-y:auto;">
-				
+		<div id ="detailed-info">			
+			<div class="container" style="overflow-x:auto;overflow-y:auto;">				
 					<table id ="row-detail-table" class="table table-striped table-bordered" >
-						
-					</table>
-					
+					</table>					
 			</div>
 		</div>
 		<script>
