@@ -129,15 +129,24 @@
 				$recipient_id_list = $this->input->post('recipient_id_list');
 				$subject = $this->input->post('subject');
 				$msg = $this->input->post('msg');	
+				$msg_from = $this->session->userdata('userid');
+				
+				//insert into message_comm
+				$this->db->set('msg_from', $msg_from);
+				$this->db->set('subject', $subject);
+				$this->db->set('msg_body', $msg);
+				$this->db->insert('message_comm');	
+				
+				$insert_id = $this->db->insert_id();
+			
 				$recipient_id_array = explode (",", $recipient_id_list);  
 				
 				foreach($recipient_id_array as $value)
 				{
 						log_message('info','##########INSIDE send_msg FUNC::RECIPIENTS ID:: '.$value);
 						$this->db->set('recipient_id', $value);
-						$this->db->set('subject', $subject);
-						$this->db->set('msg_body', $msg);
-						$this->db->insert('message_comm');				
+						$this->db->set('message_id', $insert_id);
+						$this->db->insert('message_recipient');				
 						
 				}
 
