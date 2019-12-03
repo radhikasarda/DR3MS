@@ -30,6 +30,30 @@
 				return $data;
 			}
 			
+			public function get_draft_msg()
+			{
+				$i = 0;
+				$data_list = array();
+				$user = $this->session->userdata('userid');
+				$query = $this->db->query("SELECT * from draft_message where msg_from like '$user' ORDER BY `draft_create_date` DESC;");
+				$darft_msg_details = $query->result();
+				$data['darft_msg_details'] = $darft_msg_details;
+				foreach($darft_msg_details as $row)
+				{
+					$list =  array(
+								'draft_create_date' => $row->draft_create_date,
+								'subject' => $row->subject,
+								'draft_id' => $row->draft_id
+								);
+								$data_list[$i]  = $list;
+				
+								$i++;
+				}
+				$data['data_draft_msg'] = $data_list;
+
+				return $data;
+			}
+			
 			public function get_reciepent_list()
 			{
 				$userid = $this->session->userdata('userid');
@@ -96,6 +120,32 @@
 				
 				return $data;
 				
+				
+			}
+			
+			public function get_draft_msg_details()
+			{
+				$draft_id = $this->input->post('draft_id');
+				$i = 0;
+				$data_draft_msg_details_list = array();
+				$query = $this->db->query("SELECT * from draft_message where draft_id = '$draft_id'");
+				$draft_msg_details = $query->result();
+				$data['draft_msg_details'] = $draft_msg_details;
+				foreach($draft_msg_details as $row)
+				{
+					$list =  array(
+								'subject' => $row->subject,
+								'recipient_id' => $row->recipient_id,
+								'draft_create_date' => $row->draft_create_date,
+								'msg_body' => $row->msg_body
+								);
+								$data_draft_msg_details_list[$i]  = $list;
+				
+								$i++;
+				}
+				$data['data_draft_msg_details'] = $data_draft_msg_details_list;
+				
+				return $data;
 				
 			}
 			

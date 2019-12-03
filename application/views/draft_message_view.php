@@ -3,6 +3,7 @@
 		<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />	
 		<meta name="viewport" content="width=device-width, initial-scale=1">
 		<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/css/bootstrap.min.css" type="text/css">
+		<link rel="stylesheet" href="<?php echo base_url().'assets/css/toast.css'?>" type="text/css">
 		<style>
 			
 			.logoutbutton 
@@ -48,7 +49,8 @@
 		<script type="text/javascript" src="<?php echo base_url().'assets/js/jquery-3.3.1.js'?>"></script>
 		<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-select/1.12.2/css/bootstrap-select.min.css">
 		<script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-select/1.12.2/js/bootstrap-select.min.js"></script>
-		
+		<script type="text/javascript" src="<?php echo base_url().'assets/js/toast.js'?>"></script>
+
 		<div class= "header-container" >
 			<div class = "header">
 				<?php $this->load->view('header_view');?>
@@ -80,14 +82,14 @@
 		</div>	
 		<div id ="sidebar" class="sidebar" style="margin:0;padding:0;width:200px;background-color:#FFB700;position:absolute;height:100%;margin-top:-20px;">			
 		    <a class="inbox" href="<?php echo base_url("Message/");?>"><b><i class="fa fa-inbox" aria-hidden="true"></i>&ensp;Inbox</b></a>
-			<a class="active" href="<?php echo base_url("Message/getSentMsg");?>"><b><i class="fa fa-paper-plane" aria-hidden="true"></i>&ensp;Sent Messages</b></a>
-			<a class ="draft" href="<?php echo base_url("Message/getDraftMsg");?>"><b><i class="fa fa-pen-square" aria-hidden="true"></i>&ensp;Draft Mesages</b></a>
+			<a class="sent" href="<?php echo base_url("Message/getSentMsg");?>"><b><i class="fa fa-paper-plane" aria-hidden="true"></i>&ensp;Sent Messages</b></a>
+			<a class="active" href="<?php echo base_url("Message/getDraftMsg");?>"><b><i class="fa fa-pen-square" aria-hidden="true"></i>&ensp;Draft Mesages</b></a>
 			<a class="compose" href="<?php echo base_url("Message/compose");?>"><b><i class="fa fa-plus" aria-hidden="true"></i>&ensp;Compose Message</b></a>
 			<a class="bin" href="<?php echo base_url("Message/bin");?>"><b><i class="fa fa-trash" aria-hidden="true"></i>&ensp;Deleted Messages</b></a>
 		</div>
 		<div  class="col-sm-10" style="margin-top:-10px;margin-left:200px;">
-			<div id ="sent-messages-div" class="container" style="overflow-x:auto;overflow-y:auto;height:800px;width:auto !important;"> 
-					<table class="table table-striped table-bordered table-hover"  id ="sent-msg-table">
+			<div id ="draft-messages-div" class="container" style="overflow-x:auto;overflow-y:auto;height:800px;width:auto !important;"> 
+					<table class="table table-striped table-bordered table-hover"  id ="draft-msg-table">
 						<tbody style ="cursor:pointer;">
 						<thead style ="background-color: black;color: white;">
 							<th style="display:none;"><strong>MSG ID</strong></th>	
@@ -95,11 +97,11 @@
 							<th><strong>Subject</strong></th>
 							<th><strong>Details</strong></th>
 						</thead>
-						<?php foreach($data_sent_msg as $row)
+						<?php foreach($data_draft_msg as $row)
 						{?>
 						<tr>
-						<td class= "msg_id" name ="msg_id" id ="msg_id" style="display:none;"><?php echo $row['msg_id'];?></td>
-						<td class = "date"><?php echo $row['msg_create_date'];?></td>
+						<td class= "draft_id" name ="draft_id" id ="draft_id" style="display:none;"><?php echo $row['draft_id'];?></td>
+						<td class = "date"><?php echo $row['draft_create_date'];?></td>
 						<td class = 'subject'><?php echo $row['subject'];?></td>
 	
 						<td><button onClick="return OnClickViewDetails();"><strong>View In Detail</strong></button></td>
@@ -125,7 +127,7 @@
 			function OnClickViewDetails()
 			{
 
-			var table = document.getElementById("sent-msg-table");
+			var table = document.getElementById("draft-msg-table");
 	
 			var rows = table.getElementsByTagName("tr");
 			for (i = 0; i < rows.length; i++) {
@@ -135,25 +137,25 @@
 					{
 						return function() {
 									
-							var id = row.getElementsByClassName("msg_id")[0];
-                            var msg_id = id.innerHTML;
-							sendRowData(msg_id);
+							var id = row.getElementsByClassName("draft_id")[0];
+                            var draft_id = id.innerHTML;
+							sendRowData(draft_id);
                         };
 					};
 
 					currentRow.onclick = createClickHandler(currentRow);
 			}
 			}
-			function sendRowData(msg_id)
+			function sendRowData(draft_id)
 			{
 			$.ajax({
-											url:"<?php echo site_url('Message/onViewSentMsgDetailsClick');?>",
+											url:"<?php echo site_url('Message/onViewDraftMsgDetailsClick');?>",
 											method:"POST",
-											data:{msg_id:msg_id},
+											data:{draft_id:draft_id},
 											type: "POST",
 											cache: false,
 											success: function(data){		
-												$("#sent-messages-div").hide();  
+												$("#draft-messages-div").hide();  
 												$("#message-details").show(); 											
 												$('#message-details').html(data);
 												
