@@ -240,5 +240,13 @@
 				return result;
 				
 			}
+			
+			public function delete_draft_msg()
+			{
+				$draft_id = $this->input->post('draft_id');
+				$this->db->where('draft_id', $draft_id);
+				$result = $this->db->delete('draft_message');
+				return $result;
+			}
 		}
 ?>

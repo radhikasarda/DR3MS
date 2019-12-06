@@ -88,6 +88,11 @@
 		{
 			$send_draft_msg = $this->message_model->send_draft_msg();
 		}
+		
+		public function onDeleteDraftMsgClick()
+		{
+			$delete_draft_msg = $this->message_model->delete_draft_msg();
+		}
    }
    
 ?>

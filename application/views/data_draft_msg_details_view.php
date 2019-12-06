@@ -10,7 +10,7 @@
 			$draft_id = $row['draft_id'];
 			
 		}
-		log_message('info','##########INSIDE draft_id::'.$draft_id);
+	
 		echo "<form id='myForm' class='form-horizontal' role='form' >";
 			
 			echo "<div class='form-group' style='padding-left:18px;padding-right:18px;'>";
@@ -22,16 +22,24 @@
 						
 						echo "<select name='framework' id='framework' class='selectpicker form-control' data-live-search='true' multiple>";
 	
+						
 							foreach($selected_recipients as $selected_recipient)
 							{
-		
+								log_message('info','##########INSIDE selected_recipients::'.$selected_recipient);
+								if(!is_null($selected_recipient) && !empty($selected_recipient))
+								{
 								echo "<option selected='selected' value='$selected_recipient'>";echo $selected_recipient;echo "</option>";
+								}
 									
 							}
+							}
+							
 							foreach($unselected_recipients as $unselected_recipient)
 							{
+								if(!is_null($unselected_recipient) && !empty($unselected_recipient))
+								{
 								echo "<option value='$unselected_recipient->uid;'>";echo $unselected_recipient->uid;echo "</option>";
-									
+								}	
 							}
 						echo "</select>";
 						echo "<input type='hidden' name='hidden_framework' id='hidden_framework' />";
@@ -58,7 +66,7 @@
 			echo "<div class='col-sm-11 col-sm-offset-1'>";
 				echo "<div class='form-group' >";	
 					echo "<button type='button' class='btn btn-success' onClick='return onClickSend();'>Send&nbsp;<i class='fa fa-paper-plane' aria-hidden='true'></i></button>&ensp;";
-					echo "<button type='button' class='btn btn-danger' onClick='onClickDelete();'>Delete&nbsp;<i class='fa fa-trash' aria-hidden='true'></i></button>";
+					echo "<button type='button' class='btn btn-danger' onClick='return onClickDelete();'>Delete&nbsp;<i class='fa fa-trash' aria-hidden='true'></i></button>";
 				echo "</div>";
 			echo "</div>";
 		echo "</form>";

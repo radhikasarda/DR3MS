@@ -4,6 +4,7 @@
 		<meta name="viewport" content="width=device-width, initial-scale=1">
 		<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/css/bootstrap.min.css" type="text/css">
 		<link rel="stylesheet" href="<?php echo base_url().'assets/css/toast.css'?>" type="text/css">
+		<link rel="stylesheet" href="https://lipis.github.io/bootstrap-sweetalert/dist/sweetalert.css" />
 		<style>
 			
 			.logoutbutton 
@@ -50,6 +51,8 @@
 		<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-select/1.12.2/css/bootstrap-select.min.css">
 		<script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-select/1.12.2/js/bootstrap-select.min.js"></script>
 		<script type="text/javascript" src="<?php echo base_url().'assets/js/toast.js'?>"></script>
+		<script src="https://lipis.github.io/bootstrap-sweetalert/dist/sweetalert.js"></script>
+			
 
 		<div class= "header-container" >
 			<div class = "header">
@@ -206,6 +209,41 @@
 							});
 			
 			}
+			
+			function onClickDelete()
+			{
+				var draft_id = document.getElementById('id').value;
+				swal({
+					title: "Are you sure?",
+					type: "warning",
+					showCancelButton: true,
+					confirmButtonClass: "btn-danger",
+					confirmButtonText: "Yes, delete it!",
+					closeOnConfirm: false			
+				  },
+				function(isConfirm) {
+					if (isConfirm) {
+								$.ajax({
+											url:"<?php echo site_url('Message/onDeleteDraftMsgClick');?>",
+											method:"POST",
+											data:{draft_id:draft_id},
+											type: "POST",
+											cache: false,
+											success: function(data)
+											{	
+												swal("Deleted!", "Your imaginary file has been deleted.", "success");											
+												window.location.href="<?php echo base_url('Message/');?>";
+												//iqwerty.toast.Toast('Message Deleted Successfully !!');																
+											},
+											error: function() {
+												iqwerty.toast.Toast('Internal Server error!! Please Try Again !!');
+											}
+
+							});
+					}
+				});	
+			}
+			
 		</script>
 		</body>
 </html>
