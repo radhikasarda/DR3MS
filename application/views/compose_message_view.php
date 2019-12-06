@@ -103,7 +103,7 @@
 												<?php
 												foreach($users as $user){
 												?>
-												<option value="<?php echo strtolower($user); ?>"><?php echo $user; ?>
+												<option value="<?php echo $user; ?>"><?php echo $user; ?>
 												</option>
 												<?php
 												}
@@ -145,6 +145,7 @@
 			function onClickSend()
 			{
 				var recipient_id_list = $('#framework').val().toString();
+				alert(recipient_id_list);
 				var subject = $('#subject').val();
 				var msg = $('#message').val();	
 				

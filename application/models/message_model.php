@@ -63,7 +63,7 @@
 				{ 
 					$users[$r['user']] = $r['user']; 
 				} 
-
+				
 				return $users;
 			}
 			
@@ -125,17 +125,29 @@
 			
 			public function get_draft_msg_details()
 			{
+				$userid = $this->session->userdata('userid');
 				$draft_id = $this->input->post('draft_id');
 				$i = 0;
 				$data_draft_msg_details_list = array();
 				$query = $this->db->query("SELECT * from draft_message where draft_id = '$draft_id'");
+				
+				$selected_recipients = explode (",", $query->row()->recipient_id);  
+				$selected_recipient_id_array = implode("','",$selected_recipients);
+				
+				$query_unselected_recipients = $this->db->query("SELECT uid from user where uid NOT IN ('".$selected_recipient_id_array."') AND uid NOT LIKE '$userid'");			
+				$unselected_recipients = $query_unselected_recipients->result();
+						
 				$draft_msg_details = $query->result();
 				$data['draft_msg_details'] = $draft_msg_details;
+			
 				foreach($draft_msg_details as $row)
 				{
 					$list =  array(
+					
+								'draft_id' => $row->draft_id,
 								'subject' => $row->subject,
-								'recipient_id' => $row->recipient_id,
+								'selected_recipients' => $selected_recipients,
+								'unselected_recipients' => $unselected_recipients,
 								'draft_create_date' => $row->draft_create_date,
 								'msg_body' => $row->msg_body
 								);
@@ -182,13 +194,28 @@
 				$msg_from = $this->session->userdata('userid');
 				
 				//insert into message_comm
+				
+				$insert_id = $this->insert_to_message_comm($msg_from,$subject,$msg);
+				
+				//insert to msg_recipient
+				$affected_rows = $this->insert_to_message_recipient($recipient_id_list,$insert_id);				
+
+				return ($affected_rows != 1) ? false : true;
+			}
+			
+			public function insert_to_message_comm($msg_from,$subject,$msg)
+			{
 				$this->db->set('msg_from', $msg_from);
 				$this->db->set('subject', $subject);
 				$this->db->set('msg_body', $msg);
-				$this->db->insert('message_comm');	
-				
+				$this->db->insert('message_comm');					
 				$insert_id = $this->db->insert_id();
+				
+				return $insert_id;
+			}
 			
+			public function insert_to_message_recipient($recipient_id_list,$insert_id)
+			{
 				$recipient_id_array = explode (",", $recipient_id_list);  
 				
 				foreach($recipient_id_array as $value)
@@ -199,8 +226,19 @@
 						$this->db->insert('message_recipient');				
 						
 				}
-
-				return ($this->db->affected_rows() != 1) ? false : true;
+				return $this->db->affected_rows();
+			}
+			
+			public function send_draft_msg()
+			{
+				$draft_id = $this->input->post('draft_id');
+				$this->db->where('draft_id', $draft_id);
+				$this->db->delete('draft_message');
+				
+				//send msg				
+				$result = $this->send_msg();			
+				return result;
+				
 			}
 		}
 ?>

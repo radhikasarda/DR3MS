@@ -42,7 +42,7 @@
 			{ 
 				$users[$r['uid']] = $r['uid']; 
 			} 
-
+			
 			return $users;
 				
 		}

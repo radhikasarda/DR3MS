@@ -43,6 +43,7 @@
 		}
 		public function compose()
 		{
+			log_message('info','##########INSIDE compose FUNC::');
 			$this->load->model('dashboard_model');	
 			$data_last_login = $this->dashboard_model->get_last_login_time();
 			$data['users']  = $this->message_model->get_reciepent_list(); 
@@ -68,7 +69,8 @@
 		
 		public function onViewDraftMsgDetailsClick()
 		{
-			$data_draft_msg_details = $this->message_model->get_draft_msg_details(); 	
+			log_message('info','##########INSIDE onViewDraftMsgDetailsClick FUNC::');
+			$data_draft_msg_details = $this->message_model->get_draft_msg_details(); 
 			$data_draft_msg_details_view = $this->load->view('data_draft_msg_details_view',$data_draft_msg_details,TRUE);
 			echo $data_draft_msg_details_view;
 		}
@@ -81,6 +83,10 @@
 		public function onSendClick()
 		{
 			$send_msg = $this->message_model->send_msg();
+		}
+		public function onSendDraftMsgClick()
+		{
+			$send_draft_msg = $this->message_model->send_draft_msg();
 		}
    }
    

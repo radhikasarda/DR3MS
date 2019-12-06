@@ -41,7 +41,7 @@
 		
 	</head>
 	
-	<body style="overflow-x:auto;overflow-y:auto;">
+	<body id = "body" style="overflow-x:auto;overflow-y:auto;">
 		<script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
 		<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
 		<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/js/bootstrap.min.js"></script>
@@ -112,16 +112,17 @@
 					</table>
 			</div>
 		</div>		
-		<div class="col-sm-10 "style="margin-top:-10px;margin-left:200px;display:none;" id="message-details">
-				<div class ="message-details-container">
-					<div class="container"> 
-						<div class ="message-details" id ="message-details" >
+		<div class="col-sm-10 "style="margin-top:-10px;margin-left:200px;display:none;" id="message-details-div">
+				<div id="compose-msg-div" class="container" style="overflow-x:auto;overflow-y:auto;height:800px;width:auto !important;">  
+					<div class="panel panel-default">
+						<div class="panel-body message" id ="message-details" >
 							
 						</div>
 					</div>
 				</div>
 		</div>
 		
+						
 		<script>
 			window.onload = addRowHandlers();
 			function OnClickViewDetails()
@@ -154,15 +155,57 @@
 											data:{draft_id:draft_id},
 											type: "POST",
 											cache: false,
-											success: function(data){		
+											success: function(data){	
 												$("#draft-messages-div").hide();  
-												$("#message-details").show(); 											
+												$("#message-details-div").show(); 	
 												$('#message-details').html(data);
-												
+												$('.selectpicker').selectpicker();
+												$('.selectpicker').selectpicker('render');
+												$('.selectpicker').selectpicker('refresh');
 											}
 
 							});
 			}	
+				
+			function onClickSend()
+			{
+				var recipient_id_list = $('#framework').val().toString();
+				
+				var subject = $('#subject').val();
+				
+				var msg = $('#message').val();	
+				
+				
+				if(recipient_id_list == ''){
+					iqwerty.toast.Toast('Please Select Atleast 1 Recipient !!');
+					return;
+				}
+				if(subject == ''){
+					iqwerty.toast.Toast('Please add a Subject !!');	
+					return;
+				}		
+				
+				var draft_id = document.getElementById('id').value;
+				
+			
+				$.ajax({
+											url:"<?php echo site_url('Message/onSendDraftMsgClick');?>",
+											method:"POST",
+											data:{draft_id:draft_id,recipient_id_list:recipient_id_list,subject:subject,msg:msg},
+											type: "POST",
+											cache: false,
+											success: function(data)
+											{																					
+												window.location.href="<?php echo base_url('Message/');?>";
+												iqwerty.toast.Toast('Message Sent Successfully !!');																
+											},
+											error: function() {
+												iqwerty.toast.Toast('Internal Server error!! Please Send Again !!');
+											}
+
+							});
+			
+			}
 		</script>
 		</body>
 </html>
