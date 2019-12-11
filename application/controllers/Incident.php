@@ -15,10 +15,12 @@
 		{  
 			$this->load->model('dashboard_model');	
 			$data_last_login = $this->dashboard_model->get_last_login_time();
-			//Load inbox messages data
-			$data_inbox = $this->dashboard_model->get_inbox_messages();
 			
-			$data = array_merge($data_last_login,$data_inbox);
+			$this->load->model('resource_report_model');
+			$userid = $this->session->userdata('userid');
+			$data_circles['circles'] = $this->resource_report_model->get_circles($userid)->result(); 
+			
+			$data = array_merge($data_last_login,$data_circles);
 			$this->load->view('incident_view',$data);
 		}
    }
