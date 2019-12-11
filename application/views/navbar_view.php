@@ -31,6 +31,7 @@
 							</ul>
 						</li>
 						<li><a href="<?php echo base_url("Message/");?>"><b>Message</b></a></li>
+						<li><a href="<?php echo base_url("Incident/");?>"><b>Report An Incident</b></a></li>
 					</ul>
 				</div>
 			</nav>	
