@@ -145,7 +145,6 @@
 			function onClickSend()
 			{
 				var recipient_id_list = $('#framework').val().toString();
-				alert(recipient_id_list);
 				var subject = $('#subject').val();
 				var msg = $('#message').val();	
 				
@@ -178,15 +177,9 @@
 			{
 				
 				var recipient_id_list = $('#framework').val().toString();
-				if(recipient_id_list != ''){
-					alert("not null");
-				}
-				else{alert(recipient_id_list);	}
-				
-				
 				var subject = $('#subject').val();
 				var msg = $('#message').val();	
-				/*if(recipient_id_list == '' && subject == '' && msg == '')
+				if(recipient_id_list == '' && subject == '' && msg == '')
 				{
 					window.location.href="<?php echo base_url('Message/');?>";
 				}
@@ -205,12 +198,13 @@
 												iqwerty.toast.Toast('Internal Server error!! Please SAVE Again !!');
 											}
 
-						});*/
-				//}			
+						});
+				}			
 			}
 			
 			function onClickReset()
 			{
+				$("#framework").selectpicker("refresh");
 				$("#framework").selectpicker("deselectAll");
 				$('#subject').val('');
 				$('#message').val('');

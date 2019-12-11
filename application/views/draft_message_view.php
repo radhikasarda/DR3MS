@@ -130,7 +130,7 @@
 			window.onload = addRowHandlers();
 			function OnClickViewDetails()
 			{
-
+			
 			var table = document.getElementById("draft-msg-table");
 	
 			var rows = table.getElementsByTagName("tr");

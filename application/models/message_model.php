@@ -78,6 +78,7 @@
 				foreach($msg_details as $row)
 				{
 					$list =  array(
+								'message_id' => $row->message_id,
 								'subject' => $row->subject,
 								'msg_from' => $row->msg_from,
 								'date' => $row->msg_saved_date,
@@ -99,7 +100,7 @@
 				$recipient_id = " ";
 				$i = 0;
 				$data_sent_msg_details_list = array();
-				log_message('info','##########INSIDE get_msg_details FUNC::MSG ID:: '.$msg_id);
+				log_message('info','##########INSIDE get_sent_msg_details FUNC::MSG ID:: '.$msg_id);
 				$recipient_id = $this->get_recipient_id($msg_id);
 				$query = $this->db->query("SELECT * from message_comm where message_id = '$msg_id'");
 				$sent_msg_details = $query->result();
@@ -167,7 +168,15 @@
 				$this->db->from('message_recipient');
 				$this->db->where('message_id', $msg_id);
 				$query = $this->db->get();	
-				return $query->row()->recipient_id;
+				
+				if ($query->num_rows() > 0) {
+				foreach (($query->result()) as $row1)
+				{
+				$recipient_id_array[] = $row1->recipient_id;
+				}
+				}
+				$recipient_id_string=implode(',',$recipient_id_array); 
+				return $recipient_id_string;
 			}
 			
 			public function save_draft_msg()
@@ -192,10 +201,11 @@
 				$subject = $this->input->post('subject');
 				$msg = $this->input->post('msg');	
 				$msg_from = $this->session->userdata('userid');
-				
-				//insert into message_comm
-				
-				$insert_id = $this->insert_to_message_comm($msg_from,$subject,$msg);
+				$parent_message_id = null;
+				$is_replied = false;
+				$is_viewed = false;
+				//insert into message_comm				
+				$insert_id = $this->insert_to_message_comm($msg_from,$subject,$msg,$parent_message_id);
 				
 				//insert to msg_recipient
 				$affected_rows = $this->insert_to_message_recipient($recipient_id_list,$insert_id);				
@@ -203,12 +213,22 @@
 				return ($affected_rows != 1) ? false : true;
 			}
 			
-			public function insert_to_message_comm($msg_from,$subject,$msg)
+			public function insert_to_message_comm($msg_from,$subject,$msg,$parent_message_id)
 			{
-				$this->db->set('msg_from', $msg_from);
-				$this->db->set('subject', $subject);
-				$this->db->set('msg_body', $msg);
-				$this->db->insert('message_comm');					
+				if($parent_message_id == null)
+				{
+					$this->db->set('msg_from', $msg_from);
+					$this->db->set('subject', $subject);
+					$this->db->set('msg_body', $msg);					
+				}
+				else
+				{
+					$this->db->set('msg_from', $msg_from);
+					$this->db->set('subject', $subject);
+					$this->db->set('msg_body', $msg);
+					$this->db->set('parent_msg_id', $parent_message_id);					
+				}
+				$this->db->insert('message_comm');	
 				$insert_id = $this->db->insert_id();
 				
 				return $insert_id;
@@ -223,8 +243,7 @@
 						log_message('info','##########INSIDE send_msg FUNC::RECIPIENTS ID:: '.$value);
 						$this->db->set('recipient_id', $value);
 						$this->db->set('message_id', $insert_id);
-						$this->db->insert('message_recipient');				
-						
+						$this->db->insert('message_recipient');									
 				}
 				return $this->db->affected_rows();
 			}
@@ -247,6 +266,77 @@
 				$this->db->where('draft_id', $draft_id);
 				$result = $this->db->delete('draft_message');
 				return $result;
+			}
+			
+			public function send_reply_msg()
+			{
+				$parent_message_id = $this->input->post('parent_message_id');
+				log_message('info','##########INSIDE send_reply_msg FUNC::parent_message_id: '.$parent_message_id);
+				$reply_msg = $this->input->post('reply_msg');
+				$msg_from = $this->session->userdata('userid');
+				//Get Reply Message data
+				$this->db->select('*');
+				$this->db->from('message_comm');
+				$this->db->where('message_id', $parent_message_id);
+				$query = $this->db->get();	
+				$recipient = $query->row()->msg_from;
+				$subject = "RE: ".$query->row()->subject;
+				
+				//insert into message_comm				
+				$insert_id = $this->insert_to_message_comm($msg_from,$subject,$reply_msg,$parent_message_id);
+				
+				//insert into message_recipient
+				$affected_rows = $this->insert_to_message_recipient($recipient,$insert_id);		
+				
+				$is_replied = true;
+				$is_viewed = true;
+				
+				$data = array(
+						'is_replied' => $is_replied,
+						'is_viewed' => $is_viewed
+						
+				);
+
+				$this->db->where('message_id', $parent_message_id);
+				$this->db->update('message_recipient', $data);
+				
+				return ($affected_rows != 1) ? false : true;
+			}
+			
+			public function get_forward_msg_details()
+			{
+				$userid = $this->session->userdata('userid');
+				$message_id = $this->input->post('message_id');
+				$i=0;
+				$this->db->select('*');
+				$this->db->from('message_comm');
+				$this->db->where('message_id', $message_id);
+				$query = $this->db->get();	
+				//$subject = "Fwd: ".$query->row()->subject;
+				//$msg = nl2br("---------- Forwarded message ---------\n".$query->row()->msg_body,false);
+				//log_message('info','##########INSIDE forward_inbox_msg FUNC::msg: '.$msg);
+				$query_recipients = $this->db->query("SELECT uid from user where uid NOT LIKE '$userid'");			
+				$recipients = $query_recipients->result();
+						
+				$forward_msg_details = $query->result();
+				$data['forward_msg_details'] = $forward_msg_details;
+			
+				foreach($forward_msg_details as $row)
+				{
+					$list =  array(
+					
+								'message_id' => $message_id,
+								'subject' => $row->subject,
+								'recipients' => $recipients,
+								'msg_body' => $row->msg_body
+								);
+								$data_forward_msg_details_list[$i]  = $list;
+				
+								$i++;
+				}
+				$data['data_forward_msg_details'] = $data_forward_msg_details_list;
+				
+				return $data;
 			}
 		}
 ?>

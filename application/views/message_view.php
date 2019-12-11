@@ -117,10 +117,34 @@
 					</div>
 				</div>
 			</div>
+			<div class="col-sm-10" style="margin-top:-10px;margin-left:200px;display:none;" id ="message-forward-reply" >
+				<div class ="reply-forward-message-container">					
+						<div class ="message-forward-reply" id ="message-forward-reply" >
+							<div style='width:100%;'>
+								<div class='form-group' style='margin-top:20px;'>
+									<textarea class='form-control' rows='10' cols='50' style='overflow-y: scroll;' placeholder= "Write your message here...." id="reply-forward-text"></textarea>
+								</div>
+								<div class="form-group" >	
+									<button type="button" class="btn btn-success" onClick="onClickSendReply();">Send&nbsp;<i class='fa fa-paper-plane' aria-hidden='true'></i></button>
+								</div>
+							</div>
+						</div>
+				</div>
+			</div>
+			<div class="col-sm-10 "style="margin-top:-10px;margin-left:200px;display:none;" id="forward-message-details-div">
+				<div id="forward-msg-div" class="container" style="overflow-x:auto;overflow-y:auto;height:800px;width:auto !important;">  
+					<div class="panel panel-default">
+						<div class="panel-body message" id ="forward-message-details" >
+							
+						</div>
+					</div>
+				</div>
+			</div>
 			<script>
 			window.onload = addRowHandlers();
 			function OnClickViewDetails()
 			{
+			
 			var table = document.getElementById("recieved-message-table");
 	
 			var rows = table.getElementsByTagName("tr");
@@ -157,6 +181,67 @@
 
 							});
 			}	
+			function onClickInboxReply()
+			{
+				$('#buttons').hide();
+				$("#message-forward-reply").show(); 	
+				$("#reply-forward-text").attr("placeholder", "Write Your REPLY Message Here....");	 			 
+			}
+			
+			function onClickSendReply()
+			{							 
+				var reply_msg = $('#reply-forward-text').val();
+				var parent_message_id = document.getElementById('id').value;
+				
+				$.ajax({
+											url:"<?php echo site_url('Message/onSendReplyClick');?>",
+											method:"POST",
+											data:{parent_message_id:parent_message_id,reply_msg:reply_msg},
+											type: "POST",
+											cache: false,
+											success: function(data){		
+												
+												window.location.href="<?php echo base_url('Message/');?>";			
+												iqwerty.toast.Toast('Message Sent Successfully !!');	
+																				
+											},
+											error: function() {
+												iqwerty.toast.Toast('Internal Server error!! Please Send Again !!');
+											}
+
+
+				});
+			}
+			
+			function onClickInboxForward()
+			{
+				var message_id = document.getElementById('id').value;
+			
+				$.ajax({
+											url:"<?php echo site_url('Message/onClickInboxForward');?>",
+											method:"POST",
+											data:{message_id:message_id},
+											type: "POST",
+											cache: false,
+											success: function(data){				
+												$("#inbox-table-div").hide();  
+												$("#message-details").hide(); 	
+												$("#forward-message-details-div").show(); 	
+												$('#forward-message-details').html(data);
+												$('.selectpicker').selectpicker();
+												$('.selectpicker').selectpicker('render');
+												$('.selectpicker').selectpicker('refresh');
+											//	window.location.href="<?php echo base_url('Message/');?>";			
+											//	iqwerty.toast.Toast('Message Sent Successfully !!');	
+																				
+											}//,
+											//error: function() {
+											//	iqwerty.toast.Toast('Internal Server error!! Please Send Again !!');
+											//}
+
+
+				});
+			}
 			</script>
 	
 	</body>

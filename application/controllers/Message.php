@@ -93,6 +93,18 @@
 		{
 			$delete_draft_msg = $this->message_model->delete_draft_msg();
 		}
+		
+		public function onSendReplyClick()
+		{
+			$send_reply_msg = $this->message_model->send_reply_msg();
+		}
+		public function onClickInboxForward()
+		{
+			$data_forward_msg_details = $this->message_model->get_forward_msg_details();
+			$data_forward_msg_details_view = $this->load->view('data_forward_msg_details_view',$data_forward_msg_details,TRUE);
+			echo $data_forward_msg_details_view;
+			
+		}
    }
    
 ?>

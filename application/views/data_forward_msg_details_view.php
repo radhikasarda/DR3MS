@@ -1,14 +1,11 @@
 <?php	
 
-		foreach($data_draft_msg_details as $row)
+		foreach($data_forward_msg_details as $row)
 		{
-			$selected_recipients = $row['selected_recipients'];
-			$unselected_recipients = $row['unselected_recipients'];
-			$subject = $row['subject'];
-			$date = $row['draft_create_date'];
-			$msg_body = $row['msg_body'];
-			$draft_id = $row['draft_id'];
-			
+			$recipients = $row['recipients'];
+			$subject = "Fwd: ".$row['subject'];
+			$msg = nl2br("---------- Forwarded message ---------\n".$row['msg_body'],false);
+			$message_id = $row['message_id'];
 		}
 	
 		echo "<form id='myForm' class='form-horizontal' role='form' >";
@@ -22,23 +19,11 @@
 						
 						echo "<select name='framework' id='framework' class='selectpicker form-control' data-live-search='true' multiple>";
 	
-						
-							foreach($selected_recipients as $selected_recipient)
+							foreach($recipients as $recipient)
 							{
-								log_message('info','##########INSIDE selected_recipients::'.$selected_recipient);
-								if(!is_null($selected_recipient) && !empty($selected_recipient))
+								if(!is_null($recipient) && !empty($recipient))
 								{
-								echo "<option selected='selected' value='$selected_recipient'>";echo $selected_recipient;echo "</option>";
-								}
-									
-							}
-							
-							
-							foreach($unselected_recipients as $unselected_recipient)
-							{
-								if(!is_null($unselected_recipient) && !empty($unselected_recipient))
-								{
-								echo "<option value='$unselected_recipient->uid;'>";echo $unselected_recipient->uid;echo "</option>";
+								echo "<option value='$recipient->uid;'>";echo $recipient->uid;echo "</option>";
 								}	
 							}
 						echo "</select>";
@@ -51,7 +36,7 @@
 				echo "<label for='subject' class='col-sm-1 control-label' style='padding-left:60px;'>Subject:</label>";
 					echo "<div class='col-sm-11'>";
 							echo "<input type='text' class='form-control select2-offscreen' name='subject' id='subject' value='$subject'>";
-							echo "<input type='hidden' class='form-control select2-offscreen' name='id' id='id' value='$draft_id'>";
+							echo "<input type='hidden' class='form-control select2-offscreen' name='id' id='id' value='$message_id'>";
 					echo "</div>";
 			echo "</div>";
 			echo "<br>";
@@ -60,7 +45,7 @@
 			
 			echo "<div class='col-sm-11 col-sm-offset-1' >";
 				echo "<div class='form-group' >";
-					echo "<textarea class='form-control' id='message' name='body' rows='12'>$msg_body</textarea>";
+					echo "<textarea class='form-control' id='message' name='body' rows='12'>$msg</textarea>";
 				echo "</div>";
 			echo "</div>";
 			echo "<div class='col-sm-11 col-sm-offset-1'>";
