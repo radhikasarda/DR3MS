@@ -38,7 +38,7 @@
 							{
 								if(!is_null($unselected_recipient) && !empty($unselected_recipient))
 								{
-								echo "<option value='$unselected_recipient->uid;'>";echo $unselected_recipient->uid;echo "</option>";
+								echo "<option value='$unselected_recipient->uid'>";echo $unselected_recipient->uid;echo "</option>";
 								}	
 							}
 						echo "</select>";

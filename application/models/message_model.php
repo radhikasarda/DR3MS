@@ -338,5 +338,32 @@
 				
 				return $data;
 			}
+			
+			public function send_forward_msg()
+			{
+				$parent_message_id = $this->input->post('message_id');
+				$is_viewed = true;
+				
+				$data = array(
+						'is_viewed' => $is_viewed					
+				);
+
+				$this->db->where('message_id', $parent_message_id);
+				$this->db->update('message_recipient', $data);
+				
+				$recipient_id_list = $this->input->post('recipient_id_list');
+				$subject = $this->input->post('subject');
+				$msg = $this->input->post('msg');	
+				$msg_from = $this->session->userdata('userid');
+				
+				
+				//insert into message_comm				
+				$insert_id = $this->insert_to_message_comm($msg_from,$subject,$msg,$parent_message_id);
+				
+				//insert into message_recipient
+				$affected_rows = $this->insert_to_message_recipient($recipient_id_list,$insert_id);					
+				
+				return ($affected_rows != 1) ? false : true;	
+			}
 		}
 ?>

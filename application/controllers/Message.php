@@ -105,6 +105,10 @@
 			echo $data_forward_msg_details_view;
 			
 		}
+		public function onSendForwardMsgClick()
+		{
+			$forward_msg = $this->message_model->send_forward_msg();
+		}
    }
    
 ?>

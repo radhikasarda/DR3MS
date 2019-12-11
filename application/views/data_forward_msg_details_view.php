@@ -4,7 +4,7 @@
 		{
 			$recipients = $row['recipients'];
 			$subject = "Fwd: ".$row['subject'];
-			$msg = nl2br("---------- Forwarded message ---------\n".$row['msg_body'],false);
+			$msg = "---------- Forwarded message ---------".PHP_EOL .$row['msg_body'];
 			$message_id = $row['message_id'];
 		}
 	
@@ -23,7 +23,7 @@
 							{
 								if(!is_null($recipient) && !empty($recipient))
 								{
-								echo "<option value='$recipient->uid;'>";echo $recipient->uid;echo "</option>";
+								echo "<option value='$recipient->uid'>";echo $recipient->uid;echo "</option>";
 								}	
 							}
 						echo "</select>";
@@ -50,8 +50,8 @@
 			echo "</div>";
 			echo "<div class='col-sm-11 col-sm-offset-1'>";
 				echo "<div class='form-group' >";	
-					echo "<button type='button' class='btn btn-success' onClick='return onClickSend();'>Send&nbsp;<i class='fa fa-paper-plane' aria-hidden='true'></i></button>&ensp;";
-					echo "<button type='button' class='btn btn-danger' onClick='return onClickDelete();'>Delete&nbsp;<i class='fa fa-trash' aria-hidden='true'></i></button>";
+					echo "<button type='button' class='btn btn-success' onClick='return onClickForwardSend();'>Send&nbsp;<i class='fa fa-paper-plane' aria-hidden='true'></i></button>&ensp;";
+					echo "<button type='button' class='btn btn-danger' onClick='return onClickForwardDelete();'>Delete&nbsp;<i class='fa fa-trash' aria-hidden='true'></i></button>";
 				echo "</div>";
 			echo "</div>";
 		echo "</form>";

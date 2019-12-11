@@ -231,16 +231,50 @@
 												$('.selectpicker').selectpicker();
 												$('.selectpicker').selectpicker('render');
 												$('.selectpicker').selectpicker('refresh');
-											//	window.location.href="<?php echo base_url('Message/');?>";			
-											//	iqwerty.toast.Toast('Message Sent Successfully !!');	
 																				
-											}//,
-											//error: function() {
-											//	iqwerty.toast.Toast('Internal Server error!! Please Send Again !!');
-											//}
+											}
 
 
 				});
+			}
+			
+			function onClickForwardSend()
+			{
+				var recipient_id_list = $('#framework').val().toString();
+				
+				var subject = $('#subject').val();
+				
+				var msg = $('#message').val();	
+				
+				
+				if(recipient_id_list == ''){
+					iqwerty.toast.Toast('Please Select Atleast 1 Recipient !!');
+					return;
+				}
+				if(subject == ''){
+					iqwerty.toast.Toast('Please add a Subject !!');	
+					return;
+				}		
+				
+				var message_id = document.getElementById('id').value;
+				
+			
+				$.ajax({
+											url:"<?php echo site_url('Message/onSendForwardMsgClick');?>",
+											method:"POST",
+											data:{message_id:message_id,recipient_id_list:recipient_id_list,subject:subject,msg:msg},
+											type: "POST",
+											cache: false,
+											success: function(data)
+											{																					
+												window.location.href="<?php echo base_url('Message/');?>";
+												iqwerty.toast.Toast('Message Sent Successfully !!');																
+											},
+											error: function() {
+												iqwerty.toast.Toast('Internal Server error!! Please Send Again !!');
+											}
+
+							});
 			}
 			</script>
 	
