@@ -7,12 +7,22 @@
 		{
 			
 			parent::__construct();
-			
+			if(!$this->session->userdata('entrance'))
+			{
+				redirect(base_url());
+				
+			}
 			
 		}
 	
 		public function index()  
 		{  
+			if(!$this->session->userdata('entrance'))
+			{
+				redirect(base_url());
+				
+			}else{
+			
 			$this->load->model('dashboard_model');
 			$this->load->library('table');
 			
@@ -38,7 +48,7 @@
 			//Load DashBoard view
 			$this->load->view('dashboard_view_admin',$data);
  
- 
+			}
 		}
 	
 		

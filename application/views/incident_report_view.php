@@ -24,12 +24,11 @@
 	
 		<body style="overflow-x:auto;overflow-y:auto;">	
 		
-		<script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
-		<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
-		<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/js/bootstrap.min.js"></script>
-		<script src="https://kit.fontawesome.com/a076d05399.js"></script>
+		<script src="<?php echo base_url().'assets/js/jquery-3.3.1.min.js'?>"></script>
+		<script src="<?php echo base_url().'assets/js/jquery.min.js'?>"></script>
 		<script type="text/javascript" src="<?php echo base_url().'assets/js/jquery-3.3.1.js'?>"></script>
-		
+		<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/js/bootstrap.min.js"></script>
+				
 		<div class= "header-container" >
 			<div class = "header">
 				<?php $this->load->view('header_view');?>
@@ -38,11 +37,11 @@
 		
 		<div class = "row" style="margin-right:0px;">
 			<div class = "col-sm-6" style = "text-align: left; background-color: #FFB700;height: 25px;">
-				<i class="fas fa-user"></i>
+				<i class="glyphicon glyphicon-user"></i>
 				<font color="#000000" size="4">
 				"You are logged in as : <?php echo $this->session->userdata('userid'); ;?>" 
 				&ensp;
-				<i class="fa fa-bell" aria-hidden="true"></i>
+				<i class="glyphicon glyphicon-bell" aria-hidden="true"></i>
 				Last Login Time : 	
 				<?php foreach((array)$last_login as $last_login){	 
 					 echo $last_login->last_login_time;

@@ -19,9 +19,9 @@
 				echo "<textarea class='form-control' readonly rows='10' cols='50' style='overflow-y: scroll;'>";echo $msg_body; echo"</textarea>";
 		echo "</div>";
 		echo "<div class='form-group'>";	
-				echo "<button type='submit' class='btn btn-success' onClick='onClickReply();'>Reply&nbsp;<i class='fa fa-reply' aria-hidden='true'></i></button>&ensp;";
-				echo "<button type='submit' class='btn btn-default' onClick='onClickForward();'>Forward&nbsp;<i class='fa' aria-hidden='true'>&#xf064;</i></button>&ensp;";
-				echo "<button type='submit' class='btn btn-danger' onClick='onClickDelete();'>Delete&nbsp;<i class='fa fa-trash' aria-hidden='true'></i></button>";
+				echo "<button type='submit' class='btn btn-success' onClick='onClickReply();'>Reply&nbsp;<i class='glyphicon glyphicon-arrow-left' aria-hidden='true'></i></button>&ensp;";
+				echo "<button type='submit' class='btn btn-default' onClick='onClickForward();'>Forward&nbsp;<i class='glyphicon glyphicon-arrow-right' aria-hidden='true'></i></button>&ensp;";
+				echo "<button type='submit' class='btn btn-danger' onClick='onClickDelete();'>Delete&nbsp;<i class='glyphicon glyphicon-trash' aria-hidden='true'></i></button>";
 		echo "</div>";
 		echo "</div>";
 ?>

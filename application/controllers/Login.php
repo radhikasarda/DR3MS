@@ -7,13 +7,16 @@
 		function __construct()
 		{
        		parent::__construct();
-			
+			$this->load->library('session');
+			$this->output->set_header('Last-Modified: ' . gmdate("D, d M Y H:i:s") . ' GMT');('Cache-Control: no-store, no-cache, must-revalidate, post-check=0, pre-check=0');
+			$this->output->set_header('Pragma: no-cache');
+			$this->output->set_header("Expires: Mon, 26 Jul 1997 05:00:00 GMT");
 		}
 		
 		
 		public function index($msg = null)  
 		{  
-			
+
 			log_message('info','##########Loading Login Controller INDEX FUNCTION');
 			
 			//$key_val = $this->encryption->create_key(32);
@@ -106,6 +109,7 @@
 				log_message('info','##########USER VALIDATED ID:: '.$userid);
 				
 				$this->session->set_userdata('userid', $userid);
+				$this->session->set_userdata('entrance', TRUE);
 				
 				$circle_name  = $this->get_jurisdiction($userid);
 				
@@ -163,7 +167,7 @@
 		public function logout()
 		{
 			
-			$this->session->sess_destroy();   
+			session_destroy();
 			redirect(base_url());
 			
 		}

@@ -50,8 +50,8 @@
 			echo "</div>";
 			echo "<div class='col-sm-11 col-sm-offset-1'>";
 				echo "<div class='form-group' >";	
-					echo "<button type='button' class='btn btn-success' onClick='return onClickForwardSend();'>Send&nbsp;<i class='fa fa-paper-plane' aria-hidden='true'></i></button>&ensp;";
-					echo "<button type='button' class='btn btn-danger' onClick='return onClickForwardDelete();'>Delete&nbsp;<i class='fa fa-trash' aria-hidden='true'></i></button>";
+					echo "<button type='button' class='btn btn-success' onClick='return onClickForwardSend();'>Send&nbsp;<i class='glyphicon glyphicon-send' aria-hidden='true'></i></button>&ensp;";
+					echo "<button type='button' class='btn btn-danger' onClick='return onClickForwardDelete();'>Delete&nbsp;<i class='glyphicon glyphicon-trash' aria-hidden='true'></i></button>";
 				echo "</div>";
 			echo "</div>";
 		echo "</form>";

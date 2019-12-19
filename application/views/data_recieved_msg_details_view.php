@@ -20,9 +20,9 @@
 				echo "<input type='hidden' class='form-control select2-offscreen' name='id' id='id' value='$message_id'>";
 		echo "</div>";
 		echo "<div class='form-group' id='buttons'>";	
-				echo "<button type='button' class='btn btn-success' onClick='return onClickInboxReply();'>Reply&nbsp;<i class='fa fa-reply' aria-hidden='true'></i></button>&ensp;";
-				echo "<button type='button' class='btn btn-default' onClick='return onClickInboxForward();'>Forward&nbsp;<i class='fa' aria-hidden='true'>&#xf064;</i></button>&ensp;";
-				echo "<button type='button' class='btn btn-danger' onClick='onClickDelete();'>Delete&nbsp;<i class='fa fa-trash' aria-hidden='true'></i></button>";
+				echo "<button type='button' class='btn btn-success' onClick='return onClickInboxReply();'>Reply&nbsp;<i class='glyphicon glyphicon-arrow-left' aria-hidden='true'></i></button>&ensp;";
+				echo "<button type='button' class='btn btn-default' onClick='return onClickInboxForward();'>Forward&nbsp;<i class='glyphicon glyphicon-arrow-right' aria-hidden='true'></i></button>&ensp;";
+				echo "<button type='button' class='btn btn-danger' onClick='onClickDelete();'>Delete&nbsp;<i class='glyphicon glyphicon-trash' aria-hidden='true'></i></button>";
 		echo "</div>";
 		echo "</div>";
 

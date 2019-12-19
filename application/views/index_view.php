@@ -3,9 +3,7 @@
 	 <meta charset="utf-8">
 	<meta name="viewport" content="width=device-width, initial-scale=1">
 	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/css/bootstrap.min.css">
-	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
-	<script src="//code.jquery.com/jquery-1.12.0.min.js"></script>
-	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/js/bootstrap.min.js"></script>
+	
 	<style>
 				body{
 				margin: 0;
@@ -100,12 +98,15 @@
 
 	</style>
 	<title>DR3MS::Disaster Risk Reduction and Resource Management System </title>
-	<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />  
-	
-	<!--<script src="https://cdnjs.cloudflare.com/ajax/libs/cryptojs/3.1.2/rollups/aes.js"></script> -->
-	<script src="<?php echo base_url('assets/js/aes.js');?> "></script>
+	<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />  	
 	</head>
 	<body>
+	<script src="<?php echo base_url().'assets/js/jquery-3.3.1.min.js'?>"></script>
+	<script src="<?php echo base_url().'assets/js/jquery.min.js'?>"></script>
+	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/js/bootstrap.min.js"></script>
+	<script src="<?php echo base_url('assets/js/aes.js');?> "></script>
+	<!--<script src="https://cdnjs.cloudflare.com/ajax/libs/cryptojs/3.1.2/rollups/aes.js"></script> -->
+	
 	
 	<?php $this->load->view('header_view');?>
 
