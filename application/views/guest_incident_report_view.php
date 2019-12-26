@@ -7,28 +7,10 @@
 		<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-timepicker/0.5.2/css/bootstrap-timepicker.min.css" type="text/css">
 		<link rel="stylesheet" href="<?php echo base_url().'assets/css/toast.css'?>" type="text/css">
 		
-		<style>
-			
-			.logoutbutton 
-			{
-				background-color: #FF0000;
-				border: none;
-				color: white;
-				padding: 0px 20px;
-				text-align: center;
-				text-decoration: none;
-				display: inline-block;
-				font-size: 12px;
-				margin: 4px 2px;
-				cursor: pointer;
-			}
-
-		</style>
 		<title>DR3MS::Incident</title>
-		
 	</head>
 	
-	<body style="overflow-x:none;overflow-y:none;">
+	<body >
 		
 		<script src="<?php echo base_url().'assets/js/jquery-3.3.1.min.js'?>"></script>
 		<script src="<?php echo base_url().'assets/js/jquery.min.js'?>"></script>
@@ -46,32 +28,7 @@
 				<?php $this->load->view('header_view');?>
 			</div>
 		</div>
-		<div class = "row" style="margin-right:0px;">
-			<div class = "col-sm-6" style = "text-align: left; background-color: #FFB700;height: 25px;">
-				<i class="glyphicon glyphicon-user"></i>
-				<font color="#000000" size="4">
-				"You are logged in as : <?php echo $this->session->userdata('userid'); ;?>" 
-				&ensp;
-				<i class="glyphicon glyphicon-bell" aria-hidden="true"></i>
-				Last Login Time : 	
-				<?php foreach((array)$last_login as $last_login){	 
-					 echo $last_login->last_login_time;
-				}?>
-				</font>	
-			
-	
-			</div>
-			<div class = "col-sm-6" style = "text-align: right;  height: 25px;background-color: #FFB700;">
-				<form action="<?php echo base_url("login/logout");?>">
-					<input type="submit" class="logoutbutton" value="LOGOUT">
-				</form>
-			</div>
-		</div>
-		<div>
-		<?php $this->load->view('navbar_view');?>
-		</div>	
-		
-		<div class = "row">
+		<div class = "row" style="margin-top:30px;">
 		<div class = "col-sm-2">
 		</div>
 		<div class = "col-sm-8">
@@ -86,12 +43,8 @@
 									<div class="input-group">
 										<span class="input-group-addon"><i class="glyphicon glyphicon-list"></i></span>
 										<select class="form-control" name = "circles" id="circles"  >
-											<?php $circle_name = $this->session->userdata('circle_name');
-											if($circle_name == 'All'){
-											?><option value="Select">Select Circle</option>
-											<?php
-											}
-											?>
+										
+											<option value="Select">Select Circle</option>
 											<?php
 											foreach($circles as $row)
 											{
@@ -286,7 +239,6 @@
 		 $('#timepicker').timepicker();
 		</script>
 		<script type="text/javascript">
-		
 							function removeImage1()
 							{
 								$('#uploaded_img_0').removeAttr('src');
@@ -374,6 +326,7 @@
 									}
 							}
 							$(document).ready(function(){
+									
 									$("#date").datepicker({
 									format: "dd/mm/yyyy",
 									language: "fr",
@@ -618,6 +571,8 @@
 								if(!file1 && !file2 && !file3)
 								{
 									iqwerty.toast.Toast('Report Sent Successfully!!');
+									<?php $this->session->unset_userdata('guest_entrance'); ?>
+									window.location.href="<?php echo base_url('Login/');?>";	
 									return;
 								}
 								else
@@ -631,9 +586,9 @@
 											processData: false,
 											success: function(response)
 											{
-
+													<?php $this->session->unset_userdata('guest_entrance'); ?>
 													iqwerty.toast.Toast('Report Sent Successfully !!');
-													window.location.href="<?php echo base_url('Incident/viewIncidents');?>";	
+													window.location.href="<?php echo base_url('Login/');?>";	
 												
 													
 											}
@@ -642,5 +597,10 @@
 								
 							}	
 						</script>
+			<div class ="row">
+			<div class="col-sm-12">
+				<?php $this->load->view('footer_view');?>
+			</div>
+		</div>
 	</body>
 </html>

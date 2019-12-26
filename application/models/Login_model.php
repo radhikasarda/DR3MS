@@ -5,14 +5,17 @@
 		{  
 			// Call the Model constructor  
 			parent::__construct();  
+			$database_name = $this->session->userdata('database_name');
+			$db = $this->load->database($database_name, TRUE);
+			$this->db=$db;
 		}  
 
 		public function validate($username,$password)  
 		{  
-		
-		
+				
 		log_message('info','##########USER_INFO_USER '.$username);
 		log_message('info','##########USER_INFO_Pass '.$password);
+		
 		$userid = null;
 		
         // Prep the query
@@ -24,7 +27,7 @@
 		foreach ($query->result() as $row)
 		{
 		$userid = $row->uid;
-
+		
 		}
 		
 		if(!is_null($userid)){
@@ -32,6 +35,7 @@
 			$this->insert_last_login_time($userid);
 			$this->set_login_ip($userid);
 		}		
+		
 		return $userid;
 
  
@@ -68,7 +72,30 @@
 			
 				
 		}
-	 
-	 
+		
+		
+		public function get_users()
+		{
+			
+			log_message('info','##########Loading Login Controller get_users() FUNCTION');
+			$result = $this->db->select('s_no, uid')-> get('user')-> result_array();
+			$users = array(); 
+			foreach($result as $r) 
+			{ 
+				$users[$r['uid']] = $r['uid']; 
+			} 
+			
+			return $users;
+				
+		}
+		
+		public function get_jurisdiction($userid)
+		{
+			$this->db->select('jurisdiction');
+			$this->db->from('user');
+			$this->db->where('uid', $userid);
+			$query = $this->db->get();	
+			return $query->row()->jurisdiction;
+		}
 	}  
 ?>  

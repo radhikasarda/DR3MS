@@ -7,12 +7,20 @@
 		{
 			
 			parent::__construct();
-			$this->load->model('message_model');
+			if(!$this->session->userdata('entrance'))
+			{
+				redirect(base_url());
+				
+			}
+			else{
+				$this->load->model('message_model');
+			}
 			
+		
 		}
 	
 		public function index()  
-		{  
+		{ 
 			$this->load->model('dashboard_model');	
 			$data_last_login = $this->dashboard_model->get_last_login_time();
 			//Load inbox messages data
@@ -108,6 +116,14 @@
 		public function onSendForwardMsgClick()
 		{
 			$forward_msg = $this->message_model->send_forward_msg();
+		}
+		
+		public function onClickViewIncident()
+		{
+			$this->load->model('incident_model');
+			$data_incident_details = $this->incident_model->get_incident_details(); 	
+			$data_incident_details_view = $this->load->view('data_incident_details_view',$data_incident_details,TRUE);
+			echo $data_incident_details_view;
 		}
    }
    

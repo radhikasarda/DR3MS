@@ -128,9 +128,9 @@
 							</div>
 							<div class="col-sm-11 col-sm-offset-1">
 							<div class="form-group" >	
-							<button type="button" class="btn btn-success" onClick="onClickSend();">Send&nbsp;<i class='glyphicon glyphicon-send' aria-hidden='true'></i></button>
-							<button type="button" class="btn btn-default" onClick="onClickDraft();">Draft&nbsp;<i class='glyphicon glyphicon-pencil' aria-hidden='true'></i></button>
-							<button type="button" class="btn btn-danger" onClick="onClickReset();">Reset&nbsp;<i class='glyphicon glyphicon-repeat' aria-hidden='true'></i></button>
+							<button type="button" class="btn btn-success" onClick="onClickSend();" id="btn-send">Send&nbsp;<i class='glyphicon glyphicon-send' aria-hidden='true'></i></button>
+							<button type="button" class="btn btn-default" onClick="onClickDraft();" id="btn-draft">Draft&nbsp;<i class='glyphicon glyphicon-pencil' aria-hidden='true'></i></button>
+							<button type="button" class="btn btn-danger" onClick="onClickReset();" id="btn-reset">Reset&nbsp;<i class='glyphicon glyphicon-repeat' aria-hidden='true'></i></button>
 							</div>
 							</div>
 							</form>
@@ -140,7 +140,13 @@
 			</div>
 			</div>
 			
-			<script>		
+			<script>
+			$(document).ready(function(){
+			$('#framework').selectpicker();
+			$('#framework').selectpicker('render');
+			$('#framework').selectpicker('refresh');
+			
+			});			
 			function onClickSend()
 			{
 				var recipient_id_list = $('#framework').val().toString();

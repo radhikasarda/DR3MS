@@ -17,10 +17,90 @@
 			$contact_no = $row['contact_no'];
 			$reported_by = $row['reported_by'];
 			$detailed_report = $row['detailed_report'];
-			$image_dir_name = $row['image_dir_name'];
+			$image_1_path = $row['image_1_path'];
+			$image_2_path = $row['image_2_path'];
+			$image_3_path = $row['image_3_path'];
+			$request_from_incident = $row['request_from_incident'];
+			log_message('info','##########INSIDE data_incident_details VIEW :: incident_id:: '.$incident_id);
+			log_message('info','##########INSIDE data_incident_details VIEW :: request_from_incident:: '.$request_from_incident);
 		}
 			
 ?>
+<style>
+#uploaded_img_0:hover {opacity: 0.2;}
+			#uploaded_img_1:hover {opacity: 0.2;}
+			#uploaded_img_2:hover {opacity: 0.2;}
+
+			/* The Modal (background) */
+			.modal {
+			  display: none; 
+			  position: fixed; 
+			  z-index: 1; 
+			  padding-top: 100px; 
+			  left: 0;
+			  top: 0;
+			  width: 100%; 
+			  height: 100%; 
+			  overflow: auto;
+			  background-color: rgb(0,0,0); 
+			  background-color: rgba(0,0,0,0.9); 
+			}
+
+			/* Modal Content (image) */
+			.modal-content {
+			  margin: auto;
+			  display: block;
+			  width: 80%;
+			  max-width: 700px;
+			}
+
+			/* Caption of Modal Image */
+			#caption {
+			  margin: auto;
+			  display: block;
+			  width: 80%;
+			  max-width: 700px;
+			  text-align: center;
+			  color: #ccc;
+			  padding: 10px 0;
+			  height: 150px;
+			}
+
+			@-webkit-keyframes zoom {
+			  from {-webkit-transform:scale(0)} 
+			  to {-webkit-transform:scale(1)}
+			}
+
+			@keyframes zoom {
+			  from {transform:scale(0)} 
+			  to {transform:scale(1)}
+			}
+
+			/* The Close Button */
+			.close {
+			  position: absolute;
+			  top: 15px;
+			  right: 35px;
+			  color: #f1f1f1;
+			  font-size: 40px;
+			  font-weight: bold;
+			  transition: 0.3s;
+			}
+
+			.close:hover,
+			.close:focus {
+			  color: #fff;
+			  text-decoration: none;
+			  cursor: pointer;
+			}
+
+			/* 100% Image Width on Smaller Screens */
+			@media only screen and (max-width: 700px){
+			  .modal-content {
+				width: 100%;
+			  }
+			}
+</style>
 		<div class="container">
 				<form class="well form-horizontal" id="contact_form">
 					<fieldset>
@@ -144,25 +224,23 @@
 									</div>
 								</div>
 							</div>
-							
 							<div class="form-group">
 							  <label class="col-md-4 control-label">Report in Brief</label>  
 								<div class="col-md-4 inputGroupContainer">
 									<div class="input-group">
 										<span class="input-group-addon"><i class="glyphicon glyphicon-comment"></i></span>
-										<textarea class="form-control" id="report_brief" name="report_brief" rows="12" value="<?php echo $detailed_report; ?>" readonly></textarea>									
+										<textarea class="form-control" id="report_brief" name="report_brief" rows="12" readonly><?php echo $detailed_report; ?></textarea>						
 										<!--HIDDEN INCIDENT ID FIELD -->
-										<div class="result" style="display:none;" id="incident_id" value="<?php echo $incident_id; ?>"></div> 
+										<input name='id' id='id' value="<?php echo $incident_id; ?>" class="form-control" type="hidden" >
 									</div>
 								</div>
 							</div>
-							
 							<div class="form-group">
 							  <label class="col-sm-4 control-label">First Image</label>
 								<div class="col-md-4 inputGroupContainer">
-									<div class="input-group">
+									<div class="input-group popup">
 										<span class="input-group-addon"><i class="glyphicon glyphicon-picture"></i></span>
-										<img id="uploaded_img_0" src="#" alt="No Image" />
+										<img id="uploaded_img_0" class="img-thumbnail" onClick="return onClickImg1();" src="<?php if($image_1_path != null) echo $image_1_path; ?>" alt="No Image"/>
 									</div>
 								</div>
 							</div>
@@ -170,9 +248,9 @@
 							<div class="form-group">
 							  <label class="col-sm-4 control-label">Second Image</label>
 								<div class="col-md-4 inputGroupContainer">
-									<div class="input-group">
+									<div class="input-group popup">
 										<span class="input-group-addon"><i class="glyphicon glyphicon-picture"></i></span>							
-										<img id="uploaded_img_1" src="#" alt="No Image" />
+										<img id="uploaded_img_1" class="img-thumbnail" onClick="return onClickImg2();" src="<?php if($image_2_path != null) echo $image_2_path; ?>" alt="No Image" />
 									</div>
 								</div>
 							</div>
@@ -180,20 +258,33 @@
 							<div class="form-group">
 							  <label class="col-sm-4 control-label">Third Image</label>
 								<div class="col-md-4 inputGroupContainer">
-									<div class="input-group">
+									<div class="input-group popup">
 										<span class="input-group-addon"><i class="glyphicon glyphicon-picture"></i></span>
-										<img id="uploaded_img_2" src="#" alt="No Image" />
+										<img id="uploaded_img_2" class="img-thumbnail" onClick="return onClickImg3();" src="<?php if($image_3_path != null) echo $image_3_path; ?>" alt="No Image" />
 									</div>
 								</div>
 							</div>
-							
+							<?php if($request_from_incident == "true"){ ?>
 							<div class="form-group">
 							  <label class="col-md-4 control-label"></label>
 							  <div class="col-md-4"><br>
-								<button type="button" class="btn btn-success form-control" onclick="return onClickReportSend();">SEND REPORT<span class="glyphicon glyphicon-send"></span></button>
+								<button type="button" class="btn btn-success form-control" onclick="return onClickSendInstructions();">SEND INSTRUCTIONS<span class="glyphicon glyphicon-send"></span></button>
 							  </div>
 							</div>
+							<?php } else { ?>
+							<div class="form-group">
+							  <label class="col-md-4 control-label"></label>
+							  <div class="col-md-4"><br>
+								<button type="button" class="btn btn-success form-control" onclick="return onClickBackToInbox();">BACK TO INBOX</button>
+							  </div>
+							</div>
+							<?php } ?>
+						
 							</fieldset>
 							</form>
 							</div>
-								
+
+
+
+
+					

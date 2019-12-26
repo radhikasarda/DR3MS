@@ -6,6 +6,7 @@
 			$subject = "Fwd: ".$row['subject'];
 			$msg = "---------- Forwarded message ---------".PHP_EOL .$row['msg_body'];
 			$message_id = $row['message_id'];
+			log_message('info','##########INSIDE data_forward_msg_details VIEW :: msg:: '.$msg);
 		}
 	
 		echo "<form id='myForm' class='form-horizontal' role='form' >";
@@ -45,7 +46,7 @@
 			
 			echo "<div class='col-sm-11 col-sm-offset-1' >";
 				echo "<div class='form-group' >";
-					echo "<textarea class='form-control' id='message' name='body' rows='12'>$msg</textarea>";
+					echo "<textarea class='form-control' id='message' name='body' rows='12'>";echo "\n \n \n \n \n \n $msg</textarea>";
 				echo "</div>";
 			echo "</div>";
 			echo "<div class='col-sm-11 col-sm-offset-1'>";

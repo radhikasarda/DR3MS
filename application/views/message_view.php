@@ -141,7 +141,26 @@
 					</div>
 				</div>
 			</div>
+			<div class = "row">
+			<div class = "col-sm-2">
+			</div>
+			<div class = "col-sm-8">
+			<div id="incident-details" class="incident-details" >
+			
+			</div>
+			</div>
+			<div class = "col-sm-2">
+			</div>
+			</div>
+			
+			<!-- FOR IMAGE DISPLAY IN POPUP -->
+			<div id="myModal" class="modal">
+			<span class="close">&times;</span>
+			<img class="modal-content" id="img01">
+			</div>
 			<script>
+			
+			
 			window.onload = addRowHandlers();
 			function OnClickViewDetails()
 			{
@@ -276,6 +295,107 @@
 											}
 
 							});
+			}
+			
+			function onClickViewIncident()
+			{
+				var incident_id = document.getElementById('inc_id').value;
+				var request_from_incident = "false";
+				$.ajax({
+											url:"<?php echo site_url('Message/onClickViewIncident');?>",
+											method:"POST",
+											data:{incident_id:incident_id,request_from_incident:request_from_incident},
+											type: "POST",
+											cache: false,
+											success: function(data)
+											{		
+												$("#inbox-table-div").hide();  
+												$("#message-details").hide(); 	
+												$("#forward-message-details-div").hide();
+												$("#sidebar").hide();												
+												$("#incident-details").show(); 											
+												$('#incident-details').html(data);														
+											}
+
+							});
+			}
+			
+			function onClickBackToInbox()
+			{
+				$("#incident-details").hide();
+				$("#inbox-table-div").hide();  
+				$("#sidebar").show();
+				$("#message-details").show(); 
+			}
+			
+			function onClickImg1(){
+				
+				$("#inbox-table-div").hide();  
+				$("#message-details").hide(); 	
+				$("#forward-message-details-div").hide();
+				$("#sidebar").hide();	
+				$("#incident-details").hide();
+				
+				var modal = document.getElementById("myModal");
+				var img = document.getElementById("uploaded_img_0");
+				var modalImg = document.getElementById("img01");
+	
+				modal.style.display = "block";
+				modalImg.src = img.src;
+				var span = document.getElementsByClassName("close")[0];
+
+				// When the user clicks on <span> (x), close the modal
+				span.onclick = function() 
+				{ 
+				modal.style.display = "none";
+				$("#incident-details").show();  	
+				}
+			}
+			
+			function onClickImg2(){
+				
+				$("#inbox-table-div").hide();  
+				$("#message-details").hide(); 	
+				$("#forward-message-details-div").hide();
+				$("#sidebar").hide();	
+				$("#incident-details").hide();	
+				var modal = document.getElementById("myModal");
+				var img = document.getElementById("uploaded_img_1");
+				var modalImg = document.getElementById("img01");
+	
+				modal.style.display = "block";
+				modalImg.src = img.src;
+				var span = document.getElementsByClassName("close")[0];
+
+				// When the user clicks on <span> (x), close the modal
+				span.onclick = function() 
+				{ 
+				modal.style.display = "none";
+				$("#incident-details").show();  	
+				}
+			}
+			
+			function onClickImg3(){
+				
+				$("#inbox-table-div").hide();  
+				$("#message-details").hide(); 	
+				$("#forward-message-details-div").hide();
+				$("#sidebar").hide();	
+				$("#incident-details").hide();
+				var modal = document.getElementById("myModal");
+				var img = document.getElementById("uploaded_img_2");
+				var modalImg = document.getElementById("img01");
+	
+				modal.style.display = "block";
+				modalImg.src = img.src;
+				var span = document.getElementsByClassName("close")[0];
+
+				// When the user clicks on <span> (x), close the modal
+				span.onclick = function() 
+				{ 
+				modal.style.display = "none";
+				$("#incident-details").show();  	
+				}
 			}
 			</script>
 	

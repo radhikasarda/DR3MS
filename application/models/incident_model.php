@@ -3,7 +3,10 @@
 		{  
 			function __construct()  
 			{  
-				parent::__construct();	 
+				parent::__construct();
+				$database_name = $this->session->userdata('database_name');
+				$db = $this->load->database($database_name, TRUE);
+				$this->db=$db;						
 			}  
 			
 			public function get_circles()	 
@@ -127,22 +130,25 @@
 				$file_3_name = $_FILES['file_3']['name'];
 				log_message('info','##########INSIDE upload_image_to_server FUNC::file_1_name:: '.$file_1_name);
 				$incident_id = ($_POST['incident_id']);		
-				
+				$photo_no = 0;
 				$response = null;
 				if($file_1_name)
 				{
+					$photo_no = 1;
 					$temp_file_1_name = $_FILES['file_1']['tmp_name'];
-					$response = $this->upload_image($file_1_name,$temp_file_1_name,$incident_id);
+					$response = $this->upload_image($file_1_name,$temp_file_1_name,$incident_id,$photo_no);
 				}
 				if($file_2_name)
 				{
+					$photo_no = 2;
 					$temp_file_2_name = $_FILES['file_2']['tmp_name'];
-					$response = $this->upload_image($file_2_name,$temp_file_2_name,$incident_id);
+					$response = $this->upload_image($file_2_name,$temp_file_2_name,$incident_id,$photo_no);
 				}
 				if($file_3_name)
 				{
+					$photo_no = 3;
 					$temp_file_3_name = $_FILES['file_3']['tmp_name'];
-					$response = $this->upload_image($file_3_name,$temp_file_3_name,$incident_id);
+					$response = $this->upload_image($file_3_name,$temp_file_3_name,$incident_id,$photo_no);
 				}
 				log_message('info','##########INSIDE upload_image_to_server FUNC::response:: '.$response);
 				if($response == 0)
@@ -163,7 +169,7 @@
 				
 			}
 			
-			public function upload_image($file_name,$temp_file_name,$incident_id)
+			public function upload_image($file_name,$temp_file_name,$incident_id,$photo_no)
 			{
 						
 					log_message('info','##########INSIDE upload_image FUNC::filename:: '.$file_name);				
@@ -179,40 +185,34 @@
 						mkdir($path ,0755,TRUE);
 					} 
 				
-					$uploadOk = 1;
-					$imageFileType = pathinfo($location,PATHINFO_EXTENSION);
-					log_message('info','##########INSIDE upload_image FUNC::imageFileType:: '.$imageFileType);
-				
-					$valid_extensions = array("jpg","jpeg","png");
-					/* Check file extension */
-					if( !in_array(strtolower($imageFileType),$valid_extensions) ) 
-					{
-						$uploadOk = 0;
-						log_message('info','##########INSIDE upload_image FUNC::EXTENSION NOT VALID:: ');
-					}
-
-					$filetobeuploaded = $path."/".$file_name;
 					
-					if($uploadOk == 0)
-					{
-						echo 0;
-					}
-					else
-					{
+					//$imageFileType = pathinfo($location,PATHINFO_EXTENSION);
+					//log_message('info','##########INSIDE upload_image FUNC::imageFileType:: '.$imageFileType);
+				
+					//$valid_extensions = array("jpg","jpeg","png");
+					/* Check file extension */
+					//if( !in_array(strtolower($imageFileType),$valid_extensions) ) 
+					//{
+					$uploadOk = 0;
+					//	log_message('info','##########INSIDE upload_image FUNC::EXTENSION NOT VALID:: ');
+					//}
+
+					$filetobeuploaded = $path.'/'.$incident_id.'_photo_'.$photo_no.'.jpg';
+					
+					//if($uploadOk == 0)
+					//{
+					//	echo 0;
+					//}
+					//else
+					//{
 						/* Upload file */
 						if(move_uploaded_file($temp_file_name,$filetobeuploaded))
 						{
-							log_message('info','##########INSIDE upload_image FUNC:: location:: '.$filetobeuploaded);							
-							
+							log_message('info','##########INSIDE upload_image FUNC:: location:: '.$filetobeuploaded);														
 							$uploadOk = 1;
 						}
-						else
-						{
-							$uploadOk = 0;
-							
-						}
 						return $uploadOk;
-					}
+					//}
 			}
 			
 			public function get_all_incidents()
@@ -224,12 +224,13 @@
 				{			
 					$this->db->select('*');
 					$this->db->from('incident_report');
+					$this->db->order_by("reporting_date_time", "desc");
 					$query = $this->db->get();
 				}
 				
 				else
 				{
-					$query=$this->db->query("SELECT * FROM `incident_report` join gp g on incident_report.gp_no = g.gp_no join block b on g.b_s_no = b.b_s_no JOIN circle c on b.c_s_no = c.c_s_no  where c.c_s_no = ".$c_s_no);							
+					$query=$this->db->query("SELECT * FROM `incident_report` join gp g on incident_report.gp_no = g.gp_no join block b on g.b_s_no = b.b_s_no JOIN circle c on b.c_s_no = c.c_s_no  where c.c_s_no = ".$c_s_no." ORDER BY `incident_report`.`reporting_date_time` DESC");							
 				}
 				
 				$data_all_incidents['incident'] = null;	
@@ -240,11 +241,40 @@
 			public function get_incident_details()
 			{
 				$incident_id = $this->input->post('incident_id');
+				$request_from_incident = $this->input->post('request_from_incident');
 				$query = $this->db->query("SELECT * from incident_report where incident_id = '$incident_id'");
 				
 				$gp_no = $query->row()->gp_no;				
 				$circle_name = $this->get_circle_name($gp_no);
 				log_message('info','##########INSIDE get_circle_name FUNC:: circle_name:: '.$circle_name);	
+				
+				
+				$image_1_path = null;
+				$image_2_path = null;
+				$image_3_path = null;
+				
+					log_message('info','##########INSIDE get_circle_name FUNC:: dir EXIST');
+					if (file_exists('./upload/'.$incident_id.'/'.$incident_id.'_photo_1.jpg'))
+					{
+						log_message('info','##########INSIDE get_circle_name FUNC:: PHOTO 1 EXIST');
+						$image_1_path = base_url('upload/'.$incident_id.'/'.$incident_id.'_photo_1.jpg');
+					}
+					if (file_exists('./upload/'.$incident_id.'/'.$incident_id.'_photo_2.jpg'))
+					{
+						log_message('info','##########INSIDE get_circle_name FUNC:: PHOTO 2 EXIST');
+						$image_2_path = base_url('upload/'.$incident_id.'/'.$incident_id.'_photo_2.jpg');
+					}
+					if (file_exists('./upload/'.$incident_id.'/'.$incident_id.'_photo_3.jpg'))
+					{
+						log_message('info','##########INSIDE get_circle_name FUNC:: PHOTO 3 EXIST');
+						$image_3_path = base_url('upload/'.$incident_id.'/'.$incident_id.'_photo_3.jpg');
+					}
+					
+				
+				
+				log_message('info','##########INSIDE get_circle_name FUNC:: image_1_path:: '.$image_1_path);
+				log_message('info','##########INSIDE get_circle_name FUNC:: image_2_path:: '.$image_2_path);
+				log_message('info','##########INSIDE get_circle_name FUNC:: image_3_path:: '.$image_3_path);
 				
 				$i = 0;
 				$data_incident_details_list = array();
@@ -268,7 +298,10 @@
 								'contact_no' => $row->phone_no,
 								'reported_by' => $row->reported_by,
 								'detailed_report' => $row->detailed_report,
-								'image_dir_name' => $row->dir_name
+								'image_1_path' => $image_1_path,
+								'image_2_path' => $image_2_path,
+								'image_3_path' => $image_3_path,
+								'request_from_incident' => $request_from_incident
 								);
 								$data_incident_details_list[$i]  = $list;
 				
@@ -284,6 +317,68 @@
 				$query=$this->db->query("SELECT circle_name from circle join block on block.c_s_no = circle.c_s_no join gp on gp.b_s_no = block.b_s_no where gp.gp_no = ".$gp_no);
 				
 				return $query->row()->circle_name;
+			}
+			
+			public function get_send_instructions_details()
+			{
+				$userid = $this->session->userdata('userid');
+				$incident_id = $this->input->post('incident_id');
+				log_message('info','##########INSIDE get_send_instructions_details FUNC:: incident_id:: '.$incident_id);
+				$i=0;
+				$this->db->select('*');
+				$this->db->from('incident_report');
+				$this->db->where('incident_id', $incident_id);
+				$query = $this->db->get();	
+				$query_recipients = $this->db->query("SELECT uid from user where uid NOT LIKE '$userid'");			
+				
+				$recipients = $query_recipients->result();
+				
+				$send_instructions_details = $query->result();
+				$data['send_instructions_details'] = $send_instructions_details;
+			
+				foreach($send_instructions_details as $row)
+				{
+					$list =  array(
+					
+								'subject' => $row->subject,
+								'recipients' => $recipients,
+								'detailed_report' => $row->detailed_report,
+								'incident_date' => $row->incident_date,
+								'incident_time' => $row->incident_time,
+								'reported_by' => $row->reported_by,
+								'incident_id' => $incident_id
+								);
+								$data_send_instructions_details_list[$i]  = $list;
+				
+								$i++;
+				}
+				$data['data_send_instructions_details'] = $data_send_instructions_details_list;
+				
+				return $data;
+			}
+			
+			public function send_instruction_msg()
+			{
+				$this->load->model('message_model');
+			
+				$recipient_id_list = $this->input->post('recipient_id_list');
+				$subject = $this->input->post('subject');
+				$msg = $this->input->post('msg');	
+				$msg_from = $this->session->userdata('userid');
+				$incident_id = $this->input->post('incident_id');
+
+				$this->db->set('msg_from', $msg_from);
+				$this->db->set('subject', $subject);
+				$this->db->set('msg_body', $msg);
+				$this->db->set('incident_id', $incident_id);
+				$this->db->insert('message_comm');	
+				$insert_id = $this->db->insert_id();
+								
+				//insert to msg_recipient
+				$affected_rows = $this->message_model->insert_to_message_recipient($recipient_id_list,$insert_id);		
+				
+				return ($affected_rows != 1) ? false : true;
+
 			}
 		}
 ?>

@@ -7,12 +7,20 @@
 		{
 			
 			parent::__construct();
-			$this->load->model('incident_model');
 			
+			if(!$this->session->userdata('entrance'))
+			{
+				redirect(base_url());
+				
+			}
+			else{
+				$this->load->model('incident_model');
+			}
 		}
 	
 		public function index()  
 		{  
+
 			$this->load->model('dashboard_model');	
 			$data_last_login = $this->dashboard_model->get_last_login_time();
 			
@@ -20,6 +28,7 @@
 			
 			$data = array_merge($data_last_login,$data_circles);
 			$this->load->view('incident_view',$data);
+			
 		}
 		
 		//For filling combobox
@@ -67,12 +76,26 @@
 			$this->load->view('all_incidents_view',$data);
 		}
 		
-		public function OnClickViewIncidentDetailsClick()
+		public function OnClickViewIncidentDetails()
 		{
-			log_message('info','##########INSIDE OnClickViewIncidentDetailsClick FUNC::');
+			log_message('info','##########INSIDE OnClickViewIncidentDetails FUNC::');
 			$data_incident_details = $this->incident_model->get_incident_details(); 	
 			$data_incident_details_view = $this->load->view('data_incident_details_view',$data_incident_details,TRUE);
 			echo $data_incident_details_view;
+		}
+		
+		public function onClickSendInstructions()
+		{
+			log_message('info','##########INSIDE onClickSendInstructions FUNC::');
+			$data_incident_details = $this->incident_model->get_send_instructions_details(); 				
+			$data_send_instructions_view = $this->load->view('send_instructions_view',$data_incident_details,TRUE);
+			echo $data_send_instructions_view;
+		}
+		
+		public function onSendInstructionMessageClick()
+		{
+			log_message('info','##########INSIDE onSendInstructionMessageClick FUNC::');
+			$send_instruction_msg = $this->incident_model->send_instruction_msg();
 		}
    }
 ?>

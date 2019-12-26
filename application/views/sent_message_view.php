@@ -118,7 +118,15 @@
 					</div>
 				</div>
 		</div>
-		
+		<div class="col-sm-10 "style="margin-top:-10px;margin-left:200px;display:none;" id="forward-message-details-div">
+				<div id="forward-msg-div" class="container" style="overflow-x:auto;overflow-y:auto;height:800px;width:auto !important;">  
+					<div class="panel panel-default">
+						<div class="panel-body message" id ="forward-message-details" >
+							
+						</div>
+					</div>
+				</div>
+		</div>
 		<script>
 			window.onload = addRowHandlers();
 			function OnClickViewDetails()
@@ -160,6 +168,69 @@
 
 							});
 			}	
+			
+			function onSentMsgForwardClick()
+			{
+				var message_id = document.getElementById('id').value;
+			
+				$.ajax({
+											url:"<?php echo site_url('Message/onClickInboxForward');?>",
+											method:"POST",
+											data:{message_id:message_id},
+											type: "POST",
+											cache: false,
+											success: function(data){				
+												$("#sent-messages-div").hide();   
+												$("#message-details").hide(); 	
+												$("#forward-message-details-div").show(); 	
+												$('#forward-message-details').html(data);
+												$('.selectpicker').selectpicker();
+												$('.selectpicker').selectpicker('render');
+												$('.selectpicker').selectpicker('refresh');
+																				
+											}
+
+
+				});
+			}
+			function onClickForwardSend()
+			{
+				var recipient_id_list = $('#framework').val().toString();
+				
+				var subject = $('#subject').val();
+				
+				var msg = $('#message').val();	
+				
+				
+				if(recipient_id_list == ''){
+					iqwerty.toast.Toast('Please Select Atleast 1 Recipient !!');
+					return;
+				}
+				if(subject == ''){
+					iqwerty.toast.Toast('Please add a Subject !!');	
+					return;
+				}		
+				
+				var message_id = document.getElementById('id').value;
+				
+			
+				$.ajax({
+											url:"<?php echo site_url('Message/onSendForwardMsgClick');?>",
+											method:"POST",
+											data:{message_id:message_id,recipient_id_list:recipient_id_list,subject:subject,msg:msg},
+											type: "POST",
+											cache: false,
+											success: function(data)
+											{																					
+												window.location.href="<?php echo base_url('Message/');?>";
+												iqwerty.toast.Toast('Message Sent Successfully !!');																
+											},
+											error: function() {
+												iqwerty.toast.Toast('Internal Server error!! Please Send Again !!');
+											}
+
+							});
+			}
 		</script>
 		</body>
 </html>

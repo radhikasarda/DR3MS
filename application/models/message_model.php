@@ -3,7 +3,10 @@
 		{  
 			function __construct()  
 			{  
-				parent::__construct();	 
+				parent::__construct();	
+				$database_name = $this->session->userdata('database_name');
+				$db = $this->load->database($database_name, TRUE);
+				$this->db=$db;						
 			}  
 			
 			public function get_sent_msg()
@@ -82,7 +85,8 @@
 								'subject' => $row->subject,
 								'msg_from' => $row->msg_from,
 								'date' => $row->msg_saved_date,
-								'msg_body' => $row->msg_body
+								'msg_body' => $row->msg_body,
+								'incident_id' => $row->incident_id
 								);
 								$data_recieved_msg_details_list[$i]  = $list;
 					
@@ -111,7 +115,8 @@
 								'subject' => $row->subject,
 								'to' => $recipient_id,
 								'date' => $row->msg_saved_date,
-								'msg_body' => $row->msg_body
+								'msg_body' => $row->msg_body,
+								'message_id' => $msg_id
 								);
 								$data_sent_msg_details_list[$i]  = $list;
 				
@@ -202,8 +207,7 @@
 				$msg = $this->input->post('msg');	
 				$msg_from = $this->session->userdata('userid');
 				$parent_message_id = null;
-				$is_replied = false;
-				$is_viewed = false;
+
 				//insert into message_comm				
 				$insert_id = $this->insert_to_message_comm($msg_from,$subject,$msg,$parent_message_id);
 				

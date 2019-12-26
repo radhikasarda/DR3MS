@@ -3,7 +3,10 @@
    {  
 		function __construct()  
 		{  
-         parent::__construct();	 
+			parent::__construct();	 
+			$database_name = $this->session->userdata('database_name');
+			$db = $this->load->database($database_name, TRUE);
+			$this->db=$db;		
 		}  
       
 		public function get_circles($userid)	 

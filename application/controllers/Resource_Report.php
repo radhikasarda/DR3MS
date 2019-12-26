@@ -7,7 +7,15 @@
 		{
 			
 			parent::__construct();
-			$this->load->model('resource_report_model');
+			if(!$this->session->userdata('entrance'))
+			{
+				redirect(base_url());
+				
+			}
+			else{
+				$this->load->model('resource_report_model');
+			}
+			
 			
 		}
 	
@@ -28,7 +36,6 @@
 			$data = array_merge($data_circles,$data_last_login);
 		
 			$this->load->view('resource_report_view',$data);
- 
  
 		}
 	

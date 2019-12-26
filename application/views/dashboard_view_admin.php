@@ -42,7 +42,7 @@
 			<div class = "col-sm-6" style = "text-align: left; background-color: #FFB700;height: 25px;">
 				<i class="glyphicon glyphicon-user"></i>
 				<font color="#000000" size="4">
-				"You are logged in as : <?php echo $this->session->userdata('userid'); ;?>" 
+				"You are logged in as : <?php echo $this->session->userdata('userid'); ?>" 
 				&ensp;
 				<i class="glyphicon glyphicon-bell" aria-hidden="true"></i>
 				Last Login Time : 	
@@ -177,36 +177,35 @@
 			</div>
 			
 			<div class="col-sm-6 "  style="border-left: solid;">
-			<?php 		
-			$user=$this->session->userdata('userid');
-			if ($user == "Admin" ||$user == "DC"){  
-			?>			
+			
 			<div class="user-info-container"  >
-			<h5 style="text-align:center;"><b><u>User Information<u></b></h5>
+			<h5 style="text-align:center;"><b><u>Recent Incidents<u></b></h5>
 			<br>
 				<div class="container" style="width:100%;">                                                                            
 					<div class="table-responsive" style="width:100%; height:320px;overflow-x:auto;overflow-y:auto;">          
 						<table class="table table-bordered table-hover" >
 							<thead style="background-color: black;color: white;">
 								<tr>
-									<td><strong>User</strong></td>
-									<td><strong>Last Login Time</strong></td>
-									<td><strong>Last Login Ip</strong></td>
+									<th style="display:none;"><strong>INCIDENT ID</strong></th>							
+									<th><strong>INCIDENT DATE</strong></th>
+									<th><strong>INCIDENT TIME</strong></th>
+									<th><strong>LOCATION</strong></th>
+									<th><strong>SUBJECT</strong></th>
 								</tr> 
 							</thead>
-							<?php foreach((array)$user_info as $user){?>
+							<?php foreach((array)$incident as $incident){?>	
 								<tr>
-									<td><?=$user->user;?></td>
-									<td><?=$user->last_login_time;?></td>
-									<td><?=$user->last_login_ip;?></td>
+									<td class= "incident_id" name ="incident_id" id ="incident_id" style="display:none;"><?=$incident->incident_id;?></td>
+									<td class ="incident_date"><?=$incident->incident_date;?></td>
+									<td class ="incident_time"><?=$incident->incident_time;?></td>
+									<td class ="location"><?=$incident->location_village_name;?></td>
+									<td class ="subject"><?=$incident->subject;?></td>
 								</tr>     
 							<?php }?>  
 						</table>
 					</div>
 				</div>
-			</div><?php }
-			else {
-			?>	
+			</div>
 			<!--<div class="user-info-container"  >
 			<h5 style="text-align:center;"><b><u>User Information<u></b></h5>
 			<br>
@@ -230,9 +229,7 @@
 						</table>
 					</div>
 				</div>
-			</div>--><?php 
-				}
-				?>
+			</div>-->
 			</div>
 		</div>
 		</div>

@@ -7,10 +7,7 @@
 		function __construct()
 		{
        		parent::__construct();
-			$this->load->library('session');
-			$this->output->set_header('Last-Modified: ' . gmdate("D, d M Y H:i:s") . ' GMT');('Cache-Control: no-store, no-cache, must-revalidate, post-check=0, pre-check=0');
-			$this->output->set_header('Pragma: no-cache');
-			$this->output->set_header("Expires: Mon, 26 Jul 1997 05:00:00 GMT");
+			$this->load->model('login_model');
 		}
 		
 		
@@ -28,35 +25,29 @@
 			
 	
 			//load login page
-			$data['users'] = $this->get_users();
+			$data['users'] = $this->login_model->get_users();
 			$data['msg'] = $msg;
-			
 			$this->load->view('index_view',$data);
 			
  
 		}
 		
-		private function get_users()
+		
+		
+		public function loadGuestView()
 		{
-			log_message('info','##########Loading Login Controller get_users() FUNCTION');
-			$result = $this->db->select('s_no, uid')-> get('user')-> result_array();
-			$users = array(); 
-			foreach($result as $r) 
-			{ 
-				$users[$r['uid']] = $r['uid']; 
-			} 
+			log_message('info','##########Loading loadGuestView');
+			$this->load->view('guest_view');
 			
-			return $users;
-				
 		}
+				
 				
 		public function onLogin()
 		{
-		 
+
 			log_message('info','##########Loading Login Controller  onLogin() FUNCTION');
-			
-			// Load the model
-			$this->load->model('login_model');
+
+
 			$userid = null;
 			
 			
@@ -111,7 +102,7 @@
 				$this->session->set_userdata('userid', $userid);
 				$this->session->set_userdata('entrance', TRUE);
 				
-				$circle_name  = $this->get_jurisdiction($userid);
+				$circle_name  = $this->login_model->get_jurisdiction($userid);
 				
 				$arraydata = array('circle_name'  => $circle_name);
 				
@@ -135,35 +126,6 @@
 			}
 		}
 	
-		public function get_jurisdiction($userid)
-		{
-			$this->db->select('jurisdiction');
-			$this->db->from('user');
-			$this->db->where('uid', $userid);
-			$query = $this->db->get();	
-			return $query->row()->jurisdiction;
-		}
-		public function insert()
-		{
-			
-			$this->load->model('insert_model');
-			$result = $this->insert_model->insert();
-			if(! $result)
-			{
-				// If not inserted
-				$message = "User not created. Please Try again.";
-				echo "<script type='text/javascript'>alert('$message');</script>";
-				$this->load->view('signup_view');
-			}else
-			{
-				// If inserted successfully
-				$message = "User created.";
-				echo "<script type='text/javascript'>alert('$message');</script>";
-				$this->load->view('login_view');
-			}    
-		
-		}
-	
 		public function logout()
 		{
 			
@@ -179,7 +141,15 @@
 		
 		}
 		
+		public function generateOtp()
+		{
+			$contact_no = $this->input->post('contact_no');
+			log_message('info','##########INSIDE getOtp FUNC::contact_no:: '.$contact_no);
+			$otp = rand(100000,999999);
+			log_message('info','##########INSIDE getOtp FUNC::otp:: '.$otp);			
+			echo $otp;
+		}
 
-	
+		
    }  
 ?>  
