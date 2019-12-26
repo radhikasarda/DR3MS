@@ -19,7 +19,7 @@
 				height: 520px;
 				background: rgba(0, 0, 0, 0.5);
 				color: #fff;
-				top: 50%;
+				top: 43%;
 				left: 50%;
 				position: absolute;
 				transform: translate(-50%,-50%);
@@ -113,9 +113,11 @@
 	
 	<div class ="index-view" id="index-view" >
 		<?php $this->load->view('header_view');?>
-			<div class="login-box" id="login-box">
+			<div class="login-box" id="login-box">				
 				<img src="<?php echo base_url("assets/img/avatar.png");?>" class="avatar">
 				<h1>Login Here</h1>
+				<br>
+				<h4>Selected District : <?php echo strtoupper($selected_district);?></h4>
 				<br>
 				<form role="form" name="loginform" id="loginform" action="<?php echo base_url("login/onLogin");?>"  method="POST" >
 					<div class = "form-group">

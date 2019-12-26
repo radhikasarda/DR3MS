@@ -19,7 +19,7 @@
 				height: 430px;
 				background: rgba(0, 0, 0, 0.5);
 				color: #fff;
-				top: 50%;
+				top: 43%;
 				left: 50%;
 				position: absolute;
 				transform: translate(-50%,-50%);

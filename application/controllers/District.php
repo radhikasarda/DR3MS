@@ -37,6 +37,7 @@
 			$this->session->set_userdata('database_name', $database_name);
 			
 			$this->load->model('login_model');
+			$data['selected_district'] = $selected_district;
 			$data['users'] = $this->login_model->get_users();
 			$this->load->view('login_view',$data);
 

@@ -103,8 +103,7 @@
 					
 					
 					else
-					{
-						
+					{						
 						document.getElementById('district-form').submit();	
 						return true;
 					}
