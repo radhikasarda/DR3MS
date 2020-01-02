@@ -168,7 +168,7 @@
 			
 			if($resource_type == 'assets')
 			{
-				$query=$this->db->query("SELECT sum(nos_of_items) as count_res FROM ".$resource_type." where gp_no = ".$gp_no);
+				$query=$this->db->query("SELECT sum(no_of_item) as count_res FROM ".$resource_type." where gp_no = ".$gp_no);
 			}
 			else if($resource_type == 'community_hall')
 			{
@@ -318,11 +318,11 @@
 				{
 					$list =  array(
 						'name_of_item' => $row->name_of_item,
-						'nos_of_items'  => $row->nos_of_items,
-						'name_of_owners' =>$row->name_of_owners,
+						'no_of_item'  => $row->no_of_item,
+						'name_of_owner' =>$row->name_of_owner,
 						'address_of_owner' =>$row->address_of_owner,
-						'ph_no_of_owner' => $row->ph_no_of_owner,
-						'capacity_to_hold_people_' => $row->capacity_to_hold_people_
+						'contact_no_of_owner' => $row->contact_no_of_owner,
+						'capacity_to_hold_people' => $row->capacity_to_hold_people
 						);
 					$resource_detail_data_list[$i]  = $list;
 				

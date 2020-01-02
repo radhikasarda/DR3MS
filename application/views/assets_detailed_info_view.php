@@ -24,22 +24,22 @@
 					echo "<td>".$row['name_of_item']."</td>";
 					}
 					
-					if(is_null($row['nos_of_items']))
+					if(is_null($row['no_of_item']))
 					{
 						echo "<td>".$blank."</td>";
 					}
 					else
 					{
-					echo "<td>".$row['nos_of_items']."</td>";
+					echo "<td>".$row['no_of_item']."</td>";
 					}
 					
-					if(is_null($row['name_of_owners']))
+					if(is_null($row['name_of_owner']))
 					{
 						echo "<td>".$blank."</td>";
 					}
 					else
 					{
-						echo "<td>".$row['name_of_owners']."</td>";
+						echo "<td>".$row['name_of_owner']."</td>";
 					}
 					
 					if(is_null($row['address_of_owner']))
@@ -51,22 +51,22 @@
 						echo "<td>".$row['address_of_owner']."</td>";
 					}
 					
-					if(is_null($row['ph_no_of_owner']))
+					if(is_null($row['contact_no_of_owner']))
 					{
 						echo "<td>".$blank."</td>";
 					}
 					else
 					{
-						echo "<td>".$row['ph_no_of_owner']."</td>";
+						echo "<td>".$row['contact_no_of_owner']."</td>";
 					}
 					
-					if(is_null($row['capacity_to_hold_people_']))
+					if(is_null($row['capacity_to_hold_people']))
 					{
 						echo "<td>".$blank."</td>";
 					}
 					else
 					{
-						echo "<td>".$row['capacity_to_hold_people_']."</td>";
+						echo "<td>".$row['capacity_to_hold_people']."</td>";
 					}
 					echo "</tr>";
 				}

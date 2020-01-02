@@ -163,13 +163,13 @@
 			log_message('info','##########INSIDE dashboard get_assets()');	
 			if($circle_name == 'All')
 			{
-			$query = $this->db->query("SELECT sum(nos_of_items) as no_of_assets,c.circle_name as circle_name FROM circle c LEFT JOIN block b ON b.c_s_no= c.c_s_no LEFT JOIN gp g ON g.b_s_no=b.b_s_no LEFT JOIN assets a ON a.gp_no=g.gp_no GROUP by c.circle_name");
+			$query = $this->db->query("SELECT sum(no_of_item) as no_of_assets,c.circle_name as circle_name FROM circle c LEFT JOIN block b ON b.c_s_no= c.c_s_no LEFT JOIN gp g ON g.b_s_no=b.b_s_no LEFT JOIN assets a ON a.gp_no=g.gp_no GROUP by c.circle_name");
 			}
 			else
 			{
-			$q = "SELECT sum(nos_of_items) as no_of_assets,c.circle_name as circle_name FROM circle c LEFT JOIN block b ON b.c_s_no= c.c_s_no LEFT JOIN gp g ON g.b_s_no=b.b_s_no LEFT JOIN assets a ON a.gp_no=g.gp_no WHERE c.circle_name LIKE ".$circle_name;
+			$q = "SELECT sum(no_of_item) as no_of_assets,c.circle_name as circle_name FROM circle c LEFT JOIN block b ON b.c_s_no= c.c_s_no LEFT JOIN gp g ON g.b_s_no=b.b_s_no LEFT JOIN assets a ON a.gp_no=g.gp_no WHERE c.circle_name LIKE ".$circle_name;
 			log_message('info','##########INSIDE dashboard get_assets() QUERY:::'.$q);	
-			$query = $this->db->query("SELECT sum(nos_of_items) as no_of_assets,c.circle_name as circle_name FROM circle c LEFT JOIN block b ON b.c_s_no= c.c_s_no LEFT JOIN gp g ON g.b_s_no=b.b_s_no LEFT JOIN assets a ON a.gp_no=g.gp_no WHERE c.circle_name LIKE '$circle_name'");	
+			$query = $this->db->query("SELECT sum(no_of_item) as no_of_assets,c.circle_name as circle_name FROM circle c LEFT JOIN block b ON b.c_s_no= c.c_s_no LEFT JOIN gp g ON g.b_s_no=b.b_s_no LEFT JOIN assets a ON a.gp_no=g.gp_no WHERE c.circle_name LIKE '$circle_name'");	
 			}
 			return $query;			
 		}

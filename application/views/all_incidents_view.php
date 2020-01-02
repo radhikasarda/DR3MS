@@ -175,10 +175,7 @@
 												$('.selectpicker').selectpicker('refresh');
 											}
 
-				});
-				
-				
-				
+				});			
 			}
 			
 			function onClickSendMessage()

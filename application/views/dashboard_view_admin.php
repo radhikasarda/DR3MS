@@ -64,7 +64,7 @@
 		<div>
 		<?php $this->load->view('navbar_view');?>
 		</div>
-		<div class="dashboard-body-container" >
+		<div class="dashboard-body-container" id="dashboard-body-container">
 		<div class = "row" style="width:100%;border-style: solid;margin:0px;">
 			<div class="col-sm-6" >	
 				<div class="chart-container" style="width:100%;">
@@ -81,16 +81,17 @@
 					<br>
 					<div class="container"style="width:100%;height:300px;">                                                                            
 						<div class="table-responsive" style="width:100%; height:100%;overflow-x:auto;overflow-y:auto;">          
-							<table class="table table-bordered table-hover"  >	
+							<table class="table table-bordered table-hover"  id="all-messages-table">	
 							<thead style="background-color: black;color: white;">													
 								<tr>
+								<th style="display:none;"><strong>MSG ID</strong></th>
 								<th><strong>FROM</strong></th>
 								<th><strong>SUBJECT</strong></th>
 								</tr> 
 							</thead>
 								<?php foreach((array)$user_msg as $user_msg){?>	
 								<tr>
-									
+								<td style="display:none;"><?=$user_msg->message_id;?></td>	
 								<td><?=$user_msg->msg_from;?></td>
 								<td><?=$user_msg->subject;?></td>
 								
@@ -110,8 +111,8 @@
 					<br>
 					
 					<div class="container"style="width:100%;height:320px;">                                                                            
-						<div class="table-responsive" style="width:100%; height:100%;overflow-x:auto;overflow-y:auto;">          
-							<table class="table table-bordered table-hover"  >		
+						<div class="table-responsive" style="width:100%; height:100%;overflow-x:auto;overflow-y:auto;" >          
+							<table class="table table-bordered table-hover"  id="all-resources-table">		
 							<thead style="background-color: black;color: white;">													
 								<tr>
 								<th><strong>Circle</strong></th>
@@ -183,7 +184,7 @@
 			<br>
 				<div class="container" style="width:100%;">                                                                            
 					<div class="table-responsive" style="width:100%; height:320px;overflow-x:auto;overflow-y:auto;">          
-						<table class="table table-bordered table-hover" >
+						<table class="table table-bordered table-hover" id="all-incidents-table">
 							<thead style="background-color: black;color: white;">
 								<tr>
 									<th style="display:none;"><strong>INCIDENT ID</strong></th>							
@@ -233,15 +234,35 @@
 			</div>
 		</div>
 		</div>
+		<div class = "row">
+		<div class = "col-sm-2">
+		</div>
+		<div class = "col-sm-8">
+		<div id="incident-details" class="incident-details" >
+		
+		</div>
+		</div>
+		<div class = "col-sm-2">
+		</div>
+		</div>
+		
 	
 		<div class ="row">
+		<div class = "col-sm-2">
+		</div>
+		<div class = "col-sm-8" id="send-instructions" class="send-instructions" style= "display:none;">
+		</div>
+		</div>
+		<!-- FOR IMAGE DISPLAY IN POPUP -->
+		<div id="myModal" class="modal">
+			<span class="close">&times;</span>
+			<img class="modal-content" id="img01">
+		</div>
+		<div class ="row" id="footer-div">
 			<div class="col-sm-12">
 				<?php $this->load->view('footer_view');?>
 			</div>
 		</div>
-	
-	
-	
 	</div>
 	</body>
 	
@@ -313,5 +334,146 @@
   
   
 </script>
+<script>
+			$(document).ready(function() {
+					$('#all-incidents-table').find('tr').click(function () {
+						 var incident_id = $(this).find('td:first').text();
+						 var request_from_incident = "true";
+							$.ajax({
+														url:"<?php echo site_url('Incident/OnClickViewIncidentDetails');?>",
+														method:"POST",
+														data:{incident_id:incident_id,request_from_incident:request_from_incident},
+														type: "POST",
+														cache: false,
+														success: function(data){
+															
+															$("#dashboard-body-container").hide();  
+															$("#footer-div").hide();
+															$("#incident-details").show(); 											
+															$('#incident-details').html(data);
+															
+														}
 
+							});
+					});
+					
+			}); 
+
+			function onClickSendInstructions()
+			{
+				var incident_id =  document.getElementById("id").value;
+				$.ajax({
+											url:"<?php echo site_url('Incident/onClickSendInstructions');?>",
+											method:"POST",
+											data:{incident_id:incident_id},
+											type: "POST",
+											cache: false,
+											success: function(data){		
+												$("#dashboard-body-container").hide();  
+												$("#incident-details").hide();
+												$("#footer-div").hide();												
+												$("#send-instructions").show(); 											
+												$('#send-instructions').html(data);
+												$('.selectpicker').selectpicker();
+												$('.selectpicker').selectpicker('render');
+												$('.selectpicker').selectpicker('refresh');
+											}
+
+				});			
+			}
+			
+			function onClickSendMessage()
+			{
+				var recipient_id_list = $('#framework').val().toString();
+				var subject = $('#subject_incident').val();
+				var msg = $('#message').val();	
+				var incident_id = document.getElementById('id').value;
+				if(recipient_id_list == ''){
+					iqwerty.toast.Toast('Please Select Atleast 1 Recipient !!');
+					return;
+				}
+				if(subject == ''){
+					iqwerty.toast.Toast('Please add a Subject !!');	
+					return;
+				}			
+				$.ajax({
+											url:"<?php echo site_url('Incident/onSendInstructionMessageClick');?>",
+											method:"POST",
+											data:{incident_id:incident_id,recipient_id_list:recipient_id_list,subject:subject,msg:msg},
+											type: "POST",
+											cache: false,
+											success: function(response){
+													iqwerty.toast.Toast('Instructions Sent Successfully !!');	
+													window.location.href="<?php echo base_url('Incident/viewIncidents');?>";	
+																							
+											},
+											error: function() {
+												iqwerty.toast.Toast('Internal Server error!! Please Send Again !!');
+											}
+
+						});
+			}
+			function onClickImg1(){
+				
+				$("#dashboard-body-container").hide();  
+				$("#incident-details").hide();
+				$("#footer-div").hide();		
+				var modal = document.getElementById("myModal");
+				var img = document.getElementById("uploaded_img_0");
+				var modalImg = document.getElementById("img01");
+	
+				modal.style.display = "block";
+				modalImg.src = img.src;
+				var span = document.getElementsByClassName("close")[0];
+
+				// When the user clicks on <span> (x), close the modal
+				span.onclick = function() 
+				{ 
+				modal.style.display = "none";
+				$("#incident-details").show();  	
+				}
+			}
+			
+			function onClickImg2(){
+				
+				$("#dashboard-body-container").hide();  
+				$("#incident-details").hide();
+				$("#footer-div").hide(); 	
+				var modal = document.getElementById("myModal");
+				var img = document.getElementById("uploaded_img_1");
+				var modalImg = document.getElementById("img01");
+	
+				modal.style.display = "block";
+				modalImg.src = img.src;
+				var span = document.getElementsByClassName("close")[0];
+
+				// When the user clicks on <span> (x), close the modal
+				span.onclick = function() 
+				{ 
+				modal.style.display = "none";
+				$("#incident-details").show();  	
+				}
+			}
+			
+			function onClickImg3(){
+				
+				$("#dashboard-body-container").hide();  
+				$("#incident-details").hide();
+				$("#footer-div").hide(); 	
+				var modal = document.getElementById("myModal");
+				var img = document.getElementById("uploaded_img_2");
+				var modalImg = document.getElementById("img01");
+	
+				modal.style.display = "block";
+				modalImg.src = img.src;
+				var span = document.getElementsByClassName("close")[0];
+
+				// When the user clicks on <span> (x), close the modal
+				span.onclick = function() 
+				{ 
+				modal.style.display = "none";
+				$("#incident-details").show();  	
+				}
+			}		
+</script>
 </html>
