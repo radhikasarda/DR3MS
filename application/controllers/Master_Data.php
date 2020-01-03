@@ -22,8 +22,6 @@
 		public function index()  
 		{  
 			$this->load->model('resource_report_model');
-			
-			$userid = $this->session->userdata('userid');
 
 			$data_circles['resources'] = $this->resource_report_model->get_resources_names()->result();
 			

@@ -21,7 +21,7 @@
 			}
 			
 		</style>
-		<title>DR3MS::Master data Entry</title>
+		<title>DR3MS::Master Data Entry</title>
 		
 	</head>
 	
@@ -130,7 +130,7 @@
 		</nav>
 		<div id ="master-data-entry-div" style="display:none;">
 		</div>
-		<div id ="detailed-info" style="display:none;">			
+			<div id ="detailed-info" style="display:none;">			
 			<div class="container" style="overflow-x:auto;overflow-y:auto;height:550px;">				
 					<table id ="item-detail-table" class="table table-striped table-bordered" >				
 					</table>	
