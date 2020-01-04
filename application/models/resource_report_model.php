@@ -285,7 +285,7 @@
 			$resource_details = $this->get_resource_details($gp_no,$resource_name);
 			
 			//Get Detailed info in an array
-			$detailed_info = $this->get_detailed_info($resource_name,$resource_details);
+			$detailed_info = $this->get_detailed_info($gp_no,$resource_name,$resource_details);
 			
 			return $detailed_info;
 			
@@ -308,7 +308,7 @@
 			$query = $this->db->get();	
 			return $query;
 		}
-		public function get_detailed_info($resource_name,$resource_details)
+		public function get_detailed_info($gp_no,$resource_name,$resource_details)
 		{
 			$i=0;
 			$resource_detail_data_list = [];
@@ -317,6 +317,7 @@
 				foreach ($resource_details->result() as $row)
 				{
 					$list =  array(
+						'gp_no' => $gp_no,
 						'name_of_item' => $row->name_of_item,
 						'no_of_item'  => $row->no_of_item,
 						'name_of_owner' =>$row->name_of_owner,
@@ -334,6 +335,7 @@
 				foreach ($resource_details->result() as $row)
 				{
 					$list =  array(
+						'gp_no' => $gp_no,
 						'community_hall' => $row->community_hall,
 						'capacity_to_hold_people1'  => $row->capacity_to_hold_people1,
 						'address' =>$row->address,
@@ -352,6 +354,7 @@
 				foreach ($resource_details->result() as $row)
 				{
 					$list =  array(
+						'gp_no' => $gp_no,
 						'total_pop' => $row->total_pop,
 						'male_child'  => $row->male_child,
 						'female_child' =>$row->female_child,
@@ -376,6 +379,7 @@
 				foreach ($resource_details->result() as $row)
 				{
 					$list =  array(
+						'gp_no' => $gp_no,
 						'name_of_embankment' => $row->name_of_embankment,
 						'status'  => $row->status,
 						'village_coverage' =>$row->village_coverage
@@ -391,6 +395,7 @@
 				foreach ($resource_details->result() as $row)
 				{
 					$list =  array(
+						'gp_no' => $gp_no,
 						'village_name' => $row->village_name,
 						'location'  => $row->location,
 						'gps_point' =>$row->gps_point,
@@ -408,6 +413,7 @@
 				foreach ($resource_details->result() as $row)
 				{
 					$list =  array(
+						'gp_no' => $gp_no,
 						'name_of_health_centre' => $row->name_of_health_centre,
 						'address'  => $row->address,
 						'ph_no_of_health_centre' =>$row->ph_no_of_health_centre,
@@ -427,6 +433,7 @@
 				foreach ($resource_details->result() as $row)
 				{
 					$list =  array(
+						'gp_no' => $gp_no,
 						'inaccessible_area' => $row->inaccessible_area
 						);
 					
@@ -440,6 +447,7 @@
 				foreach ($resource_details->result() as $row)
 				{
 					$list =  array(
+						'gp_no' => $gp_no,
 						'total_lp_School' => $row->total_lp_School,
 						'total_me_School'  => $row->total_me_School,
 						'total_high_school' =>$row->total_high_school,
@@ -458,6 +466,7 @@
 				foreach ($resource_details->result() as $row)
 				{
 					$list =  array(
+						'gp_no' => $gp_no,
 						'raised_platform' => $row->raised_platform,
 						'address'  => $row->address,
 						'ph_no_of_owner' =>$row->ph_no_of_owner,
@@ -475,6 +484,7 @@
 				foreach ($resource_details->result() as $row)
 				{
 					$list =  array(
+						'gp_no' => $gp_no,
 						'name_of_school' => $row->name_of_school,
 						'address_of_camp'  => $row->address_of_camp,
 						'ph_no_of_owner' =>$row->ph_no_of_owner,
@@ -496,6 +506,7 @@
 				foreach ($resource_details->result() as $row)
 				{
 					$list =  array(
+						'gp_no' => $gp_no,
 						'total_rev_village' => $row->total_rev_village,
 						'total_govt_land'  => $row->total_govt_land,
 						'total_forest_land' =>$row->total_forest_land,
@@ -516,6 +527,7 @@
 				foreach ($resource_details->result() as $row)
 				{
 					$list =  array(
+						'gp_no' => $gp_no,
 						'village_name_tele' => $row->village_name_tele,
 						'location_of_telecom'  => $row->location_of_telecom,
 						'name_of_service_provider' =>$row->name_of_service_provider
@@ -531,6 +543,7 @@
 				foreach ($resource_details->result() as $row)
 				{
 					$list =  array(
+						'gp_no' => $gp_no,
 						'village_name' => $row->village_name,
 						'nature_of_disaster'  => $row->nature_of_disaster
 						);
@@ -545,6 +558,7 @@
 				foreach ($resource_details->result() as $row)
 				{
 					$list =  array(
+						'gp_no' => $gp_no,
 						'vulnerable_roads' => $row->vulnerable_roads,
 						'vulnerable_culvert'  => $row->vulnerable_culvert,
 						'vulnerable_bridges' =>$row->vulnerable_bridges,

@@ -9,7 +9,7 @@
 					echo "<th>"; echo "<strong>GP</strong>"; echo "</th>";
 					echo "<th>"; echo "<strong>Resource Type</strong>"; echo "</th>";
 					echo "<th>"; echo "<strong>Quantity of Resource Available</strong>"; echo "</th>";
-					echo "<th>";	echo "</th>";
+					echo "<th>"; echo "</th>";
 				echo "</tr>";
 				
 				foreach($data_resource_report as $row)

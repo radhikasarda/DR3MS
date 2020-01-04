@@ -78,7 +78,7 @@
 				if(circle_id != '')
 				{
 					$.ajax({
-					url : "<?php echo site_url('Incident/get_blocks');?>",
+					url : "<?php echo site_url('Master_Data_Update_Delete/get_blocks');?>",
 					method : "POST",
 					data : {circle_id: circle_id},
 					success: function(data)

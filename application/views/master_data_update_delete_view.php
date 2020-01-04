@@ -101,7 +101,7 @@
 		</nav>
 		<nav class="navbar navbar-inverse" id="selection-bar" style="background-color: #FFFFFF;margin-top:-20px;display:none;">
 			<div class="container-fluid">
-				<div class="col-sm-12" style="padding-top:8px;">
+				<div class="col-sm-12" style="padding-left:70px;padding-top:8px;">
 					<div class="col-xs-2">
 					</div>
 					<div class="col-xs-2">
@@ -110,13 +110,7 @@
 						</div>
 						<div class = "row">				
 						<select class="form-control" name = "circles" id="circles"  >
-							<?php $circle_name = $this->session->userdata('circle_name');
-							if($circle_name == 'All'){
-							?><option value="All">All</option>
-							<?php
-							}
-							?>
-							
+							<option value="Select">Select Circle</option>
 							<?php
 							foreach($circles as $row)
 							{
@@ -133,20 +127,20 @@
 									if(circle_id != '')
 									{
 											$.ajax({
-											url : "<?php echo site_url('Resource_Report/get_blocks');?>",
+											url : "<?php echo site_url('Master_Data_Update_Delete/get_blocks');?>",
 											method : "POST",
 											data : {circle_id: circle_id},
 											success: function(data)
 											{	
 												$('#blocks').html(data);
-												$('#gp').html('<option value="All">All</option>');
+												$('#gp').html('<option value="Select">Select GP</option>');
 
 											}
 											});
 									}else
 									{
-										  $('#blocks').html('<option value="All">All</option>');
-										  $('#gp').html('<option value="All">All</option>');
+										  $('#blocks').html('<option value="Select">Select Block</option>');
+										  $('#gp').html('<option value="Select">Select GP</option>');
 									}
 							}
 							$(document).ready(function(){
@@ -162,7 +156,7 @@
 									  if(block_id != '')
 									  {
 									   $.ajax({
-										url:"<?php echo site_url('Resource_Report/get_gp');?>",
+										url:"<?php echo site_url('Master_Data_Update_Delete/get_gp');?>",
 										method:"POST",
 										data:{block_id:block_id},
 										success:function(data)
@@ -173,7 +167,7 @@
 									  }
 									  else
 									  {
-									   $('#gp').html('<option value="All">All</option>');
+									   $('#gp').html('<option value="Select">Select GP</option>');
 									  }
 								});
 																	
@@ -186,7 +180,6 @@
 						</div>
 						<div class = "row">	
 						<select class="form-control" name = "blocks" id="blocks" >
-							<option value="All">All</option>
 						</select>
 						</div>
 					</div>
@@ -196,7 +189,6 @@
 						</div>
 						<div class = "row">
 						<select class="form-control" name = "gp" id="gp" >
-							<option value="All">All</option>
 						</select>
 						</div>
 					</div>
@@ -214,10 +206,21 @@
 					</table>
 			</div>
 		</div>
-		
+		<div id ="report-circlewise-all-resource">
+			<div class="container" style="overflow-x:auto;overflow-y:auto;height:550px;">
+					<table id ="report-table" class="table table-striped table-bordered">					
+					</table>
+			</div>
+		</div>
 		<script>
 			function GetSelectedData()
 			{
+				//Reset Combobox values
+				$('#circles').prop('selectedIndex',0);
+				$('#blocks').prop('selectedIndex',0);
+				$('#gp').prop('selectedIndex',0);
+				$('#report-circlewise-all-resource').hide();
+				 
 				if($('#resources').val() == "select")
 				{
 					iqwerty.toast.Toast('Please SELECT a RESOURCE !!');
@@ -255,17 +258,38 @@
 			
 			function GetSelectedCategory()
 			{
-				$.ajax({
+					if($('#resources').val() == "select")
+					{
+						iqwerty.toast.Toast('Please SELECT a ITEM !!');
+						return;		
+					}
+					if($('#circles').val() == "Select")
+					{
+						iqwerty.toast.Toast('Please SELECT a Circle !!');
+						return;		
+					}	
+					if($('#blocks').val() == "Select")
+					{
+						iqwerty.toast.Toast('Please SELECT a Block !!');
+						return;		
+					}
+					if($('#gp').val() == "Select")
+					{
+						iqwerty.toast.Toast('Please SELECT a GP !!');
+						return;		
+					}
+					$.ajax({
 											url:"<?php echo site_url('Master_Data_Update_Delete/onClickSubmitCategory');?>",
 											method:"POST",
-											data:{block_id:$('#blocks').val(),circle_id:$('#circles').val(),gp_id:$('#gp').val(),resource_id:$('#item').val()},
+											data:{block:$('#blocks').val(),circle:$('#circles').val(),gp:$('#gp').val(),resource:$('#resources').val()},
 											type: "POST",
 											cache: false,
 											success: function(data){
-												$('#detailed-data-table').html(data); 
+												$('#report-circlewise-all-resource').show();
+												$('#report-table').html(data); 
 											}
 
-							});
+					});
 			}
 			
 			function OnClickEdit()
