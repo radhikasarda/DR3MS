@@ -12,7 +12,7 @@
 				{
 					echo "<tr>";
 					
-					echo "<td>".$row['gp_no']."</td>";
+					echo "<td class = 'id'>".$row['gp_no']."</td>";
 						
 					echo "<td>".$row['b_s_no']."</td>";
 					

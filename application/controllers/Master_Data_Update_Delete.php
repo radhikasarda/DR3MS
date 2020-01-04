@@ -85,5 +85,26 @@
 			
 			echo $data_item_details_view;
 		}
+		
+		public function onClickUpdateCircleData()
+		{
+			log_message('info','##########INSIDE onClickUpdateCircleData FUNC::');
+			$response = $this->master_data_update_delete_model->update_circle_data();
+			echo $response;	
+		}
+		
+		public function onClickUpdateBlockData()
+		{
+			log_message('info','##########INSIDE onClickUpdateBlockData FUNC::');
+			$response = $this->master_data_update_delete_model->update_block_data();
+			echo $response;	
+		}
+		
+		public function onClickUpdateGpData()
+		{
+			log_message('info','##########INSIDE onClickUpdateGpData FUNC::');
+			$response = $this->master_data_update_delete_model->update_gp_data();
+			echo $response;
+		}
    }
 ?>

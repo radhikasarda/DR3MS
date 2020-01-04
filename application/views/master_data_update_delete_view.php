@@ -129,7 +129,6 @@
 						<script type="text/javascript">
 							
 							function set_block_names(){
-								
 								var circle_id=$('#circles').val();
 									if(circle_id != '')
 									{
@@ -231,6 +230,9 @@
 				else
 				{										
 						$('#selection-bar').show();
+						$('#master-data-entry-div').hide();
+						$('#detailed-info').hide(); 
+						
 				}
 			}	
 			function GetDetailedData()
@@ -254,7 +256,7 @@
 			function GetSelectedCategory()
 			{
 				$.ajax({
-											url:"<?php echo site_url('Master_Data_Update_Delete/onClickSubmitResource');?>",
+											url:"<?php echo site_url('Master_Data_Update_Delete/onClickSubmitCategory');?>",
 											method:"POST",
 											data:{block_id:$('#blocks').val(),circle_id:$('#circles').val(),gp_id:$('#gp').val(),resource_id:$('#item').val()},
 											type: "POST",
@@ -312,9 +314,10 @@
 			{
 				alert("hii");
 			}
-			function onClickAddCircleData()
+			function onClickUpdateCircleData()
 			{
-				var name_of_circle = document.getElementById("name_of_circle").value; 
+				var name_of_circle = document.getElementById("name_of_circle").value;
+				var circle_no = document.getElementById("id").value;
 				
 				if(name_of_circle == '')
 				{
@@ -324,34 +327,28 @@
 				else
 				{
 					$.ajax({
-								url:"<?php echo site_url('Master_data/onClickAddCircleData');?>",
+								url:"<?php echo site_url('Master_Data_Update_Delete/onClickUpdateCircleData');?>",
 								method:"POST",
-								data:{name_of_circle:name_of_circle},
+								data:{circle_no:circle_no,name_of_circle:name_of_circle},
 								type: "POST",
 								cache: false,
 								success: function(data)
 								{
-									if(data == 1)
-									{
-										iqwerty.toast.Toast('Data Inserted Successfully !!');
+										iqwerty.toast.Toast('Data Updated Successfully !!');
 										$('#master-data-entry-div').hide();
-										getDetailedData();
-									}
-									else									
-									{
-										iqwerty.toast.Toast('Data NOT Inserted !! Please TRY AGAIN');	
-									}
+										GetDetailedData();
 								}
 
 				});	
 				}
 			}
-			function onClickAddBlockData()
+			function onClickUpdateBlockData()
 			{
-				var selected_circle = $('#circles').val();
+				var selected_circle = $('#circle_names').val();
 				var name_of_block = document.getElementById("name_of_block").value; 
+				var block_no = document.getElementById("id").value;
 				
-				if(name_of_block == '' || selected_circle == 'select' )
+				if(name_of_block == '' || selected_circle == 'Select' )
 				{
 					iqwerty.toast.Toast('Some Fields are Missing !!');
 					return;	
@@ -360,27 +357,51 @@
 				else
 				{
 					$.ajax({
-									url:"<?php echo site_url('Master_data/onClickAddBlockData');?>",
+									url:"<?php echo site_url('Master_Data_Update_Delete/onClickUpdateBlockData');?>",
 									method:"POST",
-									data:{selected_circle:selected_circle,name_of_block:name_of_block},
+									data:{block_no:block_no,selected_circle:selected_circle,name_of_block:name_of_block},
 									type: "POST",
 									cache: false,
 									success: function(data)
 									{
-										if(data == 1)
-										{
-											iqwerty.toast.Toast('Data Inserted Successfully !!');
+											iqwerty.toast.Toast('Data Updated Successfully !!');
 											$('#master-data-entry-div').hide();
-											getDetailedData();
-										}
-										else									
-										{
-											iqwerty.toast.Toast('Data NOT Inserted !! Please TRY AGAIN');	
-										}
+											GetDetailedData();
+										
 									}
 
 					});	
 				}			
+			}
+			
+			function onClickUpdateGpData()
+			{
+				var selected_circle = $('#circle_names').val();
+				var selected_block = $('#block_names').val();
+				var name_of_gp = document.getElementById("name_of_gp").value; 
+				var gp_no = document.getElementById("id").value;
+
+				if(selected_circle == 'Select' || selected_block == 'Select' || name_of_gp == '' || selected_block == null)
+				{
+					iqwerty.toast.Toast('Some Fields are Missing !!');
+					return;	
+				}
+				
+				$.ajax({
+									url:"<?php echo site_url('Master_Data_Update_Delete/onClickUpdateGpData');?>",
+									method:"POST",
+									data:{selected_circle:selected_circle,selected_block:selected_block,name_of_gp:name_of_gp,gp_no:gp_no},
+									type: "POST",
+									cache: false,
+									success: function(data)
+									{
+											iqwerty.toast.Toast('Data Updated Successfully !!');
+											$('#master-data-entry-div').hide();
+											GetDetailedData();
+										
+									}
+
+					});				
 			}
 		</script>
 	</body>

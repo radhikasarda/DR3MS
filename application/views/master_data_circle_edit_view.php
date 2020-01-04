@@ -23,7 +23,7 @@
 							  <label class="col-md-4 control-label">Name of Circle</label>  
 								<div class="col-md-4 inputGroupContainer">							 
 									<input name="name_of_circle" class="form-control" type="text" id="name_of_circle"  value="<?php echo $circle_name; ?>">
-									<!--HIDDEN INCIDENT ID FIELD -->
+									<!--HIDDEN ID FIELD -->
 									<input name='id' id='id' value="<?php echo $c_s_no; ?>" class="form-control" type="hidden" >
 								</div>
 							</div>
@@ -31,7 +31,7 @@
 							<div class="form-group">
 							  <label class="col-md-4 control-label"></label>
 								<div class="col-md-4"><br>
-									<button type="button" class="btn btn-success form-control" onclick="return onClickAddCircleData();">Add Data<span class="glyphicon glyphicon-send"></span></button>
+									<button type="button" class="btn btn-success form-control" onclick="return onClickUpdateCircleData();">Update Data<span class="glyphicon glyphicon-send"></span></button>
 							  </div>
 							</div>
 							

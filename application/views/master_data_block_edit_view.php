@@ -22,13 +22,8 @@
 							<div class="form-group">
 							  <label class="col-md-4 control-label">Select Circle</label>  
 								<div class="col-md-4 inputGroupContainer">								
-									<select class="form-control" name = "circles" id="circles"  >
-										<?php $circle_name = $this->session->userdata('circle_name');
-											if($circle_name == 'All'){
-											?><option value="Select">Select Circle</option>
-											<?php
-											}
-											?>
+									<select class="form-control" name = "circle_names" id="circle_names"  >
+											<option value="Select">Select Circle</option>
 											<?php
 											foreach($circles as $row)
 											{ 
@@ -46,7 +41,7 @@
 							  <label class="col-md-4 control-label">Name of Block</label>  
 								<div class="col-md-4 inputGroupContainer">							 
 									<input name="name_of_block" class="form-control" type="text" id="name_of_block" value="<?php echo $block; ?>">
-									<!--HIDDEN INCIDENT ID FIELD -->
+									<!--HIDDEN ID FIELD -->
 									<input name='id' id='id' value="<?php echo $b_s_no; ?>" class="form-control" type="hidden" >
 								</div>
 							</div>
@@ -54,7 +49,7 @@
 							<div class="form-group">
 							  <label class="col-md-4 control-label"></label>
 								<div class="col-md-4"><br>
-									<button type="button" class="btn btn-success form-control" onclick="return onClickAddBlockData();">Add Data<span class="glyphicon glyphicon-send"></span></button>
+									<button type="button" class="btn btn-success form-control" onclick="return onClickUpdateBlockData();">Update Data<span class="glyphicon glyphicon-send"></span></button>
 							  </div>
 							</div>
 							
