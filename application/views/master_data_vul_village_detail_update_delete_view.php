@@ -2,6 +2,7 @@
 				echo "<tbody>";
 				$blank = "0";
 				echo "<tr>";
+					echo "<th style = 'display:none;'>"; echo "<strong>SL NO</strong>"; echo "</th>";
 					echo "<th style = 'display:none;'>"; echo "<strong>GP NO</strong>"; echo "</th>";
 					echo "<th>"; echo "<strong>Village Name</strong>"; echo "</th>";
 					echo "<th>"; echo "<strong>Nature of Disaster</strong>"; echo "</th>";
@@ -12,6 +13,7 @@
 				foreach($data_report_detailed_info as $row)
 				{
 					echo "<tr>";
+					echo "<td class = 's_no' style = 'display:none;'>".$row['s_no']."</td>";
 					if(is_null($row['gp_no']))
 					{
 						echo "<td style = 'display:none;'>".$blank."</td>";

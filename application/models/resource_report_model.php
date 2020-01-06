@@ -318,6 +318,7 @@
 				{
 					$list =  array(
 						'gp_no' => $gp_no,
+						's_no' =>  $row->s_no,
 						'name_of_item' => $row->name_of_item,
 						'no_of_item'  => $row->no_of_item,
 						'name_of_owner' =>$row->name_of_owner,
@@ -336,6 +337,7 @@
 				{
 					$list =  array(
 						'gp_no' => $gp_no,
+						's_no' =>  $row->s_no,
 						'community_hall' => $row->community_hall,
 						'capacity_to_hold_people1'  => $row->capacity_to_hold_people1,
 						'address' =>$row->address,
@@ -355,6 +357,7 @@
 				{
 					$list =  array(
 						'gp_no' => $gp_no,
+						's_no' =>  $row->s_no,
 						'total_pop' => $row->total_pop,
 						'male_child'  => $row->male_child,
 						'female_child' =>$row->female_child,
@@ -380,6 +383,7 @@
 				{
 					$list =  array(
 						'gp_no' => $gp_no,
+						's_no' =>  $row->s_no,
 						'name_of_embankment' => $row->name_of_embankment,
 						'status'  => $row->status,
 						'village_coverage' =>$row->village_coverage
@@ -396,6 +400,7 @@
 				{
 					$list =  array(
 						'gp_no' => $gp_no,
+						's_no' =>  $row->s_no,
 						'village_name' => $row->village_name,
 						'location'  => $row->location,
 						'gps_point' =>$row->gps_point,
@@ -414,6 +419,7 @@
 				{
 					$list =  array(
 						'gp_no' => $gp_no,
+						's_no' =>  $row->s_no,
 						'name_of_health_centre' => $row->name_of_health_centre,
 						'address'  => $row->address,
 						'ph_no_of_health_centre' =>$row->ph_no_of_health_centre,
@@ -434,6 +440,7 @@
 				{
 					$list =  array(
 						'gp_no' => $gp_no,
+						's_no' =>  $row->s_no,
 						'inaccessible_area' => $row->inaccessible_area
 						);
 					
@@ -448,6 +455,7 @@
 				{
 					$list =  array(
 						'gp_no' => $gp_no,
+						's_no' =>  $row->s_no,
 						'total_lp_School' => $row->total_lp_School,
 						'total_me_School'  => $row->total_me_School,
 						'total_high_school' =>$row->total_high_school,
@@ -467,6 +475,7 @@
 				{
 					$list =  array(
 						'gp_no' => $gp_no,
+						's_no' =>  $row->s_no,
 						'raised_platform' => $row->raised_platform,
 						'address'  => $row->address,
 						'ph_no_of_owner' =>$row->ph_no_of_owner,
@@ -485,6 +494,7 @@
 				{
 					$list =  array(
 						'gp_no' => $gp_no,
+						's_no' =>  $row->s_no,
 						'name_of_school' => $row->name_of_school,
 						'address_of_camp'  => $row->address_of_camp,
 						'ph_no_of_owner' =>$row->ph_no_of_owner,
@@ -507,6 +517,7 @@
 				{
 					$list =  array(
 						'gp_no' => $gp_no,
+						's_no' =>  $row->s_no,
 						'total_rev_village' => $row->total_rev_village,
 						'total_govt_land'  => $row->total_govt_land,
 						'total_forest_land' =>$row->total_forest_land,
@@ -528,6 +539,7 @@
 				{
 					$list =  array(
 						'gp_no' => $gp_no,
+						's_no' =>  $row->s_no,
 						'village_name_tele' => $row->village_name_tele,
 						'location_of_telecom'  => $row->location_of_telecom,
 						'name_of_service_provider' =>$row->name_of_service_provider
@@ -544,6 +556,7 @@
 				{
 					$list =  array(
 						'gp_no' => $gp_no,
+						's_no' =>  $row->s_no,
 						'village_name' => $row->village_name,
 						'nature_of_disaster'  => $row->nature_of_disaster
 						);
@@ -559,6 +572,7 @@
 				{
 					$list =  array(
 						'gp_no' => $gp_no,
+						's_no' =>  $row->s_no,
 						'vulnerable_roads' => $row->vulnerable_roads,
 						'vulnerable_culvert'  => $row->vulnerable_culvert,
 						'vulnerable_bridges' =>$row->vulnerable_bridges,

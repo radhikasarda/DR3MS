@@ -96,9 +96,9 @@
 			{
 			$detailed_info_view = $this->load->view('handPump_ringwell_detailed_info_view.php',$row_detailed_info,TRUE);	
 			}
-			else if($actual_resource_name == 'Heath Centre')
+			else if($actual_resource_name == 'Health Centre')
 			{
-			$detailed_info_view = $this->load->view('heath_centre_detailed_info_view.php',$row_detailed_info,TRUE);	
+			$detailed_info_view = $this->load->view('health_centre_detailed_info_view.php',$row_detailed_info,TRUE);	
 			}
 			else if($actual_resource_name == 'Inaccessible Area')
 			{

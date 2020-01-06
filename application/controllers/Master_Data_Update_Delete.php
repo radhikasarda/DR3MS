@@ -155,9 +155,9 @@
 			{
 			$detailed_info_view = $this->load->view('master_data_handPump_ringwell_detail_update_delete_view.php',$row_detailed_info,TRUE);	
 			}
-			else if($actual_resource_name == 'Heath Centre')
+			else if($actual_resource_name == 'Health Centre')
 			{
-			$detailed_info_view = $this->load->view('master_data_heath_centre_detail_update_delete_view.php',$row_detailed_info,TRUE);	
+			$detailed_info_view = $this->load->view('master_data_health_centre_detail_update_delete_view.php',$row_detailed_info,TRUE);	
 			}
 			else if($actual_resource_name == 'Inaccessible Area')
 			{
@@ -194,5 +194,194 @@
 			echo $detailed_info_view;
 				
 		}
+		
+		public function OnClickResourceEdit()
+		{
+			log_message('info','##########INSIDE OnClickResourceEdit FUNC::');
+			$this->load->model('resource_report_model');
+			
+			$data_resource_details = $this->master_data_update_delete_model->get_resource_details(); 
+			
+			$userid = $this->session->userdata('userid');		
+			$data_resources['circles'] = $this->resource_report_model->get_circles($userid)->result(); 
+			
+			$selected_gp =  $this->input->post('selected_gp');	
+			$selected_block =  $this->input->post('selected_block');	
+			$selected_circle =  $this->input->post('selected_circle');	
+			
+			$data['selected_gp'] = $selected_gp;
+
+			$data['selected_block'] = $selected_block;
+
+			$data['selected_circle'] = $selected_circle;
+
+			$data = array_merge($data_resource_details,$data_resources,$data);
+			
+			$selected_item = $this->input->post('selected_item');	
+			
+			$data_resource_details_view = null;
+			
+			if($selected_item == "Assets")
+			{
+				$data_resource_details_view = $this->load->view('master_data_assets_edit_view.php',$data,TRUE);
+			}
+			if($selected_item == "Community hall")
+			{
+				$data_resource_details_view = $this->load->view('master_data_community_hall_edit_view.php',$data,TRUE);
+			}
+			if($selected_item == "Population")
+			{
+				$data_resource_details_view = $this->load->view('master_data_population_edit_view.php',$data,TRUE);
+			}
+			if($selected_item == "Embankment")
+			{
+				$data_resource_details_view = $this->load->view('master_data_embankment_edit_view.php',$data,TRUE);
+			}
+			if($selected_item == "HandPump and Ring Wells")
+			{
+				$data_resource_details_view = $this->load->view('master_data_handPump_ringwell_edit_view.php',$data,TRUE);
+			}
+			if($selected_item == "Health Centre")
+			{
+				$data_resource_details_view = $this->load->view('master_data_health_centre_edit_view.php',$data,TRUE);
+			}
+			if($selected_item == "Inaccessible Area")
+			{
+				$data_resource_details_view = $this->load->view('master_data_inaccessible_area_edit_view.php',$data,TRUE);
+			}
+			if($selected_item == "Institutions")
+			{
+				$data_resource_details_view = $this->load->view('master_data_institutions_edit_view.php',$data,TRUE);
+			}
+			if($selected_item == "Raised Platform")
+			{
+				$data_resource_details_view = $this->load->view('master_data_raised_platform_edit_view.php',$data,TRUE);
+			}
+			if($selected_item == 'Relif Camp')
+			{
+				$data_resource_details_view = $this->load->view('master_data_relif_camp_edit_view.php',$row_detailed_info,TRUE);	
+			}
+			if($selected_item == "Task Force Commitee Members")
+			{
+				$data_resource_details_view = $this->load->view('master_data_task_force_edit_view.php',$data,TRUE);
+			}
+			if($selected_item == "Telecommunication")
+			{
+				$data_resource_details_view = $this->load->view('master_data_telecommunication_edit_view.php',$data,TRUE);
+			}
+			if($selected_item == "Vulnerable Village")
+			{
+				$data_resource_details_view = $this->load->view('master_data_vul_village_edit_view.php',$data,TRUE);
+			}
+			if($selected_item == "Vulnerable Roads, Culvert and Bridges")
+			{
+				$data_resource_details_view = $this->load->view('master_data_vul_roads_culvert_bridge_edit_view.php',$data,TRUE);
+			}
+			
+			echo $data_resource_details_view;
+		}
+		
+		public function onClickUpdateAssetsData()
+		{
+			log_message('info','##########INSIDE onClickUpdateAssetsData FUNC::');
+			$response = $this->master_data_update_delete_model->update_assets_data();
+			echo $response;	
+		}
+		
+		public function onClickUpdateCommunityHallData()
+		{
+			log_message('info','##########INSIDE onClickUpdateCommunityHallData FUNC::');
+			$response = $this->master_data_update_delete_model->update_community_hall_data();
+			echo $response;	
+		}
+		
+		public function onClickUpdateDemographicData()
+		{
+			log_message('info','##########INSIDE onClickUpdatePopulationData FUNC::');
+			$response = $this->master_data_update_delete_model->update_demographic_data();
+			echo $response;	
+		}
+		
+		public function onClickUpdateEmbankmentData()
+		{
+			log_message('info','##########INSIDE onClickUpdateEmbankmentData FUNC::');
+			$response = $this->master_data_update_delete_model->update_embankment_data();
+			echo $response;	
+		}
+		
+		public function onClickUpdateHandPumpRingWellData()
+		{
+			log_message('info','##########INSIDE onClickUpdateHandPumpRingWellData FUNC::');
+			$response = $this->master_data_update_delete_model->update_hand_pump_ring_well_data();
+			echo $response;	
+		}
+		
+		public function onClickUpdateHealthCentreData()
+		{
+			log_message('info','##########INSIDE onClickUpdateHealthCentreData FUNC::');
+			$response = $this->master_data_update_delete_model->update_health_centre_data();
+			echo $response;	
+		}
+		
+		
+		public function onClickUpdateInaccessibleData()
+		{
+			log_message('info','##########INSIDE onClickUpdateInaccessibleData FUNC::');
+			$response = $this->master_data_update_delete_model->update_inaccessible_data();
+			echo $response;	
+		}
+				
+		public function onClickUpdateInstitutionData()
+		{
+			log_message('info','##########INSIDE onClickUpdateInstitutionData FUNC::');
+			$response = $this->master_data_update_delete_model->update_institution_data();
+			echo $response;	
+		}
+		
+		
+		public function onClickUpdateRaisedPlatformData()
+		{
+			log_message('info','##########INSIDE onClickUpdateRaisedPlatformData FUNC::');
+			$response = $this->master_data_update_delete_model->update_raised_platform_data();
+			echo $response;	
+		}
+		
+		
+		public function onClickUpdateRelifCampData()
+		{
+			log_message('info','##########INSIDE onClickUpdateRelifCampData FUNC::');
+			$response = $this->master_data_update_delete_model->update_relif_camp_data();
+			echo $response;	
+		}
+		/*
+		
+		public function onClickUpdateCommunityHallData()
+		{
+			log_message('info','##########INSIDE onClickUpdateCommunityHallData FUNC::');
+			$response = $this->master_data_update_delete_model->update_task_force_data();
+			echo $response;	
+		}
+		
+		public function onClickUpdateCommunityHallData()
+		{
+			log_message('info','##########INSIDE onClickUpdateCommunityHallData FUNC::');
+			$response = $this->master_data_update_delete_model->update_telecommunication_data();
+			echo $response;	
+		}
+		
+		public function onClickUpdateCommunityHallData()
+		{
+			log_message('info','##########INSIDE onClickUpdateCommunityHallData FUNC::');
+			$response = $this->master_data_update_delete_model->update_vul_road_cul_bridge_data();
+			echo $response;	
+		}
+		
+		
+		public function onClickUpdateCommunityHallData()
+		{
+			log_message('info','##########INSIDE onClickUpdateCommunityHallData FUNC::');
+			$response = $this->master_data_update_delete_model->update_vul_village_data();
+			echo $response;	
+		}*/
    }
 ?>

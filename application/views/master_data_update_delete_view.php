@@ -313,7 +313,7 @@
 						currentRow.onclick = createClickHandler(currentRow);
 				}
 			}
-				window.onload = addRowHandlers();
+			window.onload = addRowHandlers();
  
 			function sendRowData(id)
 			{
@@ -427,6 +427,575 @@
 
 					});				
 			}
+			
+			function OnClickResourceEdit()
+			{
+				var table = document.getElementById("report-table");
+	
+				var rows = table.getElementsByTagName("tr");
+			
+				for (i = 0; i < rows.length; i++) {
+						var currentRow = table.rows[i];
+						var createClickHandler = 
+						function(row) 
+						{
+							return function() {
+								var id_row = row.getElementsByClassName("s_no")[0];
+								var s_no = id_row.innerHTML;
+								send_Sno_Data(s_no);
+							};
+						};
+
+						currentRow.onclick = createClickHandler(currentRow);
+				}
+			}
+			
+			function send_Sno_Data(s_no)
+			{
+				var selected_item = $('#resources').val()
+				$.ajax({
+												url:"<?php echo site_url('Master_Data_Update_Delete/OnClickResourceEdit');?>",
+												method:"POST",
+												data:{s_no:s_no,selected_item:selected_item,selected_circle:$('#circles').val(),selected_block:$('#blocks').val(),selected_gp:$('#gp').val()},
+												type: "POST",
+												cache: false,
+												success: function(data)
+												{	
+													$('#selection-bar').hide();
+													$('#report-circlewise-all-resource').hide();
+													$('#master-data-entry-div').show();
+													$('#master-data-entry-div').html(data); 
+												}
+
+								});
+			}
+			
+			function onClickUpdateAssetsData()
+			{
+				var selected_circle = $('#circle_names').val();
+				var selected_block = $('#block_names').val();
+				var selected_gp = $('#gp_names').val();			
+				var name_of_item = document.getElementById("name_of_item").value; 								
+				var no_of_item = $("#no_of_item").val();
+				var name_of_owner = document.getElementById("name_of_owner").value; 
+				var address = document.getElementById("address").value; 
+				var contact_no = document.getElementById("contact_no").value; 
+				var capacity = $("#capacity").val();
+				var s_no = document.getElementById("s_no").value;
+				
+				if(selected_circle == null || selected_block == null || selected_gp == null || selected_circle == 'Select' || selected_block == 'Select' || selected_gp == 'Select' || name_of_item == '' || no_of_item == '' || name_of_owner == '' || address == '' || contact_no == '' || capacity == '' )
+				{
+					iqwerty.toast.Toast('Some Fields are Missing !!');
+					return;	
+				}
+				
+				$.ajax({
+								url:"<?php echo site_url('Master_Data_Update_Delete/onClickUpdateAssetsData');?>",
+								method:"POST",
+								data:{s_no:s_no,selected_circle:selected_circle,selected_block:selected_block,selected_gp:selected_gp,name_of_item:name_of_item,no_of_item:no_of_item,name_of_owner:name_of_owner,address:address,contact_no:contact_no,capacity:capacity},
+								type: "POST",
+								cache: false,
+								success: function(data)
+								{
+									iqwerty.toast.Toast('Data Updated Successfully !!');
+									$('#master-data-entry-div').hide();
+									GetSelectedData();
+								}
+
+				});	
+			}
+			
+			function onClickUpdateCommunityHallData()
+			{
+				var selected_circle = $('#circle_names').val();
+				var selected_block = $('#block_names').val();
+				var selected_gp = $('#gp_names').val();				
+				var community_hall = document.getElementById("community_hall").value; 								
+				var capacity_1 = $("#capacity_1").val();
+				var address = document.getElementById("address").value; 
+				var contact_no = document.getElementById("contact_no").value; 
+				var capacity_2 = $("#capacity_2").val();
+				var gps_point = document.getElementById("gps_point").value; 
+				var s_no = document.getElementById("s_no").value;
+				
+				if( selected_circle == null || selected_block == null || selected_gp == null || selected_circle == 'Select' || selected_block == 'Select' || selected_gp == 'Select' || community_hall == '' || capacity_1 == '' || address == '' || contact_no == '' || capacity_2 == '' || gps_point == '' )
+				{
+					iqwerty.toast.Toast('Some Fields are Missing !!');
+					return;	
+				}
+				
+				else
+				{
+					$.ajax({
+								url:"<?php echo site_url('Master_Data_Update_Delete/onClickUpdateCommunityHallData');?>",
+								method:"POST",
+								data:{s_no:s_no,selected_circle:selected_circle,selected_block:selected_block,selected_gp:selected_gp,community_hall:community_hall,capacity_1:capacity_1,address:address,contact_no:contact_no,capacity_2:capacity_2,gps_point:gps_point},
+								type: "POST",
+								cache: false,
+								success: function(data)
+								{
+									iqwerty.toast.Toast('Data Updated Successfully !!');
+									$('#master-data-entry-div').hide();
+									GetSelectedData();
+								}
+
+								});
+				}
+					
+			}
+		
+			function onClickUpdateDemographicData()
+			{
+				var selected_circle = $('#circle_names').val();
+				var selected_block = $('#block_names').val();
+				var selected_gp = $('#gp_names').val();											
+				var total_population = $("#total_population").val();
+				var male_child = $("#male_child").val();
+				var female_child = $("#female_child").val();
+				var male_adult = $("#male_adult").val();
+				var female_adult = $("#female_adult").val();
+				var male_old = $("#male_old").val();
+				var female_old = $("#female_old").val();
+				var no_of_bpl_families = $("#no_of_bpl_families").val();
+				var families_with_pucca_house = $("#families_with_pucca_house").val();
+				var families_with_kutcha_house = $("#families_with_kutcha_house").val();
+				var landless_families = $("#landless_families").val();
+				var homeless_families = $("#homeless_families").val();
+				var s_no = document.getElementById("s_no").value;
+				if(selected_circle == null || selected_block == null || selected_gp == null || selected_circle == 'Select' || selected_block == 'Select' || selected_gp == 'Select' || total_population == '' || male_child == '' || female_child == '' || male_adult == '' || female_adult == '' || male_old == '' || female_old == '' || no_of_bpl_families == '' || families_with_pucca_house == '' || families_with_kutcha_house == '' || landless_families == '' || homeless_families == '')
+				{
+					iqwerty.toast.Toast('Some Fields are Missing !!');
+					return;	
+				}
+				
+				else
+				{
+					$.ajax({
+								url:"<?php echo site_url('Master_Data_Update_Delete/onClickUpdateDemographicData');?>",
+								method:"POST",
+								data:{s_no:s_no,selected_circle:selected_circle,selected_block:selected_block,selected_gp:selected_gp,total_population:total_population,male_child:male_child,female_child:female_child,male_adult:male_adult,female_adult:female_adult,male_old:male_old,female_old:female_old,no_of_bpl_families:no_of_bpl_families,families_with_pucca_house:families_with_pucca_house,families_with_kutcha_house:families_with_kutcha_house,landless_families:landless_families,homeless_families:homeless_families},
+								type: "POST",
+								cache: false,
+								success: function(data)
+								{
+									iqwerty.toast.Toast('Data Updated Successfully !!');
+									$('#master-data-entry-div').hide();
+									GetSelectedData();
+								}
+
+								});
+				}
+			}
+			
+			function onClickUpdateEmbankmentData()
+			{
+				var s_no = document.getElementById("s_no").value;
+				var selected_circle = $('#circle_names').val();
+				var selected_block = $('#block_names').val();
+				var selected_gp = $('#gp_names').val();				
+				var name_of_embankment = document.getElementById("name_of_embankment").value; 								
+				var status = $("#status").val();
+				var village_coverage = $("#village_coverage").val();
+				
+				if(selected_circle == null || selected_block == null || selected_gp == null || selected_circle == 'Select' || selected_block == 'Select' || selected_gp == 'Select' || name_of_embankment == '' || status == 'select' || village_coverage == '')
+				{
+					iqwerty.toast.Toast('Some Fields are Missing !!');
+					return;	
+				}
+				
+				else
+				{
+					$.ajax({
+								url:"<?php echo site_url('Master_Data_Update_Delete/onClickUpdateEmbankmentData');?>",
+								method:"POST",
+								data:{s_no:s_no,selected_circle:selected_circle,selected_block:selected_block,selected_gp:selected_gp,name_of_embankment:name_of_embankment,status:status,village_coverage:village_coverage},
+								type: "POST",
+								cache: false,
+								success: function(data)
+								{
+									iqwerty.toast.Toast('Data Updated Successfully !!');
+									$('#master-data-entry-div').hide();
+									GetSelectedData();
+								}
+
+								});
+				}
+			}
+			
+			function onClickUpdateHandPumpRingWellData()
+			{
+				var s_no = document.getElementById("s_no").value;
+				var selected_circle = $('#circle_names').val();
+				var selected_block = $('#block_names').val();
+				var selected_gp = $('#gp_names').val();				
+				var village = document.getElementById("village").value; 								
+				var location = document.getElementById("location").value; 
+				var gps_point = document.getElementById("gps_point").value; 
+				var provider = document.getElementById("provider").value; 
+				var name_of_provider = document.getElementById("name_of_provider").value; 
+				
+				if(selected_circle == null || selected_block == null || selected_gp == null || selected_circle == 'Select' || selected_block == 'Select' || selected_gp == 'Select' || village == '' || location == '' || gps_point == '' || provider == '' || name_of_provider == '')
+				{
+					iqwerty.toast.Toast('Some Fields are Missing !!');
+					return;	
+				}
+				
+				else
+				{
+					$.ajax({
+								url:"<?php echo site_url('Master_Data_Update_Delete/onClickUpdateHandPumpRingWellData');?>",
+								method:"POST",
+								data:{s_no:s_no,selected_circle:selected_circle,selected_block:selected_block,selected_gp:selected_gp,village:village,location:location,gps_point:gps_point,provider:provider,name_of_provider:name_of_provider},
+								type: "POST",
+								cache: false,
+								success: function(data)
+								{
+									iqwerty.toast.Toast('Data Updated Successfully !!');
+									$('#master-data-entry-div').hide();
+									GetSelectedData();
+								}
+
+								});
+				}
+			}
+			
+			function onClickUpdateHealthCentreData()
+			{
+				var s_no = document.getElementById("s_no").value;
+				var selected_circle = $('#circle_names').val();
+				var selected_block = $('#block_names').val();
+				var selected_gp = $('#gp_names').val();		
+				var name_of_health_centre = document.getElementById("name_of_health_centre").value;			
+				var address = document.getElementById("address").value; 
+				var contact_no = document.getElementById("contact_no").value; 
+				var no_of_doctors = $("#no_of_doctors").val();
+				var no_of_anm = $("#no_of_anm").val();
+				var building_type = document.getElementById("building_type").value; 
+				var no_of_beds = $("#no_of_beds").val();
+				
+				if(selected_circle == null || selected_block == null || selected_gp == null || selected_circle == 'Select' || selected_block == 'Select' || selected_gp == 'Select' || name_of_health_centre == '' || address == '' || contact_no == '' || no_of_doctors == '' || no_of_anm == '' || building_type == '' || no_of_beds == '' )
+				{
+					iqwerty.toast.Toast('Some Fields are Missing !!');
+					return;	
+				}
+				
+				else
+				{
+					$.ajax({
+								url:"<?php echo site_url('Master_Data_Update_Delete/onClickUpdateHealthCentreData');?>",
+								method:"POST",
+								data:{s_no:s_no,selected_circle:selected_circle,selected_block:selected_block,selected_gp:selected_gp,name_of_health_centre:name_of_health_centre,address:address,contact_no:contact_no,no_of_doctors:no_of_doctors,no_of_anm:no_of_anm,building_type:building_type,no_of_beds:no_of_beds},
+								type: "POST",
+								cache: false,
+								success: function(data)
+								{
+									iqwerty.toast.Toast('Data Updated Successfully !!');
+									$('#master-data-entry-div').hide();
+									GetSelectedData();
+								}
+
+								});
+				}
+			}
+			
+			function onClickUpdateInaccessibleData()
+			{
+				var s_no = document.getElementById("s_no").value;
+				var selected_circle = $('#circle_names').val();
+				var selected_block = $('#block_names').val();
+				var selected_gp = $('#gp_names').val();		
+				var inaccessible_area = document.getElementById("inaccessible_area").value;			
+
+				if(selected_circle == null || selected_block == null || selected_gp == null || selected_circle == 'Select' || selected_block == 'Select' || selected_gp == 'Select' || inaccessible_area == '')
+				{
+					iqwerty.toast.Toast('Some Fields are Missing !!');
+					return;	
+				}
+				
+				else
+				{
+					$.ajax({
+								url:"<?php echo site_url('Master_Data_Update_Delete/onClickUpdateInaccessibleData');?>",
+								method:"POST",
+								data:{s_no:s_no,selected_circle:selected_circle,selected_block:selected_block,selected_gp:selected_gp,inaccessible_area:inaccessible_area},
+								type: "POST",
+								cache: false,
+								success: function(data)
+								{
+									iqwerty.toast.Toast('Data Updated Successfully !!');
+									$('#master-data-entry-div').hide();
+									GetSelectedData();
+								}
+
+								});
+				}
+			}
+			
+			function onClickUpdateInstitutionData()
+			{
+				var s_no = document.getElementById("s_no").value;
+				var selected_circle = $('#circle_names').val();
+				var selected_block = $('#block_names').val();
+				var selected_gp = $('#gp_names').val();												
+				var total_lp_school = $("#total_lp_school").val();
+				var total_me_school = $("#total_me_school").val();
+				var total_high_school = $("#total_high_school").val();
+				var total_hs_school = $("#total_hs_school").val();
+				var total_college = $("#total_college").val();
+				var other_institutions = $("#other_institutions").val();
+				
+				if(selected_circle == null || selected_block == null || selected_gp == null || selected_circle == 'Select' || selected_block == 'Select' || selected_gp == 'Select' || total_lp_school == '' || total_me_school == '' || total_high_school == '' || total_hs_school == '' || total_college == '' || other_institutions == '')
+				{
+					iqwerty.toast.Toast('Some Fields are Missing !!');
+					return;	
+				}
+				
+				else
+				{
+					$.ajax({
+								url:"<?php echo site_url('Master_Data_Update_Delete/onClickUpdateInstitutionData');?>",
+								method:"POST",
+								data:{s_no:s_no,selected_circle:selected_circle,selected_block:selected_block,selected_gp:selected_gp,total_lp_school:total_lp_school,total_me_school:total_me_school,total_high_school:total_high_school,total_hs_school:total_hs_school,total_college:total_college,other_institutions:other_institutions},
+								type: "POST",
+								cache: false,
+								success: function(data)
+								{
+									iqwerty.toast.Toast('Data Updated Successfully !!');
+									$('#master-data-entry-div').hide();
+									GetSelectedData();
+								}
+
+								});
+				}
+			}
+			
+			function onClickAddRaisedPlatformData()
+			{
+				var selected_circle = $('#circle_names').val();
+				var selected_block = $('#block_names').val();
+				var selected_gp = $('#gp_names').val();											
+				var raised_platform = document.getElementById("raised_platform").value;			
+				var address = document.getElementById("address").value; 
+				var contact_no = document.getElementById("contact_no").value; 
+				var capacity = $("#capacity").val();
+				var gps_point = document.getElementById("gps_point").value; 
+				
+				if(selected_circle == null || selected_block == null || selected_gp == null || selected_circle == 'select' || selected_block == 'select' || selected_gp == 'select' || raised_platform == '' || address == '' || contact_no == '' || capacity == '' || gps_point == '')
+				{
+					iqwerty.toast.Toast('Some Fields are Missing !!');
+					return;	
+				}
+				
+				else
+				{
+					$.ajax({
+								url:"<?php echo site_url('Master_Data_Update_Delete/onClickAddRaisedPlatformData');?>",
+								method:"POST",
+								data:{selected_circle:selected_circle,selected_block:selected_block,selected_gp:selected_gp,raised_platform:raised_platform,address:address,contact_no:contact_no,capacity:capacity,gps_point:gps_point},
+								type: "POST",
+								cache: false,
+								success: function(data)
+								{
+									iqwerty.toast.Toast('Data Updated Successfully !!');
+									$('#master-data-entry-div').hide();
+									GetSelectedData();
+								}
+
+								});
+				}
+			}
+			
+			function onClickAddRelifCampData()
+			{
+				var selected_circle = $('#circle_names').val();
+				var selected_block = $('#block_names').val();
+				var selected_gp = $('#gp_names').val();											
+				var name_of_school = document.getElementById("name_of_school").value;			
+				var address = document.getElementById("address").value; 
+				var contact_no = document.getElementById("contact_no").value; 
+				var no_of_classroom = $("#no_of_classroom").val();
+				var type_of_building = document.getElementById("type_of_building").value; 
+				var no_of_toilets = $("#no_of_toilets").val();
+				var source_of_drinking_water = $('#source_of_drinking_water').val();
+				var open_space_yes = document.getElementById("open_space_yes");
+				var open_space_no = document.getElementById("open_space_no"); 
+				var electricity_available_yes = document.getElementById("electricity_available_yes"); 
+				var electricity_available_no = document.getElementById("electricity_available_no"); 
+				
+				if(selected_circle == null || selected_block == null || selected_gp == null || selected_circle == 'select' || selected_block == 'select' || selected_gp == 'select' || name_of_school == '' || address == '' || contact_no == '' || no_of_classroom == '' || type_of_building == '' || no_of_toilets == '' || source_of_drinking_water == 'select')
+				{
+					iqwerty.toast.Toast('Some Fields are Missing !!');
+					return;	
+				}
+				if(open_space_yes.checked == false && open_space_no.checked == false)
+				{
+					iqwerty.toast.Toast('Some Fields are Missing !!');
+					return;	
+				}
+				
+				if(electricity_available_yes.checked == false && electricity_available_no.checked == false)
+				{
+					iqwerty.toast.Toast('Some Fields are Missing !!');
+					return;	
+				}
+				var open_space = "no";
+				var electricity_available = "no";
+				
+				if(open_space_yes.checked)
+				{
+					open_space = open_space_yes.value;
+				}
+				if(electricity_available_yes.checked)
+				{
+					electricity_available = electricity_available_yes.value;
+				}
+				
+
+				$.ajax({
+								url:"<?php echo site_url('Master_Data_Update_Delete/onClickAddRelifCampData');?>",
+								method:"POST",
+								data:{selected_circle:selected_circle,selected_block:selected_block,selected_gp:selected_gp,name_of_school:name_of_school,address:address,contact_no:contact_no,no_of_classroom:no_of_classroom,type_of_building:type_of_building,no_of_toilets:no_of_toilets,source_of_drinking_water:source_of_drinking_water,open_space:open_space,electricity_available:electricity_available},
+								type: "POST",
+								cache: false,
+								success: function(data)
+								{
+									iqwerty.toast.Toast('Data Updated Successfully !!');
+									$('#master-data-entry-div').hide();
+									GetSelectedData();
+								}
+
+								});
+				
+			}
+			
+			function onClickAddTaskForceData()
+			{
+				var selected_circle = $('#circle_names').val();
+				var selected_block = $('#block_names').val();
+				var selected_gp = $('#gp_names').val();											
+				var total_rev_village = $('#total_rev_village').val();	
+				var total_govt_land = document.getElementById("total_govt_land").value; 
+				var total_forest_land = document.getElementById("total_forest_land").value; 
+				var designation = document.getElementById("designation").value; 
+				var name_of_members = document.getElementById("name_of_members").value; 
+				var contact_no = document.getElementById("contact_no").value;  
+				var address = document.getElementById("address").value; 
+				
+				if(selected_circle == null || selected_block == null || selected_gp == null || selected_circle == 'select' || selected_block == 'select' || selected_gp == 'select' || total_rev_village == '' || total_govt_land == '' || total_forest_land == '' || designation == '' || name_of_members == '' || contact_no == '' || address == 'select')
+				{
+					iqwerty.toast.Toast('Some Fields are Missing !!');
+					return;	
+				}
+
+				$.ajax({
+								url:"<?php echo site_url('Master_Data_Update_Delete/onClickAddTaskForceData');?>",
+								method:"POST",
+								data:{selected_circle:selected_circle,selected_block:selected_block,selected_gp:selected_gp,total_rev_village:total_rev_village,total_govt_land:total_govt_land,total_forest_land:total_forest_land,designation:designation,name_of_members:name_of_members,contact_no:contact_no,address:address},
+								type: "POST",
+								cache: false,
+								success: function(data)
+								{
+									iqwerty.toast.Toast('Data Updated Successfully !!');
+									$('#master-data-entry-div').hide();
+									GetSelectedData();
+								}
+
+								});
+			}
+			
+			function onClickAddTelecommunicationData()
+			{
+				var selected_circle = $('#circle_names').val();
+				var selected_block = $('#block_names').val();
+				var selected_gp = $('#gp_names').val();											
+				var name_of_village = document.getElementById("name_of_village").value; 
+				var location = document.getElementById("location").value; 
+				var name_of_service_provider = document.getElementById("name_of_service_provider").value; 
+				
+				if(selected_circle == null || selected_block == null || selected_gp == null || selected_circle == 'select' || selected_block == 'select' || selected_gp == 'select' || name_of_village == '' || location == '' || name_of_service_provider == '')
+				{
+					iqwerty.toast.Toast('Some Fields are Missing !!');
+					return;	
+				}
+
+				$.ajax({
+								url:"<?php echo site_url('Master_Data_Update_Delete/onClickAddTelecommunicationData');?>",
+								method:"POST",
+								data:{selected_circle:selected_circle,selected_block:selected_block,selected_gp:selected_gp,name_of_village:name_of_village,location:location,name_of_service_provider:name_of_service_provider},
+								type: "POST",
+								cache: false,
+								success: function(data)
+								{
+									iqwerty.toast.Toast('Data Updated Successfully !!');
+									$('#master-data-entry-div').hide();
+									GetSelectedData();
+								}
+
+								});
+			}
+			
+			function onClickAddVulRoadCulvertBridgeData()
+			{
+				var selected_circle = $('#circle_names').val();
+				var selected_block = $('#block_names').val();
+				var selected_gp = $('#gp_names').val();												
+				var name_of_vul_road = document.getElementById("name_of_vul_road").value; 
+				var name_of_vul_culvert = document.getElementById("name_of_vul_culvert").value; 
+				var name_of_vul_bridge = document.getElementById("name_of_vul_bridge").value; 
+				var status = document.getElementById("status").value; 
+				
+				if(selected_circle == null || selected_block == null || selected_gp == null || selected_circle == 'select' || selected_block == 'select' || selected_gp == 'select' || name_of_vul_road == '' || name_of_vul_culvert == '' || name_of_vul_bridge == '' || status == '')
+				{
+					iqwerty.toast.Toast('Some Fields are Missing !!');
+					return;	
+				}
+
+				$.ajax({
+								url:"<?php echo site_url('Master_Data_Update_Delete/onClickAddVulRoadCulvertBridgeData');?>",
+								method:"POST",
+								data:{selected_circle:selected_circle,selected_block:selected_block,selected_gp:selected_gp,name_of_vul_road:name_of_vul_road,name_of_vul_culvert:name_of_vul_culvert,name_of_vul_bridge:name_of_vul_bridge,status:status},
+								type: "POST",
+								cache: false,
+								success: function(data)
+								{
+									iqwerty.toast.Toast('Data Updated Successfully !!');
+									$('#master-data-entry-div').hide();
+									GetSelectedData();
+								}
+
+								});
+			}
+			
+			function onClickAddVulVillageData()
+			{
+				var selected_circle = $('#circle_names').val();
+				var selected_block = $('#block_names').val();
+				var selected_gp = $('#gp_names').val();											
+				var name_of_village = document.getElementById("name_of_village").value; 
+				var nature_of_disaster = document.getElementById("nature_of_disaster").value; 
+				
+				if(selected_circle == null || selected_block == null || selected_gp == null || selected_circle == 'select' || selected_block == 'select' || selected_gp == 'select' || name_of_village == '' || nature_of_disaster == '')
+				{
+					iqwerty.toast.Toast('Some Fields are Missing !!');
+					return;	
+				}
+
+				$.ajax({
+								url:"<?php echo site_url('Master_Data_Update_Delete/onClickAddVulVillageData');?>",
+								method:"POST",
+								data:{selected_circle:selected_circle,selected_block:selected_block,selected_gp:selected_gp,name_of_village:name_of_village,nature_of_disaster:nature_of_disaster},
+								type: "POST",
+								cache: false,
+								success: function(data)
+								{
+									iqwerty.toast.Toast('Data Updated Successfully !!');
+									$('#master-data-entry-div').hide();
+									GetSelectedData();
+								}
+
+								});
+			}
+		
 		</script>
 	</body>
 </html>

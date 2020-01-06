@@ -2,6 +2,7 @@
 				echo "<tbody>";
 				$blank = "0";
 				echo "<tr>";
+					echo "<th style = 'display:none;'>"; echo "<strong>SL NO</strong>"; echo "</th>";
 					echo "<th style = 'display:none;'>"; echo "<strong>GP NO</strong>"; echo "</th>";
 					echo "<th>"; echo "<strong>Total LP School</strong>"; echo "</th>";
 					echo "<th>"; echo "<strong>Total ME School</strong>"; echo "</th>";
@@ -16,6 +17,9 @@
 				foreach($data_report_detailed_info as $row)
 				{
 					echo "<tr>";
+					
+					echo "<td class = 's_no' style = 'display:none;'>".$row['s_no']."</td>";
+
 					if(is_null($row['gp_no']))
 					{
 						echo "<td style = 'display:none;'>".$blank."</td>";
@@ -77,9 +81,9 @@
 					{
 						echo "<td>".$row['others']."</td>";
 					}
-					echo "<td><button onClick=\"OnClickEdit();\"><strong>EDIT</strong></button></td>";
+					echo "<td><button onClick=\"OnClickResourceEdit();\"><strong>EDIT</strong></button></td>";
 					
-					echo "<td><button onClick=\"OnClickDelete();\"><strong>DELETE</strong></button></td>";
+					echo "<td><button onClick=\"OnClickResourceDelete();\"><strong>DELETE</strong></button></td>";
 					echo "</tr>";
 				}
 					echo "</tbody>";
