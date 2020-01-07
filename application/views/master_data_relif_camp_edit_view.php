@@ -106,10 +106,10 @@
 								<div class="col-md-4 inputGroupContainer">							 
 									<select class="form-control" name = "source_of_drinking_water" id="source_of_drinking_water">
 										<option value="select">Select Source</option>
-										<option value="ring_well">Ring Well</option>
-										<option value="tube_well">Tube Well</option>
-										<option value="water_supply">Water Supply</option>
-										<option value="water_bodies">Water Bodies</option>
+										<option value="ring well">Ring Well</option>
+										<option value="tube well">Tube Well</option>
+										<option value="water supply">Water Supply</option>
+										<option value="water bodies">Water Bodies</option>
 										<option value="others">Others</option>
 									</select>
 							  </div>

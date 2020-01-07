@@ -259,7 +259,7 @@
 			}
 			if($selected_item == 'Relif Camp')
 			{
-				$data_resource_details_view = $this->load->view('master_data_relif_camp_edit_view.php',$row_detailed_info,TRUE);	
+				$data_resource_details_view = $this->load->view('master_data_relif_camp_edit_view.php',$data,TRUE);	
 			}
 			if($selected_item == "Task Force Commitee Members")
 			{
@@ -353,35 +353,35 @@
 			$response = $this->master_data_update_delete_model->update_relif_camp_data();
 			echo $response;	
 		}
-		/*
 		
-		public function onClickUpdateCommunityHallData()
+		
+		public function onClickUpdateTaskForceData()
 		{
-			log_message('info','##########INSIDE onClickUpdateCommunityHallData FUNC::');
+			log_message('info','##########INSIDE onClickUpdateTaskForceData FUNC::');
 			$response = $this->master_data_update_delete_model->update_task_force_data();
 			echo $response;	
 		}
 		
-		public function onClickUpdateCommunityHallData()
+		public function onClickUpdateTelecommunicationData()
 		{
-			log_message('info','##########INSIDE onClickUpdateCommunityHallData FUNC::');
+			log_message('info','##########INSIDE onClickUpdateTelecommunicationData FUNC::');
 			$response = $this->master_data_update_delete_model->update_telecommunication_data();
 			echo $response;	
 		}
 		
-		public function onClickUpdateCommunityHallData()
+		public function onClickUpdateVulRoadCulvertBridgeData()
 		{
-			log_message('info','##########INSIDE onClickUpdateCommunityHallData FUNC::');
+			log_message('info','##########INSIDE onClickUpdateVulRoadCulvertBridgeData FUNC::');
 			$response = $this->master_data_update_delete_model->update_vul_road_cul_bridge_data();
 			echo $response;	
 		}
 		
 		
-		public function onClickUpdateCommunityHallData()
+		public function onClickUpdateVulVillageData()
 		{
-			log_message('info','##########INSIDE onClickUpdateCommunityHallData FUNC::');
+			log_message('info','##########INSIDE onClickUpdateVulVillageData FUNC::');
 			$response = $this->master_data_update_delete_model->update_vul_village_data();
 			echo $response;	
-		}*/
+		}
    }
 ?>

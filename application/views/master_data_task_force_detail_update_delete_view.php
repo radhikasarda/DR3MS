@@ -92,9 +92,9 @@
 					{
 						echo "<td>".$row['address_of_members']."</td>";
 					}
-					echo "<td><button onClick=\"OnClickEdit();\"><strong>EDIT</strong></button></td>";
+					echo "<td><button onClick=\"OnClickResourceEdit();\"><strong>EDIT</strong></button></td>";
 					
-					echo "<td><button onClick=\"OnClickDelete();\"><strong>DELETE</strong></button></td>";
+					echo "<td><button onClick=\"OnClickResourceDelete();\"><strong>DELETE</strong></button></td>";
 					echo "</tr>";
 				}
 					echo "</tbody>";

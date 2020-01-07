@@ -39,9 +39,9 @@
 					{
 					echo "<td>".$row['nature_of_disaster']."</td>";
 					}
-					echo "<td><button onClick=\"OnClickEdit();\"><strong>EDIT</strong></button></td>";
+					echo "<td><button onClick=\"OnClickResourceEdit();\"><strong>EDIT</strong></button></td>";
 					
-					echo "<td><button onClick=\"OnClickDelete();\"><strong>DELETE</strong></button></td>";
+					echo "<td><button onClick=\"OnClickResourceDelete();\"><strong>DELETE</strong></button></td>";
 					echo "</tr>";
 				}
 					echo "</tbody>";

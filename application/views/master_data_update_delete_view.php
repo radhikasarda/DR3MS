@@ -769,8 +769,9 @@
 				}
 			}
 			
-			function onClickAddRaisedPlatformData()
+			function onClickUpdateRaisedPlatformData()
 			{
+				var s_no = document.getElementById("s_no").value;
 				var selected_circle = $('#circle_names').val();
 				var selected_block = $('#block_names').val();
 				var selected_gp = $('#gp_names').val();											
@@ -780,7 +781,7 @@
 				var capacity = $("#capacity").val();
 				var gps_point = document.getElementById("gps_point").value; 
 				
-				if(selected_circle == null || selected_block == null || selected_gp == null || selected_circle == 'select' || selected_block == 'select' || selected_gp == 'select' || raised_platform == '' || address == '' || contact_no == '' || capacity == '' || gps_point == '')
+				if(selected_circle == null || selected_block == null || selected_gp == null || selected_circle == 'Select' || selected_block == 'Select' || selected_gp == 'Select' || raised_platform == '' || address == '' || contact_no == '' || capacity == '' || gps_point == '')
 				{
 					iqwerty.toast.Toast('Some Fields are Missing !!');
 					return;	
@@ -789,9 +790,9 @@
 				else
 				{
 					$.ajax({
-								url:"<?php echo site_url('Master_Data_Update_Delete/onClickAddRaisedPlatformData');?>",
+								url:"<?php echo site_url('Master_Data_Update_Delete/onClickUpdateRaisedPlatformData');?>",
 								method:"POST",
-								data:{selected_circle:selected_circle,selected_block:selected_block,selected_gp:selected_gp,raised_platform:raised_platform,address:address,contact_no:contact_no,capacity:capacity,gps_point:gps_point},
+								data:{s_no:s_no,selected_circle:selected_circle,selected_block:selected_block,selected_gp:selected_gp,raised_platform:raised_platform,address:address,contact_no:contact_no,capacity:capacity,gps_point:gps_point},
 								type: "POST",
 								cache: false,
 								success: function(data)
@@ -805,8 +806,9 @@
 				}
 			}
 			
-			function onClickAddRelifCampData()
+			function onClickUpdateRelifCampData()
 			{
+				var s_no = document.getElementById("s_no").value;
 				var selected_circle = $('#circle_names').val();
 				var selected_block = $('#block_names').val();
 				var selected_gp = $('#gp_names').val();											
@@ -822,7 +824,7 @@
 				var electricity_available_yes = document.getElementById("electricity_available_yes"); 
 				var electricity_available_no = document.getElementById("electricity_available_no"); 
 				
-				if(selected_circle == null || selected_block == null || selected_gp == null || selected_circle == 'select' || selected_block == 'select' || selected_gp == 'select' || name_of_school == '' || address == '' || contact_no == '' || no_of_classroom == '' || type_of_building == '' || no_of_toilets == '' || source_of_drinking_water == 'select')
+				if(selected_circle == null || selected_block == null || selected_gp == null || selected_circle == 'Select' || selected_block == 'Select' || selected_gp == 'Select' || name_of_school == '' || address == '' || contact_no == '' || no_of_classroom == '' || type_of_building == '' || no_of_toilets == '' || source_of_drinking_water == 'select')
 				{
 					iqwerty.toast.Toast('Some Fields are Missing !!');
 					return;	
@@ -852,9 +854,9 @@
 				
 
 				$.ajax({
-								url:"<?php echo site_url('Master_Data_Update_Delete/onClickAddRelifCampData');?>",
+								url:"<?php echo site_url('Master_Data_Update_Delete/onClickUpdateRelifCampData');?>",
 								method:"POST",
-								data:{selected_circle:selected_circle,selected_block:selected_block,selected_gp:selected_gp,name_of_school:name_of_school,address:address,contact_no:contact_no,no_of_classroom:no_of_classroom,type_of_building:type_of_building,no_of_toilets:no_of_toilets,source_of_drinking_water:source_of_drinking_water,open_space:open_space,electricity_available:electricity_available},
+								data:{s_no:s_no,selected_circle:selected_circle,selected_block:selected_block,selected_gp:selected_gp,name_of_school:name_of_school,address:address,contact_no:contact_no,no_of_classroom:no_of_classroom,type_of_building:type_of_building,no_of_toilets:no_of_toilets,source_of_drinking_water:source_of_drinking_water,open_space:open_space,electricity_available:electricity_available},
 								type: "POST",
 								cache: false,
 								success: function(data)
@@ -868,8 +870,9 @@
 				
 			}
 			
-			function onClickAddTaskForceData()
+			function onClickUpdateTaskForceData()
 			{
+				var s_no = document.getElementById("s_no").value;
 				var selected_circle = $('#circle_names').val();
 				var selected_block = $('#block_names').val();
 				var selected_gp = $('#gp_names').val();											
@@ -881,16 +884,16 @@
 				var contact_no = document.getElementById("contact_no").value;  
 				var address = document.getElementById("address").value; 
 				
-				if(selected_circle == null || selected_block == null || selected_gp == null || selected_circle == 'select' || selected_block == 'select' || selected_gp == 'select' || total_rev_village == '' || total_govt_land == '' || total_forest_land == '' || designation == '' || name_of_members == '' || contact_no == '' || address == 'select')
+				if(selected_circle == null || selected_block == null || selected_gp == null || selected_circle == 'Select' || selected_block == 'Select' || selected_gp == 'Select' || total_rev_village == '' || total_govt_land == '' || total_forest_land == '' || designation == '' || name_of_members == '' || contact_no == '' || address == 'select')
 				{
 					iqwerty.toast.Toast('Some Fields are Missing !!');
 					return;	
 				}
 
 				$.ajax({
-								url:"<?php echo site_url('Master_Data_Update_Delete/onClickAddTaskForceData');?>",
+								url:"<?php echo site_url('Master_Data_Update_Delete/onClickUpdateTaskForceData');?>",
 								method:"POST",
-								data:{selected_circle:selected_circle,selected_block:selected_block,selected_gp:selected_gp,total_rev_village:total_rev_village,total_govt_land:total_govt_land,total_forest_land:total_forest_land,designation:designation,name_of_members:name_of_members,contact_no:contact_no,address:address},
+								data:{s_no:s_no,selected_circle:selected_circle,selected_block:selected_block,selected_gp:selected_gp,total_rev_village:total_rev_village,total_govt_land:total_govt_land,total_forest_land:total_forest_land,designation:designation,name_of_members:name_of_members,contact_no:contact_no,address:address},
 								type: "POST",
 								cache: false,
 								success: function(data)
@@ -903,8 +906,9 @@
 								});
 			}
 			
-			function onClickAddTelecommunicationData()
+			function onClickUpdateTelecommunicationData()
 			{
+				var s_no = document.getElementById("s_no").value;
 				var selected_circle = $('#circle_names').val();
 				var selected_block = $('#block_names').val();
 				var selected_gp = $('#gp_names').val();											
@@ -919,9 +923,9 @@
 				}
 
 				$.ajax({
-								url:"<?php echo site_url('Master_Data_Update_Delete/onClickAddTelecommunicationData');?>",
+								url:"<?php echo site_url('Master_Data_Update_Delete/onClickUpdateTelecommunicationData');?>",
 								method:"POST",
-								data:{selected_circle:selected_circle,selected_block:selected_block,selected_gp:selected_gp,name_of_village:name_of_village,location:location,name_of_service_provider:name_of_service_provider},
+								data:{s_no:s_no,selected_circle:selected_circle,selected_block:selected_block,selected_gp:selected_gp,name_of_village:name_of_village,location:location,name_of_service_provider:name_of_service_provider},
 								type: "POST",
 								cache: false,
 								success: function(data)
@@ -934,8 +938,9 @@
 								});
 			}
 			
-			function onClickAddVulRoadCulvertBridgeData()
+			function onClickUpdateVulRoadCulvertBridgeData()
 			{
+				var s_no = document.getElementById("s_no").value;
 				var selected_circle = $('#circle_names').val();
 				var selected_block = $('#block_names').val();
 				var selected_gp = $('#gp_names').val();												
@@ -951,9 +956,9 @@
 				}
 
 				$.ajax({
-								url:"<?php echo site_url('Master_Data_Update_Delete/onClickAddVulRoadCulvertBridgeData');?>",
+								url:"<?php echo site_url('Master_Data_Update_Delete/onClickUpdateVulRoadCulvertBridgeData');?>",
 								method:"POST",
-								data:{selected_circle:selected_circle,selected_block:selected_block,selected_gp:selected_gp,name_of_vul_road:name_of_vul_road,name_of_vul_culvert:name_of_vul_culvert,name_of_vul_bridge:name_of_vul_bridge,status:status},
+								data:{s_no:s_no,selected_circle:selected_circle,selected_block:selected_block,selected_gp:selected_gp,name_of_vul_road:name_of_vul_road,name_of_vul_culvert:name_of_vul_culvert,name_of_vul_bridge:name_of_vul_bridge,status:status},
 								type: "POST",
 								cache: false,
 								success: function(data)
@@ -966,24 +971,25 @@
 								});
 			}
 			
-			function onClickAddVulVillageData()
+			function onClickUpdateVulVillageData()
 			{
+				var s_no = document.getElementById("s_no").value;
 				var selected_circle = $('#circle_names').val();
 				var selected_block = $('#block_names').val();
 				var selected_gp = $('#gp_names').val();											
 				var name_of_village = document.getElementById("name_of_village").value; 
 				var nature_of_disaster = document.getElementById("nature_of_disaster").value; 
 				
-				if(selected_circle == null || selected_block == null || selected_gp == null || selected_circle == 'select' || selected_block == 'select' || selected_gp == 'select' || name_of_village == '' || nature_of_disaster == '')
+				if(selected_circle == null || selected_block == null || selected_gp == null || selected_circle == 'Select' || selected_block == 'Select' || selected_gp == 'Select' || name_of_village == '' || nature_of_disaster == '')
 				{
 					iqwerty.toast.Toast('Some Fields are Missing !!');
 					return;	
 				}
 
 				$.ajax({
-								url:"<?php echo site_url('Master_Data_Update_Delete/onClickAddVulVillageData');?>",
+								url:"<?php echo site_url('Master_Data_Update_Delete/onClickUpdateVulVillageData');?>",
 								method:"POST",
-								data:{selected_circle:selected_circle,selected_block:selected_block,selected_gp:selected_gp,name_of_village:name_of_village,nature_of_disaster:nature_of_disaster},
+								data:{s_no:s_no,selected_circle:selected_circle,selected_block:selected_block,selected_gp:selected_gp,name_of_village:name_of_village,nature_of_disaster:nature_of_disaster},
 								type: "POST",
 								cache: false,
 								success: function(data)
