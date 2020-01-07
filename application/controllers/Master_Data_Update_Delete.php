@@ -383,5 +383,20 @@
 			$response = $this->master_data_update_delete_model->update_vul_village_data();
 			echo $response;	
 		}
+		
+		public function OnClickResourceDelete()
+		{
+			log_message('info','##########INSIDE onClickUpdateVulVillageData FUNC::');
+			$response = $this->master_data_update_delete_model->delete_resource();
+			echo $response;	
+		}
+		
+		//For Circle,block &gp
+		public function OnClickDelete()
+		{
+			log_message('info','##########INSIDE OnClickDelete FUNC::');
+			$response = $this->master_data_update_delete_model->delete_circle_block_gp();
+			echo $response;
+		}
    }
 ?>

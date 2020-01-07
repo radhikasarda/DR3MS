@@ -4,6 +4,7 @@
 		<meta name="viewport" content="width=device-width, initial-scale=1">
 		<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/css/bootstrap.min.css" type="text/css">
 		<link rel="stylesheet" href="<?php echo base_url().'assets/css/toast.css'?>" type="text/css">
+		<link rel="stylesheet" href="https://lipis.github.io/bootstrap-sweetalert/dist/sweetalert.css" />
 		<style>
 			
 			.logoutbutton 
@@ -33,7 +34,7 @@
 		<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/js/bootstrap.min.js"></script>
 		<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.8.0/Chart.js"></script>
 		<script type="text/javascript" src="<?php echo base_url().'assets/js/toast.js'?>"></script>		
-		
+		<script src="https://lipis.github.io/bootstrap-sweetalert/dist/sweetalert.js"></script>
 		<div class= "header-container" >
 			<div class = "header">
 				<?php $this->load->view('header_view');?>
@@ -121,7 +122,49 @@
 						</select>
 						</div>
 						<script type="text/javascript">
-							
+						
+						</script>
+					</div>
+					<div class="col-xs-2">	
+						<div class = "row">
+						<label>Select Block:</label>
+						</div>
+						<div class = "row">	
+						<select class="form-control" name = "blocks" id="blocks" >
+						</select>
+						</div>
+					</div>
+					<div class="col-xs-2">
+						<div class = "row">
+						<label>Select &ensp; GP:</label>
+						</div>
+						<div class = "row">
+						<select class="form-control" name = "gp" id="gp" >
+						</select>
+						</div>
+					</div>
+					<div class="col-xs-2">
+					<button type="button" class="btn btn-primary" onclick="return GetSelectedCategory();" style="margin-top:25px;">SUBMIT</button>					
+					</div>
+				</div>
+			</div>
+		</nav>
+		<div id ="master-data-entry-div" style="display:none;">
+		</div>
+		<div id ="detailed-info" style="display:none;">
+			<div class="container" style="overflow-x:auto;overflow-y:auto;height:550px;">
+					<table id ="item-detail-table" class="table table-striped table-bordered">					
+					</table>
+			</div>
+		</div>
+		<div id ="report-circlewise-all-resource">
+			<div class="container" style="overflow-x:auto;overflow-y:auto;height:550px;">
+					<table id ="report-table" class="table table-striped table-bordered">					
+					</table>
+			</div>
+		</div>
+		<script>
+			
 							function set_block_names(){
 								var circle_id=$('#circles').val();
 									if(circle_id != '')
@@ -172,53 +215,43 @@
 								});
 																	
 							});
-						</script>
-					</div>
-					<div class="col-xs-2">	
-						<div class = "row">
-						<label>Select Block:</label>
-						</div>
-						<div class = "row">	
-						<select class="form-control" name = "blocks" id="blocks" >
-						</select>
-						</div>
-					</div>
-					<div class="col-xs-2">
-						<div class = "row">
-						<label>Select &ensp; GP:</label>
-						</div>
-						<div class = "row">
-						<select class="form-control" name = "gp" id="gp" >
-						</select>
-						</div>
-					</div>
-					<div class="col-xs-2">
-					<button type="button" class="btn btn-primary" onclick="return GetSelectedCategory();" style="margin-top:25px;">SUBMIT</button>					
-					</div>
-				</div>
-			</div>
-		</nav>
-		<div id ="master-data-entry-div" style="display:none;">
-		</div>
-		<div id ="detailed-info" style="display:none;">
-			<div class="container" style="overflow-x:auto;overflow-y:auto;height:550px;">
-					<table id ="item-detail-table" class="table table-striped table-bordered">					
-					</table>
-			</div>
-		</div>
-		<div id ="report-circlewise-all-resource">
-			<div class="container" style="overflow-x:auto;overflow-y:auto;height:550px;">
-					<table id ="report-table" class="table table-striped table-bordered">					
-					</table>
-			</div>
-		</div>
-		<script>
+			$('#circles').change(function(){ 
+									var circle_id=$('#circles').val();
+									$.ajax({
+											url : "<?php echo site_url('Master_Data_Update_Delete/get_blocks');?>",
+											method : "POST",
+											data : {circle_id: circle_id},
+											success: function(data)
+											{	
+												$('#blocks').html(data);
+												$('#gp').html('<option value="Select">Select GP</option>');
+
+											}
+									});
+										
+								});
+			$('#blocks').change(function()
+								{
+									  var block_id = $('#blocks').val();
+									  if(block_id != '')
+									  {
+									   $.ajax({
+										url:"<?php echo site_url('Master_Data_Update_Delete/get_gp');?>",
+										method:"POST",
+										data:{block_id:block_id},
+										success:function(data)
+										{
+										 $('#gp').html(data);
+										}
+									   });
+									  }
+									  else
+									  {
+									   $('#gp').html('<option value="Select">Select GP</option>');
+									  }
+								});
 			function GetSelectedData()
 			{
-				//Reset Combobox values
-				$('#circles').prop('selectedIndex',0);
-				$('#blocks').prop('selectedIndex',0);
-				$('#gp').prop('selectedIndex',0);
 				$('#report-circlewise-all-resource').hide();
 				 
 				if($('#resources').val() == "select")
@@ -231,8 +264,11 @@
 					GetDetailedData();
 				}
 				else
-				{										
-						$('#selection-bar').show();
+				{		
+						$('#selection-bar').show();	
+						$('#circles').prop('selectedIndex',0);
+						$('#blocks').html('<option value="Select">Select Block</option>');
+						$('#gp').html('<option value="Select">Select GP</option>');
 						$('#master-data-entry-div').hide();
 						$('#detailed-info').hide(); 
 						
@@ -285,6 +321,7 @@
 											type: "POST",
 											cache: false,
 											success: function(data){
+												
 												$('#report-circlewise-all-resource').show();
 												$('#report-table').html(data); 
 											}
@@ -334,10 +371,6 @@
 								});
 			}
 			
-			function OnClickDelete()
-			{
-				alert("hii");
-			}
 			function onClickUpdateCircleData()
 			{
 				var name_of_circle = document.getElementById("name_of_circle").value;
@@ -499,6 +532,7 @@
 								{
 									iqwerty.toast.Toast('Data Updated Successfully !!');
 									$('#master-data-entry-div').hide();
+									
 									GetSelectedData();
 								}
 
@@ -1001,7 +1035,122 @@
 
 								});
 			}
-		
+			
+			function onClickBack()
+			{
+				$('#master-data-entry-div').hide();
+				$('#selection-bar').hide();
+				GetSelectedData();
+			}
+			
+			function OnClickResourceDelete()
+			{
+				var table = document.getElementById("report-table");
+	
+				var rows = table.getElementsByTagName("tr");
+			
+				for (i = 0; i < rows.length; i++) {
+						var currentRow = table.rows[i];
+						var createClickHandler = 
+						function(row) 
+						{
+							return function() {
+								var id_row = row.getElementsByClassName("s_no")[0];
+								var s_no = id_row.innerHTML;
+								deleteResourceData(s_no);
+							};
+						};
+
+						currentRow.onclick = createClickHandler(currentRow);
+				}
+			}	
+			function deleteResourceData(s_no)
+			{
+			
+				swal({
+					title: "Are you sure?",
+					type: "warning",
+					showCancelButton: true,
+					confirmButtonClass: "btn-danger",
+					confirmButtonText: "Yes, delete it!",
+					closeOnConfirm: false			
+				},
+				function(isConfirm) {
+					if (isConfirm) {
+								$.ajax({
+											url:"<?php echo site_url('Master_Data_Update_Delete/OnClickResourceDelete');?>",
+											method:"POST",
+											data:{s_no:s_no,selected_resource:$('#resources').val()},
+											type: "POST",
+											cache: false,
+											success: function(data)
+											{	
+												swal("Deleted!", "Your data has been deleted.", "success");											
+												GetSelectedData();													
+											},
+											error: function() {
+												iqwerty.toast.Toast('Internal Server error!! Please Try Again !!');
+											}
+
+							});
+					}
+				});	
+			}
+			// For Circle , block and Gp
+			function OnClickDelete()
+			{
+				var table = document.getElementById("item-detail-table");
+	
+				var rows = table.getElementsByTagName("tr");
+			
+				for (i = 0; i < rows.length; i++) {
+						var currentRow = table.rows[i];
+						var createClickHandler = 
+						function(row) 
+						{
+							return function() {
+								var id_row = row.getElementsByClassName("id")[0];
+								var id = id_row.innerHTML;
+								deleteData(id);
+							};
+						};
+
+						currentRow.onclick = createClickHandler(currentRow);
+				}
+			}
+			function deleteData(id)
+			{
+			
+				swal({
+					title: "Are you sure?",
+					type: "warning",
+					showCancelButton: true,
+					confirmButtonClass: "btn-danger",
+					confirmButtonText: "Yes, delete it!",
+					closeOnConfirm: false			
+				},
+				function(isConfirm) {
+					if (isConfirm) {
+								$.ajax({
+											url:"<?php echo site_url('Master_Data_Update_Delete/OnClickDelete');?>",
+											method:"POST",
+											data:{id:id,selected_resource:$('#resources').val()},
+											type: "POST",
+											cache: false,
+											success: function(data)
+											{	
+												swal("Deleted!", "Your data has been deleted.", "success");											
+												GetSelectedData();													
+											},
+											error: function() {
+												iqwerty.toast.Toast('Internal Server error!! Please Try Again !!');
+											}
+
+							});
+					}
+				});	
+			}
+			
 		</script>
 	</body>
 </html>

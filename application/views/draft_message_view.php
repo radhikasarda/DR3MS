@@ -231,7 +231,7 @@
 											cache: false,
 											success: function(data)
 											{	
-												swal("Deleted!", "Your imaginary file has been deleted.", "success");											
+												swal("Deleted!", "Your message has been deleted.", "success");											
 												window.location.href="<?php echo base_url('Message/');?>";
 												//iqwerty.toast.Toast('Message Deleted Successfully !!');																
 											},

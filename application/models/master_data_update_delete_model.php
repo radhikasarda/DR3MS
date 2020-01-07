@@ -668,5 +668,47 @@
 			log_message('info','########## update_vul_village_data::affected_rows '.$affected_rows);
 			return $affected_rows ;
 		}
+		
+		public function delete_resource()
+		{
+			$selected_resource =  $this->input->post('selected_resource');	
+			$this->load->model('resource_report_model');
+			$resource_name = $this->resource_report_model->get_resource_name($selected_resource);
+			log_message('info','########## resource_name:: '.$resource_name);
+
+			$s_no = $this->input->post('s_no');		
+			
+			$this->db->where('s_no', $s_no);
+			$result = $this->db->delete($resource_name);
+			return $result ;
+			
+		}
+		
+		public function delete_circle_block_gp()
+		{
+			$selected_resource =  $this->input->post('selected_resource');
+			$id = $this->input->post('id');	
+			log_message('info','########## id:: '.$id);
+			if($selected_resource == "circle")
+			{
+				$this->db->where('c_s_no', $id);
+				$result = $this->db->delete($selected_resource);
+			}
+			
+			if($selected_resource == "block")
+			{
+				$this->db->where('b_s_no', $id);
+				$result = $this->db->delete($selected_resource);
+			}
+			
+			if($selected_resource == "gp")
+			{
+				$this->db->where('gp_no', $id);
+				$result = $this->db->delete($selected_resource);
+			}
+			
+			return $result ;
+		}
+		
    }
 ?>

@@ -153,6 +153,12 @@
 									<button type="button" class="btn btn-success form-control" onclick="return onClickUpdateDemographicData();">Update Data<span class="glyphicon glyphicon-send"></span></button>
 								</div>
 							</div>
+							<div class="form-group">
+							 <label class="col-md-5 control-label"></label>
+							 <div class="col-md-2"><br>
+									<button type="button" class="btn btn-danger form-control" onclick="return onClickBack();">BACK</button>
+							  </div>
+							</div>
 					</fieldset>
 				</form>
 			</div>
