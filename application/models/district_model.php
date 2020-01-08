@@ -3,13 +3,12 @@
 	{  
 		function __construct()  
 		{  
-			// Call the Model constructor  
 			parent::__construct();  
 		}  
 		
 		public function get_districts()
 		{
-			//$result = $this->db->select('s_no, district_name')-> get('district')-> result_array();
+			log_message('info','##########Loading District Model get_districts FUNCTION');
 			$this->db->select('s_no, district_name');
 			$this->db->from('district');
 			$this->db->where('is_enabled', true);

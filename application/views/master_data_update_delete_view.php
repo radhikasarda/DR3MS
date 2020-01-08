@@ -40,27 +40,6 @@
 				<?php $this->load->view('header_view');?>
 			</div>
 		</div>
-		<div class = "row" style="margin-right:0px;">
-			<div class = "col-sm-6" style = "text-align: left; background-color: #FFB700;height: 25px;">
-				<i class="glyphicon glyphicon-user"></i>
-				<font color="#000000" size="4">
-				"You are logged in as : <?php echo $this->session->userdata('userid'); ;?>" 
-				&ensp;
-				<i class="glyphicon glyphicon-bell" aria-hidden="true"></i>
-				Last Login Time : 	
-				<?php foreach((array)$last_login as $last_login){	 
-					 echo $last_login->last_login_time;
-				}?>
-				</font>	
-			
-	
-			</div>
-			<div class = "col-sm-6" style = "text-align: right;  height: 25px;background-color: #FFB700;">
-				<form action="<?php echo base_url("login/logout");?>">
-					<input type="submit" class="logoutbutton" value="LOGOUT">
-				</form>
-			</div>
-		</div>
 		<div>
 		<?php $this->load->view('navbar_view');?>
 		</div>	
@@ -79,9 +58,12 @@
 							<div class="col-sm-3" style="padding-left:0px;">						
 								<select class="form-control" name = "resources" id="resources" >
 									<option value="select">--Select--</option>
+									<?php $user=$this->session->userdata('userid');
+									if ($user == "Admin"){ ?>
 									<option value="circle">Circle</option>
 									<option value="block">Block</option>
 									<option value="gp">GP</option>
+									<?php } ?>
 									<?php
 									foreach($resources as $row)
 									{

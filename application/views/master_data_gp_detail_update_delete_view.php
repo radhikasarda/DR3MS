@@ -1,8 +1,8 @@
 <?php
 				echo "<tbody>";
 				echo "<tr>";
-					echo "<th>"; echo "<strong>GP No.</strong>"; echo "</th>";
-					echo "<th>"; echo "<strong>Block No.</strong>"; echo "</th>";
+					echo "<th>"; echo "<strong>Sl No.</strong>"; echo "</th>";
+					echo "<th>"; echo "<strong>Block name</strong>"; echo "</th>";
 					echo "<th>"; echo "<strong>GP name</strong>"; echo "</th>";
 					echo "<th>"; echo "<strong>Edit</strong>"; echo "</th>";
 					echo "<th>"; echo "<strong>Delete</strong>"; echo "</th>";
@@ -14,7 +14,7 @@
 					
 					echo "<td class = 'id'>".$row['gp_no']."</td>";
 						
-					echo "<td>".$row['b_s_no']."</td>";
+					echo "<td>".$row['block_name']."</td>";
 					
 					echo "<td>".$row['gp_name']."</td>";
 					

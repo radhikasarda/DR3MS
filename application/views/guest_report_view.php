@@ -7,10 +7,10 @@
 		<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-timepicker/0.5.2/css/bootstrap-timepicker.min.css" type="text/css">
 		<link rel="stylesheet" href="<?php echo base_url().'assets/css/toast.css'?>" type="text/css">
 		
-		<title>DR3MS::Incident</title>
+	<title>DR3MS::Guest::Incident Report</title>
 	</head>
 	
-	<body >
+	<body style="overflow-x:none;overflow-y:none;">
 		
 		<script src="<?php echo base_url().'assets/js/jquery-3.3.1.min.js'?>"></script>
 		<script src="<?php echo base_url().'assets/js/jquery.min.js'?>"></script>
@@ -20,65 +20,62 @@
 		<script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.18.1/moment.min.js"></script>
 		<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-timepicker/0.5.2/js/bootstrap-timepicker.js"></script>
 		<script type="text/javascript" src="<?php echo base_url().'assets/js/toast.js'?>"></script>		
-
-		
 		
 		<div class= "header-container" >
 			<div class = "header">
-				<?php $this->load->view('header_view');?>
+				<?php $this->load->view('guest_header_view');?>
 			</div>
 		</div>
 		<div class = "row" style="margin-top:30px;">
 		<div class = "col-sm-2">
 		</div>
 		<div class = "col-sm-8">
-		<div class="incident-report">
-			<div class="container">
-				<form class="well form-horizontal" id="contact_form">
-					<fieldset>
-						<legend><center><h2><b>Report An Incident</b></h2></center></legend><br>
-							<div class="form-group">
-							  <label class="col-md-4 control-label">Select Circle</label>  
-								<div class="col-md-4 inputGroupContainer">
-									<div class="input-group">
-										<span class="input-group-addon"><i class="glyphicon glyphicon-list"></i></span>
-										<select class="form-control" name = "circles" id="circles"  >
-										
-											<option value="Select">Select Circle</option>
-											<?php
-											foreach($circles as $row)
-											{
-											 echo '<option value="'.$row->circle_name.'">'.$row->circle_name.'</option>';
-											}
-											?>							
-										</select>
-									</div>
-							  </div>
-							</div>
-							
-							<div class="form-group">
-							  <label class="col-md-4 control-label" >Select Block</label> 
-								<div class="col-md-4 inputGroupContainer">
-									<div class="input-group">
-										<span class="input-group-addon"><i class="glyphicon glyphicon-list"></i></span>
-										<select class="form-control" name = "blocks" id="blocks" >							
-										</select>
+			<div class="guest-incident-report">
+				<div class="container">
+					<form class="well form-horizontal" id="guest_incident_form">
+						<fieldset>
+							<legend><center><h2><b>Report An Incident</b></h2></center></legend><br>
+								<div class="form-group">
+									<label class="col-md-4 control-label">Select Circle</label>  
+										<div class="col-md-4 inputGroupContainer">
+											<div class="input-group">
+												<span class="input-group-addon"><i class="glyphicon glyphicon-list"></i></span>
+												<select class="form-control" name = "circle_names" id="circle_names"  >
+													<option value="Select">Select Circle</option>
+														<?php
+														foreach($circles as $row)
+														{ 
+														?>
+															<option value="<?php echo $row->circle_name; ?>"><?php echo $row->circle_name; ?></option>
+															
+														<?php
+														}
+														?>							
+												</select>		
+											</div>
+										</div>
+								</div>
+								<div class="form-group">
+								  <label class="col-md-4 control-label" >Select Block</label> 
+									<div class="col-md-4 inputGroupContainer">
+										<div class="input-group">
+											<span class="input-group-addon"><i class="glyphicon glyphicon-list"></i></span>
+											<select class="form-control" name = "block_names" id="block_names" >							
+											</select>
+										</div>
 									</div>
 								</div>
-							</div>
-							
-							<div class="form-group">
-							  <label class="col-md-4 control-label" >Select GP</label> 
-								<div class="col-md-4 inputGroupContainer">
-								<div class="input-group">
-							  <span class="input-group-addon"><i class="glyphicon glyphicon-list"></i></span>
-								<select class="form-control" name = "gp" id="gp" >
-								</select>
-								</div>
-							  </div>
-							</div>							
-							
-							<div class="form-group">
+								<div class="form-group">
+								  <label class="col-md-4 control-label" >Select GP</label> 
+									<div class="col-md-4 inputGroupContainer">
+										<div class="input-group">
+											<span class="input-group-addon"><i class="glyphicon glyphicon-list"></i></span>
+											<select class="form-control" name = "gp_names" id="gp_names" >
+											</select>
+										</div>
+									</div>
+								</div>	
+								<div class="form-group">
 							  <label class="col-md-4 control-label">Location/Village Name</label>  
 							  <div class="col-md-4 inputGroupContainer">
 							  <div class="input-group">
@@ -227,142 +224,145 @@
 								<button type="button" class="btn btn-success form-control" onclick="return onClickReportSend();">SEND REPORT<span class="glyphicon glyphicon-send"></span></button>
 							  </div>
 							</div>
-							</fieldset>
-							</form>
+							<div class="form-group">
+							 <label class="col-md-5 control-label"></label>
+							 <div class="col-md-2"><br>
+									<button type="button" class="btn btn-danger form-control" onclick="return onClickBack();">BACK</button>
+							  </div>
 							</div>
-								</div>
+						</fieldset>
+					</form>
+				</div>
+			</div>
 		</div>
-		<div class = "col-sm-2">
-		</div>
+		<div class ="row">
+			<div class="col-sm-12">
+				<?php $this->load->view('footer_view');?>
+			</div>
 		</div>
 		<script type="text/javascript">
-		 $('#timepicker').timepicker();
-		</script>
-		<script type="text/javascript">
-							function removeImage1()
+							$(document).ready(function()
+							{								
+								set_block_names();
+								 $('#timepicker').timepicker();
+							});	
+							
+							function set_block_names()
 							{
-								$('#uploaded_img_0').removeAttr('src');
-								$("#file0").val("");
-								$("#button_cancel_1").hide();
-							}
-							function removeImage2()
-							{
-								$('#uploaded_img_1').removeAttr('src');
-								$("#file1").val("");
-								$("#button_cancel_2").hide();
-							}
-							function removeImage3()
-							{
-								$('#uploaded_img_2').removeAttr('src');
-								$("#file2").val("");
-								$("#button_cancel_3").hide();
-							}
-							$(function () {
-							$("#file0").change(function () {
-										if (this.files && this.files[0]) {
-										var reader = new FileReader();
-										reader.onload = imageIsLoaded;
-										reader.readAsDataURL(this.files[0]);
-							}
-							});
-							function imageIsLoaded(e) {
-								$('#uploaded_img_0').attr('src', e.target.result);								
-								$("#button_cancel_1").show();
-							};
-							});
-
-							
-							
-							$(function () {
-							$("#file1").change(function () {
-										if (this.files && this.files[0]) {
-										var reader = new FileReader();
-										reader.onload = imageIsLoaded;
-										reader.readAsDataURL(this.files[0]);
-							}
-							});
-							function imageIsLoaded(e) {
-								$('#uploaded_img_1').attr('src', e.target.result);
-								$("#button_cancel_2").show();
-							};
-							});
-
-							
-							$(function () {
-							$("#file2").change(function () {
-										if (this.files && this.files[0]) {
-										var reader = new FileReader();
-										reader.onload = imageIsLoaded;
-										reader.readAsDataURL(this.files[0]);
-							}
-							});
-							function imageIsLoaded(e) {
-								$('#uploaded_img_2').attr('src', e.target.result);
-								$("#button_cancel_3").show();
-							};
-							});
-
-							
-							function set_block_names(){
-								
-								var circle_id=$('#circles').val();
+									var circle_id=$('#circle_names').val();
+									
 									if(circle_id != '')
 									{
 											$.ajax({
-											url : "<?php echo site_url('Incident/get_blocks');?>",
+											
+											url : "<?php echo site_url('Guest/get_blocks');?>",
 											method : "POST",
 											data : {circle_id: circle_id},
 											success: function(data)
 											{	
-												$('#blocks').html(data);
-												$('#gp').html('<option value="Select">Select GP</option>');
-
+												
+												$('#block_names').html(data);	
+												set_gp_names();	
 											}
 											});
 									}else
 									{
-										  $('#blocks').html('<option value="Select">Select Block</option>');
-										  $('#gp').html('<option value="Select">Select GP</option>');
+										  $('#block_names').html('<option value="Select">Select Block</option>');
+										  $('#gp_names').html('<option value="Select">Select GP</option>');
 									}
 							}
-							$(document).ready(function(){
-									
-									$("#date").datepicker({
-									format: "dd/mm/yyyy",
-									language: "fr",
-									changeMonth: true,
-									changeYear: true });
-									
-									set_block_names();
-									$('#circles').change(function(){ 
+							$('#circle_names').change(function(){ 
 									set_block_names();	
-											
-									}); 
-								
-								$('#blocks').change(function()
-								{
-									  var block_id = $('#blocks').val();
+									set_gp_names();		
+							});
+							$('#block_names').change(function(){ 
+									set_gp_names();	
+										
+							});
+							
+							function set_gp_names()
+							{
+								 var block_id = $('#block_names').val();
 									  if(block_id != '')
 									  {
 									   $.ajax({
-										url:"<?php echo site_url('Incident/get_gp');?>",
+										url:"<?php echo site_url('Guest/get_gp');?>",
 										method:"POST",
 										data:{block_id:block_id},
 										success:function(data)
 										{
-										 $('#gp').html(data);
+										 $('#gp_names').html(data); 		
 										}
 									   });
 									  }
 									  else
 									  {
-									   $('#gp').html('<option value="Select">Select GP</option>');
+									   $('#gp_names').html('<option value="Select">Select GP</option>');
 									  }
+								
+							}
+							function removeImage1()
+								{
+									$('#uploaded_img_0').removeAttr('src');
+									$("#file0").val("");
+									$("#button_cancel_1").hide();
+								}
+								function removeImage2()
+								{
+									$('#uploaded_img_1').removeAttr('src');
+									$("#file1").val("");
+									$("#button_cancel_2").hide();
+								}
+								function removeImage3()
+								{
+									$('#uploaded_img_2').removeAttr('src');
+									$("#file2").val("");
+									$("#button_cancel_3").hide();
+								}
+								$(function () {
+								$("#file0").change(function () {
+											if (this.files && this.files[0]) {
+											var reader = new FileReader();
+											reader.onload = imageIsLoaded;
+											reader.readAsDataURL(this.files[0]);
+								}
 								});
-																	
-							});
-							
-							
+								function imageIsLoaded(e) {
+									$('#uploaded_img_0').attr('src', e.target.result);								
+									$("#button_cancel_1").show();
+								};
+								});
+
+								
+								
+								$(function () {
+								$("#file1").change(function () {
+											if (this.files && this.files[0]) {
+											var reader = new FileReader();
+											reader.onload = imageIsLoaded;
+											reader.readAsDataURL(this.files[0]);
+								}
+								});
+								function imageIsLoaded(e) {
+									$('#uploaded_img_1').attr('src', e.target.result);
+									$("#button_cancel_2").show();
+								};
+								});
+
+								
+								$(function () {
+								$("#file2").change(function () {
+											if (this.files && this.files[0]) {
+											var reader = new FileReader();
+											reader.onload = imageIsLoaded;
+											reader.readAsDataURL(this.files[0]);
+								}
+								});
+								function imageIsLoaded(e) {
+									$('#uploaded_img_2').attr('src', e.target.result);
+									$("#button_cancel_3").show();
+								};
+								});
 							function onClickReportSend()
 							{
 								validateReport();
@@ -372,9 +372,9 @@
 							function validateReport()
 							{
 
-								var selected_circle = $('#circles').val();
-								var selected_block = $('#blocks').val();
-								var selected_gp = $('#gp').val();
+								var selected_circle = $('#circle_names').val();
+								var selected_block = $('#block_names').val();
+								var selected_gp = $('#gp_names').val();
 								var latitude = document.getElementById("latitude").value; 
 								
 								var longitude = document.getElementById("longitude").value;
@@ -476,131 +476,159 @@
 								}
 																
 								sendReport(selected_circle,selected_block,selected_gp,latitude,longitude,location,landmark,subject,incident_date,incident_time,reported_by,contact_no,report_brief);
-							}
-							
-							function sendReport(selected_circle,selected_block,selected_gp,latitude,longitude,location,landmark,subject,incident_date,incident_time,reported_by,contact_no,report_brief)
-							{
+									
+								}
+								function sendReport(selected_circle,selected_block,selected_gp,latitude,longitude,location,landmark,subject,incident_date,incident_time,reported_by,contact_no,report_brief)
+								{
 								$.ajax({
-											url:"<?php echo site_url('Incident/sendIncidentReport');?>",
+											url:"<?php echo site_url('Guest/sendIncidentReport');?>",
 											method:"POST",
 											data:{selected_circle:selected_circle,selected_block:selected_block,selected_gp:selected_gp,latitude:latitude,longitude:longitude,location:location,landmark:landmark,subject:subject,incident_date:incident_date,incident_time:incident_time,reported_by:reported_by,contact_no:contact_no,report_brief:report_brief},
 											type: "POST",
 											cache: false,
-											success: function(data){													
-												$(".result").html(data); 
-												uploadimage();
+											success: function(data){	
+												if(data != 0)
+												{
+													$(".result").html(data); 
+													uploadimage();
+												}
+												else
+												{
+													iqwerty.toast.Toast('Internal server error ...Please TRY again!!');
+													return;
+												}
+												
 											}
 
 								});
-							}
-							
-							function uploadimage()
-							{								
-								var incident_id = document.getElementById('incident_id').innerHTML;
-								var formdata = new FormData();
-								var file1 = document.getElementById('file0').files[0];
-								var file2 = document.getElementById('file1').files[0];
-								var file3 = document.getElementById('file2').files[0];
+								}
 								
-								if(file1)
-								{
-									if ($.inArray(file1.type, ['image/png','image/jpg','image/jpeg']) == -1)
+								
+								function uploadimage()
+								{								
+									var incident_id = document.getElementById('incident_id').innerHTML;
+									var formdata = new FormData();
+									var file1 = document.getElementById('file0').files[0];
+									var file2 = document.getElementById('file1').files[0];
+									var file3 = document.getElementById('file2').files[0];
+									if(file1)
 									{
-										iqwerty.toast.Toast('Please select a PNG/JPG/JPEG file!!');
-										return;
-										
-									}
-									else
-									{
-										if(file1.size > 50000)
+										if ($.inArray(file1.type, ['image/png','image/jpg','image/jpeg']) == -1)
 										{
-											iqwerty.toast.Toast('File too Big, Please select a file less than 50kb !!');
+											iqwerty.toast.Toast('Please select a PNG/JPG/JPEG file!!');
 											return;
+											
 										}
 										else
 										{
-											formdata.append('file_1',file1);
+											if(file1.size > 50000)
+											{
+												iqwerty.toast.Toast('File too Big, Please select a file less than 50kb !!');
+												return;
+											}
+											else
+											{
+												formdata.append('file_1',file1);
+											}
 										}
 									}
-								}
-								
-								if(file2)
-								{
-									if ($.inArray(file2.type, ['image/png','image/jpg','image/jpeg']) == -1)
+									if(file2)
 									{
-										iqwerty.toast.Toast('Please select a PNG/JPG/JPEG file!!');
-										return;
-										
-									}
-									else
-									{
-										if(file1.size > 50000)
+										if ($.inArray(file2.type, ['image/png','image/jpg','image/jpeg']) == -1)
 										{
-											iqwerty.toast.Toast('File too Big, Please select a file less than 50kb !!');
+											iqwerty.toast.Toast('Please select a PNG/JPG/JPEG file!!');
 											return;
+											
 										}
 										else
 										{
-										formdata.append('file_2',file2);
+											if(file1.size > 50000)
+											{
+												iqwerty.toast.Toast('File too Big, Please select a file less than 50kb !!');
+												return;
+											}
+											else
+											{
+											formdata.append('file_2',file2);
+											}
 										}
 									}
-								}
-								
-								if(file3)
-								{
-									if ($.inArray(file1.type, ['image/png','image/jpg','image/jpeg']) == -1)
+									if(file3)
 									{
-										iqwerty.toast.Toast('Please select a PNG/JPG/JPEG file!!');
-										return;
-										
-									}
-									else
-									{
-										if(file1.size > 50000)
+										if ($.inArray(file1.type, ['image/png','image/jpg','image/jpeg']) == -1)
 										{
-											iqwerty.toast.Toast('File too Big, Please select a file less than 50kb !!');
+											iqwerty.toast.Toast('Please select a PNG/JPG/JPEG file!!');
 											return;
+											
 										}
 										else
 										{
-										formdata.append('file_3',file3);
+											if(file1.size > 50000)
+											{
+												iqwerty.toast.Toast('File too Big, Please select a file less than 50kb !!');
+												return;
+											}
+											else
+											{
+											formdata.append('file_3',file3);
+											}
 										}
 									}
-								}
-								
-								if(!file1 && !file2 && !file3)
-								{
-									iqwerty.toast.Toast('Report Sent Successfully!!');
-									<?php $this->session->unset_userdata('guest_entrance'); ?>
-									window.location.href="<?php echo base_url('Login/');?>";	
-									return;
-								}
-								else
-								{
-									formdata.append('incident_id',incident_id);								
-									$.ajax({
-											url: "<?php echo site_url('Incident/uploadImage');?>",
+									var noImage = 0;
+									if(!file1 && !file2 && !file3)
+									{
+										//iqwerty.toast.Toast('Report Sent Successfully!!');
+										//window.location.href="<?php echo base_url('Login/');?>";	
+										//return;
+										noImage = 1;
+									}
+									
+									/*else
+									{*/
+										formdata.append('noImage',noImage);	
+										formdata.append('incident_id',incident_id);								
+										$.ajax({
+											url: "<?php echo site_url('Guest/uploadImage');?>",
 											type: 'post',
 											data: formdata,
 											contentType: false,
 											processData: false,
-											success: function(response)
+											success: function(data)
 											{
-													<?php $this->session->unset_userdata('guest_entrance'); ?>
+													if(data != 0)
+													{
 													iqwerty.toast.Toast('Report Sent Successfully !!');
-													window.location.href="<?php echo base_url('Login/');?>";	
-												
+													window.location.href="<?php echo base_url('District/');?>";	
+													}
 													
+													else
+													{
+														iqwerty.toast.Toast('Internal server error ...Please TRY again!!');
+														return;
+													}
+														
 											}
 										});
-								}								
+									/*}*/	
+								}
 								
-							}	
-						</script>
-			<div class ="row">
-			<div class="col-sm-12">
-				<?php $this->load->view('footer_view');?>
-			</div>
-		</div>
+								function onClickBack()
+								{
+									alert("BACK");
+									$.ajax({
+											url:"<?php echo site_url('login/logout');?>",
+											method:"POST",
+											data:{},
+											type: "POST",
+											cache: false,
+											success: function(response)
+											{
+												window.location.href="<?php echo base_url('District/');?>";																											
+											}
+										});
+								}
+						
+							
+		</script>
 	</body>
 </html>

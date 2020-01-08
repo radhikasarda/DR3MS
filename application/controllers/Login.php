@@ -32,16 +32,6 @@
  
 		}
 		
-		
-		
-		public function loadGuestView()
-		{
-			log_message('info','##########Loading loadGuestView');
-			$this->load->view('guest_view');
-			
-		}
-				
-				
 		public function onLogin()
 		{
 
@@ -98,7 +88,7 @@
 			else
 			{
 				log_message('info','##########USER VALIDATED ID:: '.$userid);
-				
+				$this->load->library('session');
 				$this->session->set_userdata('userid', $userid);
 				$this->session->set_userdata('entrance', TRUE);
 				
@@ -126,9 +116,35 @@
 			}
 		}
 	
+		public function validateGuestLogin()
+		{
+			$otp_generated = strval($this->input->post('otp-generated'));
+			$otp_entered = strval($this->input->post('otp'));
+			log_message('info','##########otp_generated '.$otp_generated);
+			log_message('info','##########otp_entered '.$otp_entered);
+			
+			
+			$otp_generated_trim = trim($otp_generated);
+			$otp_entered_trim = trim($otp_entered);
+			log_message('info','##########otp_generated_trim '.$otp_generated_trim);
+			log_message('info','##########otp_entered_trim '.$otp_entered_trim);
+			
+			if($otp_entered_trim == $otp_entered_trim)
+			{
+				log_message('info','########## setGuestEntrance');
+				$this->load->library('session');			
+				$this->session->set_userdata('entrance', TRUE); 
+				redirect('/Guest');
+			}
+			else
+			{
+				redirect('/District');
+			}
+			
+		}
 		public function logout()
 		{
-			
+			log_message('info','########## INSIDE logout');
 			session_destroy();
 			redirect(base_url());
 			

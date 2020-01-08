@@ -7,10 +7,10 @@
 		function __construct()
 		{
        		parent::__construct();
-			$this->load->library('session');
-			$this->output->set_header('Last-Modified: ' . gmdate("D, d M Y H:i:s") . ' GMT');('Cache-Control: no-store, no-cache, must-revalidate, post-check=0, pre-check=0');
-			$this->output->set_header('Pragma: no-cache');
-			$this->output->set_header("Expires: Mon, 26 Jul 1997 05:00:00 GMT");
+			//$this->load->library('session');
+			//$this->output->set_header('Last-Modified: ' . gmdate("D, d M Y H:i:s") . ' GMT');('Cache-Control: no-store, no-cache, must-revalidate, post-check=0, pre-check=0');
+			//$this->output->set_header('Pragma: no-cache');
+			//$this->output->set_header("Expires: Mon, 26 Jul 1997 05:00:00 GMT");
 			$this->load->model('district_model');
 		}
 		
@@ -33,14 +33,37 @@
 			$database_name = "database_".$selected_district;
 			log_message('info','##########Loading Login Controller getSelelctedDistrict() FUNCTION:: database_name:: '.$database_name);
 			
-			//$this->login_model->set_dbValue($database_name);
 			$this->session->set_userdata('database_name', $database_name);
-			
-			$this->load->model('login_model');
+
 			$data['selected_district'] = $selected_district;
-			$data['users'] = $this->login_model->get_users();
+			$data['users'] = $this->get_users();
 			$this->load->view('login_view',$data);
 
 		}
+		
+		public function get_users()
+		{
+			log_message('info','##########Loading Login Controller get_users() FUNCTION');
+			$database_name = $this->session->userdata('database_name');
+			$db = $this->load->database($database_name, TRUE);
+			$this->db=$db;						
+			$result = $this->db->select('s_no, uid')-> get('user')-> result_array();
+			$users = array(); 
+			foreach($result as $r) 
+			{ 
+				$users[$r['uid']] = $r['uid']; 
+			} 
+			
+			return $users;
+				
+		}
+		
+		public function loadGuestView()
+		{
+			log_message('info','##########Loading loadGuestView');
+			$this->load->view('guest_view');
+			
+		}
+		
 	}
 ?>

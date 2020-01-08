@@ -35,31 +35,8 @@
 		<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/js/bootstrap.min.js"></script>
 		<script type="text/javascript" src="<?php echo base_url().'assets/js/Chart.js'?>"></script>		
 
-	<div class= "dashboard-container" >
-	
+	<div class= "dashboard-container" >	
 		<?php $this->load->view('header_view');?>
-		<div class = "row" style="margin-right:0px;">
-			<div class = "col-sm-6" style = "text-align: left; background-color: #FFB700;height: 25px;">
-				<i class="glyphicon glyphicon-user"></i>
-				<font color="#000000" size="4">
-				"You are logged in as : <?php echo $this->session->userdata('userid'); ?>" 
-				&ensp;
-				<i class="glyphicon glyphicon-bell" aria-hidden="true"></i>
-				Last Login Time : 	
-				<?php foreach((array)$last_login as $last_login){	 
-					 echo $last_login->last_login_time;
-				}?>
-				</font>	
-			
-	
-			</div>
-			<div class = "col-sm-6" style = "text-align: right;  height: 25px;background-color: #FFB700;">
-				<form action="<?php echo base_url("login/logout");?>">
-				
-				<input type="submit" class="logoutbutton" value="LOGOUT">
-				</form>
-			</div>
-		</div>
 		
 		<div>
 		<?php $this->load->view('navbar_view');?>
@@ -335,7 +312,7 @@
   
 </script>
 <script>
-			$(document).ready(function() {
+			/*$(document).ready(function() {
 					$('#all-incidents-table').find('tr').click(function () {
 						 var incident_id = $(this).find('td:first').text();
 						 var request_from_incident = "true";
@@ -357,7 +334,7 @@
 							});
 					});
 					
-			}); 
+			}); */
 
 			function onClickSendInstructions()
 			{

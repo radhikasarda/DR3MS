@@ -112,7 +112,7 @@
 	<!--<script src="https://cdnjs.cloudflare.com/ajax/libs/cryptojs/3.1.2/rollups/aes.js"></script> -->
 	
 	<div class ="index-view" id="index-view" >
-		<?php $this->load->view('header_view');?>
+		<?php $this->load->view('guest_header_view');?>
 			<div class="login-box" id="login-box">				
 				<img src="<?php echo base_url("assets/img/avatar.png");?>" class="avatar">
 				<h1>Login Here</h1>
@@ -153,7 +153,7 @@
 					</div>			
 				</form>
 				<div style="margin-left:110px;"><p>OR</p></div></br>
-				<form role="form" name="guestloginform" id="guestloginform" action="<?php echo base_url("login/loadGuestView");?>"  method="POST" >
+				<form role="form" name="guestloginform" id="guestloginform" action="<?php echo base_url("District/loadGuestView");?>"  method="POST" >
 					<div class = "form-group">
 						<button type="submit"  class="btn btn-primary" style="margin-left:30px;width:200px;font-size:15;">Report As a Guest User</button>
 					</div>

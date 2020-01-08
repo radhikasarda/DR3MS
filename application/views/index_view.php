@@ -36,6 +36,7 @@
 	<script src="<?php echo base_url('assets/js/aes.js');?> "></script>
 	<script type="text/javascript" src="<?php echo base_url().'assets/js/toast.js'?>"></script>
 	<!--<script src="https://cdnjs.cloudflare.com/ajax/libs/cryptojs/3.1.2/rollups/aes.js"></script> -->
+	
 	<form role="form" name="district-form" id="district-form" action="<?php echo base_url("District/getSelelctedDistrict");?>"  method="POST" >
 		<div id="myModal" role="dialog" class="modal fade" data-backdrop="static" data-keyboard="false">
 			
@@ -44,7 +45,7 @@
 			<div class="modal-content">
 				<div class="modal-header">
 				<!--<button type="button" class="close" data-dismiss="modal">&times;</button>-->
-					<div class="row" style="margin-left:0px;margin-top:0px;"><?php $this->load->view('header_view');?></div>
+					<div class="row" style="margin-left:0px;margin-top:0px;"><?php $this->load->view('guest_header_view');?></div>
 					
 				</div>
 				<div class="modal-body" >					

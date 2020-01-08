@@ -33,6 +33,7 @@
 		
 		public function get_item_details()
 		{
+			$this->load->model('master_data_update_delete_model');
 			$selected_resource = $this->input->post('resource_id');		
 			log_message('info','########## SELECTED RESOURCE:: '.$selected_resource);
 			
@@ -58,11 +59,15 @@
 			}
 			else if($selected_resource == 'block')
 			{
+			
 				foreach ($query->result() as $row)
 				{
+					$c_s_no =  $row->c_s_no;		
+					$circle_name = $this->master_data_update_delete_model->get_circle_name($c_s_no);
 					$list =  array(
 						'b_s_no' => $row->b_s_no,
 						'c_s_no'  => $row->c_s_no,
+						'circle_name' => $circle_name,
 						'block' =>$row->block
 						);
 					
@@ -73,11 +78,15 @@
 			}
 			else if($selected_resource == 'gp')
 			{
+			
 				foreach ($query->result() as $row)
 				{
+					$b_s_no =  $row->b_s_no;
+					$block_name = $this->master_data_update_delete_model->get_block_name($b_s_no);
 					$list =  array(
 						'gp_no' => $row->gp_no,
 						'b_s_no'  => $row->b_s_no,
+						'block_name' =>$block_name,
 						'gp_name' =>$row->gp_name
 						);
 					

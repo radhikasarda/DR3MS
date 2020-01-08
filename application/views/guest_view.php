@@ -106,20 +106,21 @@
 	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/js/bootstrap.min.js"></script>
 	<script type="text/javascript" src="<?php echo base_url().'assets/js/toast.js'?>"></script>
 	
-	<?php $this->load->view('header_view');?>
+	<?php $this->load->view('guest_header_view');?>
 
 	<div class="login-box">
 			<img src="<?php echo base_url("assets/img/avatar.png");?>" class="avatar">
 			<h1>Enter Details</h1>
 			<br>
-			<form role="form" name="guestLoginForm" id="guestLoginForm">
+			<form role="form" name="guestLoginForm" id="guestLoginForm"  action="<?php echo base_url("login/validateGuestLogin");?>"  method="POST" >
 						
 			<div class = "form-group" id="input-mobile-no">
 			<p>Mobile No.:<font color="#fff" size="2"><i> [Only 10 digits accepted]</i></font></p>			
 			<input type="number" class="form-control" name="contact_no" placeholder="Enter Mobile No." id="contact_no" onkeypress="return isNumberKey(event)"  min="1111111111" max="9999999999" value="">			
 			</div>
 		
-			<div class = "form-group" id="view-otp" style="display:none;">	
+			<div class = "form-group" name="view-otp" id="view-otp" style="display:none;" >	
+			<input type="text" class="form-control" name="otp-generated" id="otp-generated" readonly>	
 			</div>
 			
 			<div class = "form-group" id="enter-otp" style="display:none;">
@@ -138,7 +139,7 @@
 			</form>
 			<div class = "form-group" id="or" style="margin-left:110px;"><p>OR</p></div>
 			
-			<form role="form" name="guestloginform" id="guestloginform" action="<?php echo base_url("District/");?>"  method="POST" >
+			<form role="form" name="regloginform" id="regloginform" action="<?php echo base_url("District/");?>"  method="POST" >
 			<div class = "form-group" id="btn-registered-user">
 			<button type="submit"  class="btn btn-primary" style="margin-left:30px;width:200px;font-size:15;">Login as a Registered User</button>
 			</div>
@@ -192,7 +193,7 @@
 												$("#btn-submit-otp").show();
  												$("#enter-otp").show();
 												$("#view-otp").show(); 
-												$('#view-otp').html(data);
+												document.getElementById('otp-generated').value = data;
 												
 											}
 
@@ -204,20 +205,8 @@
 		
 		function submitOtp()
 		{
-			var contact_no = document.getElementById('contact_no').value;
-			var submitted_otp = document.getElementById('otp').value.toString().trim();
-		
-			var otp = document.getElementById("view-otp").innerHTML.toString().trim();
-			
-			if(submitted_otp == otp) {
-					<?php $this->session->set_userdata('guest_entrance', TRUE); ?>
-					window.location.href="<?php echo base_url('Guest/');?>";	
-			} 
-			else 
-			{
-				iqwerty.toast.Toast('Please Enter Valid OTP !!');
-				return;
-			}
+			document.getElementById('guestLoginForm').submit();
+			return true;
 		}
 		
 	</script>
