@@ -242,7 +242,11 @@
 		</div>
 		<script type="text/javascript">
 							$(document).ready(function()
-							{								
+							{	$("#date").datepicker({
+									format: "dd/mm/yyyy",
+									language: "fr",
+									changeMonth: true,
+									changeYear: true });							
 								set_block_names();
 								 $('#timepicker').timepicker();
 							});	
@@ -577,14 +581,11 @@
 									var noImage = 0;
 									if(!file1 && !file2 && !file3)
 									{
-										//iqwerty.toast.Toast('Report Sent Successfully!!');
-										//window.location.href="<?php echo base_url('Login/');?>";	
-										//return;
+										
 										noImage = 1;
 									}
 									
-									/*else
-									{*/
+									
 										formdata.append('noImage',noImage);	
 										formdata.append('incident_id',incident_id);								
 										$.ajax({
@@ -609,12 +610,11 @@
 														
 											}
 										});
-									/*}*/	
+									
 								}
 								
 								function onClickBack()
 								{
-									alert("BACK");
 									$.ajax({
 											url:"<?php echo site_url('login/logout');?>",
 											method:"POST",

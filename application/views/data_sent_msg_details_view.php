@@ -22,7 +22,7 @@
 		echo "</div>";
 		echo "<div class='form-group' id='buttons'>";	
 				echo "<button type='submit' class='btn btn-default' onClick='onSentMsgForwardClick();'>Forward&nbsp;<i class='glyphicon glyphicon-arrow-right' aria-hidden='true'></i></button>&ensp;";
-				echo "<button type='submit' class='btn btn-danger' onClick='onClickDelete();'>Delete&nbsp;<i class='glyphicon glyphicon-trash' aria-hidden='true'></i></button>";
+				//echo "<button type='submit' class='btn btn-danger' onClick='onClickDelete();'>Delete&nbsp;<i class='glyphicon glyphicon-trash' aria-hidden='true'></i></button>";
 		echo "</div>";
 		echo "</div>";
 ?>
