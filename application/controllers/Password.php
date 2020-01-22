@@ -38,8 +38,44 @@
 			
 			$userid = $this->session->userdata('userid');
 			$oldPasswordOk = 0;
-			$oldPasswordOk = $this->password_model->validateOldPassword($userid,$current_password);
-			$password = $this->get_password();
+			$oldPasswordOk = $this->password_model->validateOldPassword($oldPasswordOk,$userid,$current_password);
+			log_message('info','##########oldPasswordOk '.$oldPasswordOk);
+			
+			if($oldPasswordOk == 0)
+			{
+				$this->session->set_flashdata('oldPasswordError', 'Incorrect Current Password !! TRY AGAIN !!');
+				redirect($_SERVER['HTTP_REFERER']);				
+			}
+			
+			else
+			{
+				$validateRetypePassword = 0;
+				$validateRetypePassword = $this->password_model->validateRetypePassword($validateRetypePassword,$new_password,$retype_password);
+				log_message('info','##########validateRetypePassword '.$validateRetypePassword);
+				if($validateRetypePassword == 0)
+				{
+					$this->session->set_flashdata('retypePasswordError', 'New Password and Retyped Password did not match !! TRY AGAIN !!');
+					redirect($_SERVER['HTTP_REFERER']);				
+				}
+				
+				else
+				{
+					$newPasswordSet = 0;
+					$newPasswordSet = $this->password_model->insertNewPassword($newPasswordSet,$new_password,$userid);
+					log_message('info','##########newPasswordSet '.$newPasswordSet);
+					if($newPasswordSet == 0)
+					{
+						$this->session->set_flashdata('setPasswordError', 'Internal server Error !! TRY AGAIN !!');
+						redirect($_SERVER['HTTP_REFERER']);				
+					}
+					else
+					{
+						$this->session->set_flashdata('passwordSetSuccess', 'Password Changed Successfully');
+						redirect($_SERVER['HTTP_REFERER']);		
+					}
+				}
+				
+			}
 			
 		}
    }

@@ -85,7 +85,15 @@
 		</div>
 		</div>					
 		<script>
-		
+			<?php if($this->session->flashdata('oldPasswordError')){  ?>
+			iqwerty.toast.Toast("<?php echo $this->session->flashdata('oldPasswordError'); ?>");
+			<?php } else if($this->session->flashdata('retypePasswordError')){  ?>
+			iqwerty.toast.Toast("<?php echo $this->session->flashdata('retypePasswordError'); ?>");
+			<?php } else if($this->session->flashdata('setPasswordError')){  ?>
+			iqwerty.toast.Toast("<?php echo $this->session->flashdata('setPasswordError'); ?>");
+			<?php } else if($this->session->flashdata('passwordSetSuccess')){  ?>
+			iqwerty.toast.Toast("<?php echo $this->session->flashdata('passwordSetSuccess'); ?>");
+			<?php } ?>
 		</script>
 	</body>
 </html>
