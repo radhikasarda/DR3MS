@@ -16,18 +16,12 @@
 
 			log_message('info','##########Loading Login Controller INDEX FUNCTION');
 			
-			//$key_val = $this->encryption->create_key(32);
-			//$data['key']=bin2hex($key_val);
-			
-			//log_message('info','##########KEY IN INDEX FUNCTIOON '.$key_val);
-			
-			//$this->session->set_userdata('key_val', $key_val);
-			
-	
 			//load login page
 			$data['users'] = $this->login_model->get_users();
 			$data['msg'] = $msg;
-			$this->load->view('index_view',$data);
+			$selected_district = $this->session->userdata('selected_district');
+			$data['selected_district'] = $selected_district;
+			$this->load->view('login_view',$data);
 			
  
 		}
@@ -41,18 +35,18 @@
 			$userid = null;
 			
 			
-			$username = $this->input->post('users');
-			$password = $this->input->post('password');
+			$enc_username = $this->input->post('users');
+			$enc_password = $this->input->post('password');
 			
-			/*log_message('info','##########login_encrypt_INFO_USER '.$username);
-			log_message('info','##########login_eNCRYPT_INFO_PASS '.$password);
+			log_message('info','##########login_encrypt_INFO_USER '.$enc_username);
+			log_message('info','##########login_eNCRYPT_INFO_PASS '.$enc_password);
 			
 			$key = $this->session->userdata('key_val');
 			
 			log_message('info','##########KEY '.$key);
 			
 			
-			$username = $this->encryption->decrypt(base64_decode($user), array(
+			$username = $this->encryption->decrypt(base64_decode($enc_username), array(
 			'cipher' => 'aes-256',
 			'mode' => 'cbc',
 			'hmac' => FALSE,
@@ -61,7 +55,7 @@
 		
 			
 			
-			$password = $this->encryption->decrypt(base64_decode($password), array(
+			$password = $this->encryption->decrypt(base64_decode($enc_password), array(
 			'cipher' => 'aes-256',
 			'mode' => 'cbc',
 			'hmac' => FALSE,
@@ -70,7 +64,7 @@
 			
 			$this->session->unset_userdata('key_val');
 			log_message('info','##########login_Decrypt_INFO_USER '.$username);
-			log_message('info','##########login_Decrypt_INFO_PASS '.$password);*/
+			log_message('info','##########login_Decrypt_INFO_PASS '.$password);
 			
 			// Validate the user 
 			$userid = $this->login_model->validate($username,$password);
@@ -81,8 +75,10 @@
 				log_message('info','##########USER NOT VALIDATED');
 			
 				$msg = "Invalid Username Or Password";
+				$selected_district = $this->session->userdata('selected_district');
+				$this->load->model('district_model');
 				
-				$this->index($msg);
+				$this->district_model->loadLoginView($msg,$selected_district);
 			}
 			// If user did validate 
 			else

@@ -15,30 +15,39 @@
 				
 		log_message('info','##########USER_INFO_USER '.$username);
 		log_message('info','##########USER_INFO_Pass '.$password);
-		
 		$userid = null;
 		
-        // Prep the query
-        $this->db->where('uid', $username);
-        $this->db->where('password', $password);
-        
-        // Run the query
-        $query = $this->db->get('user');
-		foreach ($query->result() as $row)
-		{
-		$userid = $row->uid;
+		$query = $this->db->query("SELECT * FROM user WHERE uid='".$username."'");  
+		$numrows = $query->num_rows(); 
+		if($numrows!=0)  
+		{  
+			foreach($query->result_array() as $row)
+			{
+				$dbusername = $row['uid'];  
+				$dbpassword = $row['password'];  
+				log_message('info','##########dbusername '.$dbusername);
+				log_message('info','##########dbpassword '.$dbpassword);
+				if($username == $dbusername)
+				{ 
+					if(password_verify( $password, $dbpassword))
+					{
+						$userid = $username;
+						$this->insert_last_login_time($username);
+						$this->set_login_ip($username);
+					}
+				}
+			}
+			/*if($username == $dbusername && $password == $dbpassword)  
+			{ 
+				$userid = $username;
+				$this->insert_last_login_time($username);
+				$this->set_login_ip($username);
 		
+			}*/
+			
+			
 		}
-		
-		if(!is_null($userid)){
-		
-			$this->insert_last_login_time($userid);
-			$this->set_login_ip($userid);
-		}		
-		
 		return $userid;
-
- 
 		}  
 		
 		private function insert_last_login_time($userid)

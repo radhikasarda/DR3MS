@@ -24,5 +24,38 @@
 			return $districts;
 				
 		}
+		public function loadLoginView($msg = null,$selected_district)
+		{
+			//For password Encryption
+			
+			$key_val = $this->encryption->create_key(32);
+			$data['key']=bin2hex($key_val);
+			
+			log_message('info','##########KEY IN loadLoginView FUNCTION '.$key_val);
+			
+			$this->session->set_userdata('key_val', $key_val);
+		
+			$data['msg'] = $msg;
+			$data['selected_district'] = $selected_district;
+			$data['users'] = $this->get_users();
+			$this->load->view('login_view',$data);
+		}
+		
+		public function get_users()
+		{
+			log_message('info','##########Loading Login Controller get_users() FUNCTION');
+			$database_name = $this->session->userdata('database_name');
+			$db = $this->load->database($database_name, TRUE);
+			$this->db=$db;						
+			$result = $this->db->select('s_no, uid')-> get('user')-> result_array();
+			$users = array(); 
+			foreach($result as $r) 
+			{ 
+				$users[$r['uid']] = $r['uid']; 
+			} 
+			
+			return $users;
+				
+		}
 	}
 ?>

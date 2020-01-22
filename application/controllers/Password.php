@@ -37,7 +37,8 @@
 			log_message('info','##########retype_password '.$retype_password);
 			
 			$userid = $this->session->userdata('userid');
-			
+			$oldPasswordOk = 0;
+			$oldPasswordOk = $this->password_model->validateOldPassword($userid,$current_password);
 			$password = $this->get_password();
 			
 		}

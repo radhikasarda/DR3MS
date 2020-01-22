@@ -1,0 +1,93 @@
+Add SSL to any website
+
+1. Download openssl
+
+2. Set environment variable as --->OPENSSL_CONF-->C:\OpenSSL-Win64\bin\openssl.cfg
+
+3. create a test folder say example-cert
+
+4. open example-cert and open CMD and run command ::
+
+	openssl genrsa -des3 -out rootCA.key 2048
+	
+	enter any test passphrase say 123456
+	
+5. Run the command :: 
+
+	openssl req -x509 -new -nodes -key rootCA.key -sha256 -days 1024 -out rootCA.pem
+
+	enter the details as asked
+
+6. open manage certificates->trusted certifiacte->right click certificates->add tasks->import-->select rootCA.pem file and click import-->done
+
+7. create v3.ext file in example-cert with following data
+
+		authorityKeyIdentifier=keyid,issuer
+		basicConstraints=CA:FALSE
+		keyUsage = digitalSignature, nonRepudiation, keyEncipherment, dataEncipherment
+		subjectAltName = @alt_names
+
+		[alt_names]
+		DNS.1 = localhost  OR /// Use IP.1 10.177.64.105
+		
+8. Run the command
+
+	openssl req -new -newkey rsa:2048 -nodes -keyout server.key -out server.csr
+	
+	Enter details with CommanName as required
+
+9. Run command 
+
+	openssl x509 -req -in server.csr -CA rootCA.pem -CAkey rootCA.key -CAcreateserial -out server.crt -days 500 -sha256 -extfile v3.ext
+	
+	enter passphrase used above
+	
+10. Copy server.key and server.crt files to apache/conf/ssl.key and apache/conf/ssl.crt
+
+11. restart xampp server.
+
+
+
+//configuration in apache--
+
+
+edit httpd-ssl-conf--
+
+change localhost to -your_ip_addres
+change server name to _your_ip_address
+
+//force ssl in codeigniter
+
+edit config.php--->enable hooks-->TRUE
+
+edit config/hooks.php -->add code -->
+
+$hook['post_controller_constructor'][] = array(
+    'function' => 'redirect_ssl',
+    'filename' => 'ssl.php',
+    'filepath' => 'hooks'
+);	
+
+create a file ssl.php in application/hooks/ssl.php
+
+add code --
+
+<?php 
+
+ function redirect_ssl() {
+          $CI =& get_instance();
+          $class = $CI->router->fetch_class();
+          $exclude =  array('client');  // add more controller name to exclude ssl.
+          if(!in_array($class,$exclude)) {
+              // redirecting to ssl.
+              $CI->config->config['base_url'] = str_replace('http://', 'https://', $CI->config->config['base_url']);
+              if ($_SERVER['SERVER_PORT'] != 443) redirect($CI->uri->uri_string());
+          } else {
+              // redirecting with no ssl.
+              $CI->config->config['base_url'] = str_replace('https://', 'http://', $CI->config->config['base_url']);
+              if ($_SERVER['SERVER_PORT'] == 443) redirect($CI->uri->uri_string());
+          }
+      }
+?>
+
+restart apache

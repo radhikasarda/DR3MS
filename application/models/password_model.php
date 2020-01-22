@@ -7,6 +7,13 @@
 				$database_name = $this->session->userdata('database_name');
 				$db = $this->load->database($database_name, TRUE);
 				$this->db=$db;						
-			}  
+			}
+
+
+
+			public function validateOldPassword($userid,$current_password)
+			{
+				
+			}
 		}
 ?>

@@ -34,29 +34,14 @@
 			log_message('info','##########Loading Login Controller getSelelctedDistrict() FUNCTION:: database_name:: '.$database_name);
 			
 			$this->session->set_userdata('database_name', $database_name);
-
-			$data['selected_district'] = $selected_district;
-			$data['users'] = $this->get_users();
-			$this->load->view('login_view',$data);
-
+			$this->session->set_userdata('selected_district', $selected_district);
+			$msg = null;
+			$this->district_model->loadLoginView($msg,$selected_district);
 		}
 		
-		public function get_users()
-		{
-			log_message('info','##########Loading Login Controller get_users() FUNCTION');
-			$database_name = $this->session->userdata('database_name');
-			$db = $this->load->database($database_name, TRUE);
-			$this->db=$db;						
-			$result = $this->db->select('s_no, uid')-> get('user')-> result_array();
-			$users = array(); 
-			foreach($result as $r) 
-			{ 
-				$users[$r['uid']] = $r['uid']; 
-			} 
-			
-			return $users;
-				
-		}
+		
+		
+		
 		
 		public function loadGuestView()
 		{

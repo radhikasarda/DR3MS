@@ -56,20 +56,20 @@
 							<div class="form-group">
 							  <label class="col-md-4 control-label">Enter Current Password</label>  
 								<div class="col-md-4 inputGroupContainer">								
-									<input  name="current_password"  class="form-control" minlength="5"  maxlength="10"  pattern="[0-9]+" type="text" id="current_password" required>
+									<input  name="current_password"  class="form-control" minlength="5"  maxlength="5"  pattern="[0-9]+" type="text" id="current_password" required>
 								</div>
 							</div>
 							<div class="form-group">
 							  <label class="col-md-4 control-label">Enter New Password</label>  
 								<div class="col-md-4 inputGroupContainer">								
-									<input  name="new_password"  class="form-control"   minlength="5"  maxlength="10"  pattern="[0-9]+" type="password" id="new_password" required>
-									<label class="control-label"><font color="red"><font size="2">Maximum 10 digits allowed(Use only numbers)</font></font></label>
+									<input  name="new_password"  class="form-control"   minlength="5"  maxlength="5"  pattern="[0-9]+" type="password" id="new_password" required>
+									<label class="control-label"><font color="red"><font size="2">Maximum 5 digits allowed(Use only numbers)</font></font></label>
 								</div>
 							</div>
 							<div class="form-group">
 							  <label class="col-md-4 control-label">Retype New Password</label>  
 								<div class="col-md-4 inputGroupContainer">								
-									<input  name="retype_password"  class="form-control"  minlength="5" maxlength="10"  pattern="[0-9]+" type="password" id="retype_password" required>
+									<input  name="retype_password"  class="form-control"  minlength="5" maxlength="5"  pattern="[0-9]+" type="password" id="retype_password" required>
 								</div>
 							</div>
 							<div class="form-group">

@@ -16,7 +16,7 @@
 			
 			.login-box{
 				width: 320px;
-				height: 520px;
+				height: 560px;
 				background: rgba(0, 0, 0, 0.5);
 				color: #fff;
 				top: 43%;
@@ -129,7 +129,7 @@
 
 									foreach($users as $user){
 								?>
-								<option value="<?php echo strtolower($user); ?>"><?php echo $user; ?>
+								<option value="<?php echo $user; ?>"><?php echo $user; ?>
 								</option>
 								<?php
 								}
@@ -163,7 +163,7 @@
 			<script>
 
 			function prepareFormData(){
-					/* //alert("prepareFormData..");
+					
 		
 					var user = document.getElementById('users').value;
 					//alert("User.." + user);
@@ -198,25 +198,21 @@
 					//alert("encPass.." + encPass);
 						
 					var outUser = ivu.concat(encUser).toString(CryptoJS.enc.Base64);
+	
 					var outPass = ivp.concat(encPass).toString(CryptoJS.enc.Base64);
-					//	alert("Crypt Data Pass.." + outPass);
-						
-					/*var x=document.getElementById("users")
-					alert("X.." + x);
-					var option = document.createElement("option");
-					alert("option.." + option);
-					option.text = outUser;
-					x.add(option);
-					alert("X AFTER ADDING.." + x);
-					alert("INDEX.." + option.index);
-					document.getElementById('users').selectedIndex = option.index;
+	
+					optionText = outUser; 
+					optionValue = outUser; 
 					
-					var slectedVal= document.getElementById('users').value;
 					
-					alert("slectedVal.." + slectedVal);*/
-					//document.getElementById('password').value = outPass;
-					//alert("Submitting..");
-					//	*/
+
+					var option = new Option(optionText, optionValue);
+					
+					$("#users").append(option);
+					$("#users").val(optionValue);
+
+					document.getElementById('password').value = outPass;
+
 					document.getElementById('loginform').submit();
 					return true;
 			}
