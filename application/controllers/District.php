@@ -35,8 +35,7 @@
 			
 			$this->session->set_userdata('database_name', $database_name);
 			$this->session->set_userdata('selected_district', $selected_district);
-			$msg = null;
-			$this->district_model->loadLoginView($msg,$selected_district);
+			$this->district_model->loadLoginView($selected_district);
 		}
 		
 		
@@ -48,6 +47,14 @@
 			log_message('info','##########Loading loadGuestView');
 			$this->load->view('guest_view');
 			
+		}
+		
+		public function loadCitizenRegistration()
+		{
+			log_message('info','##########Loading CitizenRegistrationView');
+			$this->load->library('session');			
+			$this->session->set_userdata('entrance', TRUE); 
+			redirect('/Citizen');
 		}
 		
 	}

@@ -28,6 +28,7 @@
 						if($user =='Admin')
 						{?>
 						<li><a href="<?php echo base_url("Dashboard/viewUserInfo");?>"><b>User Information</b></a></li>
+						<li><a href="<?php echo base_url("Dashboard/viewRegisteredCitizens");?>"><b>Registered Citizens</b></a></li>
 						<?php } ?>
 					</ul>
 				</div>

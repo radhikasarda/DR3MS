@@ -169,11 +169,13 @@
 					log_message('info','##########INSIDE upload_image FUNC::filename:: '.$file_name);				
 					log_message('info','##########INSIDE upload_image FUNC::incident_id:: '.$incident_id);
 					log_message('info','##########INSIDE upload_image FUNC::temp_file_name:: '.$temp_file_name);
-				
+					$database_name = $this->session->userdata('database_name');
+					
+					
 					/* Location */
 					$location = 'upload/'.$file_name;				
-					$path  =  'upload/'.$incident_id;				
-				
+					$path  =  'upload/'.$database_name."/".$incident_id;				
+					log_message('info','##########INSIDE upload_image FUNC::path:: '.$path);
 					if(!is_dir($path)) //create the folder if it's not already exists
 					{
 						mkdir($path ,0755,TRUE);

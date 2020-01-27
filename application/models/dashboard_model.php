@@ -252,5 +252,62 @@
 			return $query;	
 		}
 
+		public function get_registered_citizens_data()
+		{
+			$query_reg_citizen = $this->db->query("SELECT * from registered_citizens");
+			$gp_no =  $query_reg_citizen->row()->gp_no;
+			
+			$this->db->select('*');
+			$this->db->from('gp');
+			$this->db->where('gp_no', $gp_no);
+			$query_gp = $this->db->get();
+				
+			$gp_name = $query_gp->row()->gp_name;
+			$block_no = $query_gp->row()->b_s_no;
+			
+			$this->db->select('*');
+			$this->db->from('block');
+			$this->db->where('b_s_no', $block_no);
+			$query_block = $this->db->get();
+			
+			$block_name = $query_block->row()->block;
+			$circle_no = $query_block->row()->c_s_no;
+			
+			$this->db->select('*');
+			$this->db->from('circle');
+			$this->db->where('c_s_no', $circle_no);
+			$query_circle = $this->db->get();
+			
+			$circle_name = $query_circle->row()->circle_name;
+			
+			$i=0;
+			$registered_citizens_detail_data_list = [];
+			foreach ($query_reg_citizen->result() as $row)
+			{					
+					$list =  array(
+						'circle' => $circle_name,
+						'block'  => $block_name,
+						'gp' => $gp_name,
+						'citizen_id' =>$row->citizen_id,
+						'name' =>$row->name,
+						'father_name' =>$row->father_name,
+						'contact_no' =>$row->contact_no,
+						'village_name' =>$row->village_name,
+						'area_locality_street' =>$row->area_locality_street,
+						'email_id' =>$row->email_id
+						
+						);
+					
+					$registered_citizens_detail_data_list[$i]  = $list;
+				
+					$i++;			
+			}
+			
+			$data['data_reg_citizen_details'] = $registered_citizens_detail_data_list;
+
+			return $data;
+		}
+		
+		
    }
 ?>

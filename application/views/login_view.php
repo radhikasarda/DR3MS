@@ -16,10 +16,10 @@
 			
 			.login-box{
 				width: 320px;
-				height: 560px;
+				height: 630px;
 				background: rgba(0, 0, 0, 0.5);
 				color: #fff;
-				top: 43%;
+				top: 47%;
 				left: 50%;
 				position: absolute;
 				transform: translate(-50%,-50%);
@@ -124,7 +124,7 @@
 						<p>Username</p>		
 						<div class = "select-tag">
 							<select name = "users" id="users">
-								<option selected="selected">Choose one</option>
+								<option selected="selected" value="select">Choose one</option>
 								<?php
 
 									foreach($users as $user){
@@ -143,14 +143,7 @@
 					</div>
 					<div class = "form-group">
 						<button type="button"  class="btn btn-primary"  onClick = "return prepareFormData()" style="margin-left:50px;width:150px;font-size:15;">Login</button>
-					</div>
-					<div class="error-box">
-						<?php
-							if (isset($msg)){ 
-							echo $msg;
-							}
-						?>
-					</div>			
+					</div>		
 				</form>
 				<div style="margin-left:110px;"><p>OR</p></div></br>
 				<form role="form" name="guestloginform" id="guestloginform" action="<?php echo base_url("District/loadGuestView");?>"  method="POST" >
@@ -158,17 +151,37 @@
 						<button type="submit"  class="btn btn-primary" style="margin-left:30px;width:200px;font-size:15;">Report As a Guest User</button>
 					</div>
 				</form>
+				<div style="margin-left:110px;"><p>OR</p></div></br>
+				<form role="form" name="guestloginform" id="guestloginform" action="<?php echo base_url("District/loadCitizenRegistration");?>"  method="POST" >
+					<div class = "form-group">
+						<button type="submit"  class="btn btn-primary" style="margin-left:30px;width:200px;font-size:15;">Register as a Citizen</button>
+					</div>
+				</form>
 				<div class ="row" id ="guest-view"></div>
 		
 			<script>
-
+			<?php if($this->session->flashdata('validationFail')){  ?>
+			iqwerty.toast.Toast("<?php echo $this->session->flashdata('validationFail'); ?>");
+			<?php } ?>
 			function prepareFormData(){
 					
 		
 					var user = document.getElementById('users').value;
+					
+					if(user == "select")
+					{
+						iqwerty.toast.Toast('Please select a Username!!');
+						return;
+					}
 					//alert("User.." + user);
 					
 					var pass = document.getElementById('password').value;	
+					if(pass == "")
+					{
+						iqwerty.toast.Toast('Please enter a Password!!');
+						return;
+					}
+					
 					//alert("Pass.." + pass);
 					
 					//alert("PKey.." + "<?php echo $key;?>");

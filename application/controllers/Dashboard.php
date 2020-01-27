@@ -63,5 +63,19 @@
 			$this->load->view('user_info_view',$data);
 			
 		}
+		
+		
+		public function viewRegisteredCitizens()
+		{
+			//Get users info
+			$this->load->library('table');
+			$data_registered_citizens = $this->dashboard_model->get_registered_citizens_data();
+			
+			$data_last_login = $this->dashboard_model->get_last_login_time();
+			
+			$data = array_merge($data_last_login,$data_registered_citizens);
+			$this->load->view('registered_citizens_view',$data);
+		}
+		
 	}  
 ?> 

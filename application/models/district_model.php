@@ -24,7 +24,7 @@
 			return $districts;
 				
 		}
-		public function loadLoginView($msg = null,$selected_district)
+		public function loadLoginView($selected_district)
 		{
 			//For password Encryption
 			
@@ -34,8 +34,7 @@
 			log_message('info','##########KEY IN loadLoginView FUNCTION '.$key_val);
 			
 			$this->session->set_userdata('key_val', $key_val);
-		
-			$data['msg'] = $msg;
+
 			$data['selected_district'] = $selected_district;
 			$data['users'] = $this->get_users();
 			$this->load->view('login_view',$data);

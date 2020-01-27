@@ -205,10 +205,19 @@
 		
 		function submitOtp()
 		{
+			var submitted_otp = document.getElementById('otp').value;
+			if(submitted_otp == "")
+			{
+				iqwerty.toast.Toast('Please Enter OTP !!');
+				return;
+			}
 			document.getElementById('guestLoginForm').submit();
 			return true;
 		}
 		
+		<?php if($this->session->flashdata('otpError')){  ?>
+			iqwerty.toast.Toast("<?php echo $this->session->flashdata('otpError'); ?>");
+		<?php } ?>
 	</script>
 	</body>
 	

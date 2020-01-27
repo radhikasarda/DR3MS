@@ -19,7 +19,7 @@
 			}
 			
 		</style>
-		<title>DR3MS::User Information</title>
+		<title>DR3MS::Registered Citizens</title>
 		
 	</head>
 	
@@ -44,19 +44,34 @@
 		<div class = "col-sm-2">
 		</div>
 		<div class ="col-sm-8" style="margin-top:-10px;">
-			<div id="all-users-table-div" class="container" style="overflow-x:auto;overflow-y:auto;height:800px;width:auto !important;">                                                                                     
-				<table class="table table-striped table-bordered table-hover" id="all-users-table">
+			<div id="registered-citizens-table-div" class="container" style="overflow-x:auto;overflow-y:auto;height:800px;width:auto !important;">                                                                                     
+				<table class="table table-striped table-bordered table-hover" id="registered-citizens-table">
 					<tbody style ="cursor:pointer;">							
 						<thead style="background-color: black;color: white;">
-									<td><strong>User</strong></td>
-									<td><strong>Last Login Time</strong></td>
-									<td><strong>Last Login Ip</strong></td>
+									<td><strong>Citizen ID</strong></td>
+									<td><strong>Circle Name</strong></td>
+									<td><strong>Block Name</strong></td>
+									<td><strong>GP Name</strong></td>
+									<td><strong>Citizen Name</strong></td>
+									<td><strong>Father's Name</strong></td>
+									<td><strong>Contact No.</strong></td>
+									<td><strong>Village</strong></td>
+									<td><strong>Area/Locality/Street</strong></td>
+									<td><strong>Email ID</strong></td>
 						</thead>
-						<?php foreach((array)$user_info as $user){?>
+						<?php foreach((array)$data_reg_citizen_details as $citizen){?>
 								<tr>
-									<td><?=$user->user;?></td>
-									<td><?=$user->last_login_time;?></td>
-									<td><?=$user->last_login_ip;?></td>
+									<td><?php echo $citizen['citizen_id']; ?></td>
+									<td><?php echo $citizen['circle']; ?></td>
+									<td><?php echo $citizen['block']; ?></td>
+									<td><?php echo $citizen['gp']; ?></td>
+									<td><?php echo $citizen['name']; ?></td>
+									<td><?php echo $citizen['father_name']; ?></td>
+									<td><?php echo $citizen['contact_no']; ?></td>
+									<td><?php echo $citizen['village_name']; ?></td>
+									<td><?php echo $citizen['area_locality_street']; ?></td>
+									<td><?php echo $citizen['email_id']; ?></td>
+									
 								</tr>     
 						<?php }?>  
 					</tbody>

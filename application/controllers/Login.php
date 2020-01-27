@@ -11,14 +11,12 @@
 		}
 		
 		
-		public function index($msg = null)  
+		public function index()  
 		{  
 
-			log_message('info','##########Loading Login Controller INDEX FUNCTION');
-			
+			log_message('info','##########Loading Login Controller INDEX FUNCTION');			
 			//load login page
 			$data['users'] = $this->login_model->get_users();
-			$data['msg'] = $msg;
 			$selected_district = $this->session->userdata('selected_district');
 			$data['selected_district'] = $selected_district;
 			$this->load->view('login_view',$data);
@@ -76,9 +74,8 @@
 			
 				$msg = "Invalid Username Or Password";
 				$selected_district = $this->session->userdata('selected_district');
-				$this->load->model('district_model');
-				
-				$this->district_model->loadLoginView($msg,$selected_district);
+				$this->load->model('district_model');			
+				$this->district_model->loadLoginView($selected_district);
 			}
 			// If user did validate 
 			else
@@ -95,20 +92,6 @@
 				$this->session->set_userdata($arraydata);
 
 				redirect('/Dashboard');
-			 
-				/*$data['userid'] = $userid; 
-				//Get role of the user
-				$role = $this->db->query("SELECT role FROM user WHERE uid = '$userid' ")->row()->role;
-				
-				if($role == 1){
-				//Load the dashbord for role 1
-				$this->load->view('dashboard_view_admin',$data);
-				}
-				else{
-				//Load the dashboard for other roles
-				$this->load->view('dashboard_view_general',$data);
-				}
-				*/
 			}
 		}
 	
@@ -125,7 +108,7 @@
 			log_message('info','##########otp_generated_trim '.$otp_generated_trim);
 			log_message('info','##########otp_entered_trim '.$otp_entered_trim);
 			
-			if($otp_entered_trim == $otp_entered_trim)
+			if($otp_entered_trim == $otp_generated_trim)
 			{
 				log_message('info','########## setGuestEntrance');
 				$this->load->library('session');			
@@ -134,7 +117,8 @@
 			}
 			else
 			{
-				redirect('/District');
+				$this->session->set_flashdata('otpError', 'Invalid OTP Entered !!');
+				redirect($_SERVER['HTTP_REFERER']);		
 			}
 			
 		}
@@ -156,6 +140,8 @@
 		public function generateOtp()
 		{
 			$contact_no = $this->input->post('contact_no');
+			$this->session->set_userdata('contact', $contact_no); 
+			
 			log_message('info','##########INSIDE getOtp FUNC::contact_no:: '.$contact_no);
 			$otp = rand(100000,999999);
 			log_message('info','##########INSIDE getOtp FUNC::otp:: '.$otp);			

@@ -1,7 +1,7 @@
 <?php  
    defined('BASEPATH') OR exit('No direct script access allowed');
   
-   class Guest extends CI_Controller  
+   class Citizen extends CI_Controller  
    {  
 		
 		function __construct()
@@ -14,10 +14,9 @@
 				
 			}
 			else{
-				$this->load->model('guest_model');
+				$this->load->model('citizen_model');
 			}
 		}
-		
 		
 		public function index()  		
 		{  
@@ -29,8 +28,8 @@
 			else
 			{
 				
-				$data_circles['circles'] = $this->guest_model->get_circles()->result(); 		
-				$this->load->view('guest_report_view',$data_circles);
+				$data_circles['circles'] = $this->citizen_model->get_circles()->result(); 		
+				$this->load->view('citizen_registration_view',$data_circles);
 			}
 		}
 		
@@ -43,7 +42,7 @@
 			{
 				log_message('info','##########INSIDE get_blocks FUNC::');
 				$selected_circle = $this->input->post('circle_id');			
-				echo $this->guest_model->get_blocks($selected_circle);
+				echo $this->citizen_model->get_blocks($selected_circle);
 			}
 			
 		}
@@ -55,33 +54,24 @@
 			{
 				log_message('info','##########INSIDE get_gp FUNC::');
 				$selected_block = $this->input->post('block_id');
-				echo $this->guest_model->get_gp($selected_block);
+				echo $this->citizen_model->get_gp($selected_block);
 			}
 		}
 		
-		public function sendIncidentReport()
+		public function register_citizen()
 		{
-			$result = $this->guest_model->send_incident_report();
-			log_message('info','##########INSIDE sendIncidentReport FUNC::result:: '.$result);
-			echo $result;
-		}
-		
-		public function uploadImage()
-		{
-			log_message('info','##########INSIDE uploadImage FUNC::');
-			$result = $this->guest_model->upload_image_to_server();
-			if($result != 0)
-			{
+				$result = $this->citizen_model->register_citizen();
+				if($result != 0)
+				{
 				session_destroy();
-			}
-			echo $result;
+				}
+				echo $result;
 		}
 		
 		public function logout()
 		{
 			log_message('info','########## INSIDE logout');
-			session_destroy();
-			//redirect(base_url());
+			session_destroy();			
 			
 		}
 		
