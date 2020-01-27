@@ -146,7 +146,8 @@
 					}
 					else
 					{
-						$path_url = $this->config->base_url('upload/'.$incident_id);
+						$database_name = $this->session->userdata('database_name');
+						$path_url = $this->config->base_url('upload/'.$database_name."/".$incident_id);
 						log_message('info','##########INSIDE upload_image_to_server FUNC::path_url:: '.$path_url);
 						
 						$this->db->set('dir_name',$path_url);

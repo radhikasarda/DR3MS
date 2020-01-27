@@ -590,18 +590,9 @@
 										processData: false,
 										success: function(data)
 										{
-											if(data != 0)
-											{
 												iqwerty.toast.Toast('Report Sent Successfully !!');
 												window.location.href="<?php echo base_url('District/');?>";	
-											}
-													
-											else
-											{
-												iqwerty.toast.Toast('Internal server error ...Please TRY again!!');
-												return;
-											}
-														
+					
 										}
 									});
 									

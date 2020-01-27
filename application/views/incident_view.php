@@ -40,7 +40,6 @@
 		<script type="text/javascript" src="<?php echo base_url().'assets/js/toast.js'?>"></script>		
 
 		
-		
 		<div class= "header-container" >
 			<div class = "header">
 				<?php $this->load->view('header_view');?>
@@ -54,209 +53,211 @@
 		<div class = "col-sm-2">
 		</div>
 		<div class = "col-sm-8">
-		<div class="incident-report">
-			<div class="container">
-				<form class="well form-horizontal" id="contact_form">
-					<fieldset>
-						<legend><center><h2><b>Report An Incident</b></h2></center></legend><br>
-							<div class="form-group">
-							  <label class="col-md-4 control-label">Select Circle</label>  
-								<div class="col-md-4 inputGroupContainer">
-									<div class="input-group">
-										<span class="input-group-addon"><i class="glyphicon glyphicon-list"></i></span>
-										<select class="form-control" name = "circles" id="circles"  >
-											<?php $circle_name = $this->session->userdata('circle_name');
-											if($circle_name == 'All'){
-											?><option value="Select">Select Circle</option>
-											<?php
-											}
-											?>
-											<?php
-											foreach($circles as $row)
-											{
-											 echo '<option value="'.$row->circle_name.'">'.$row->circle_name.'</option>';
-											}
-											?>							
-										</select>
-									</div>
-							  </div>
-							</div>
-							
-							<div class="form-group">
-							  <label class="col-md-4 control-label" >Select Block</label> 
-								<div class="col-md-4 inputGroupContainer">
-									<div class="input-group">
-										<span class="input-group-addon"><i class="glyphicon glyphicon-list"></i></span>
-										<select class="form-control" name = "blocks" id="blocks" >							
-										</select>
+			<div class="incident-report">
+				<div class="container">
+					<form class="well form-horizontal" id="contact_form">
+						<fieldset>
+							<legend><center><h2><b>Report An Incident</b></h2></center></legend><br>
+								<div class="form-group">
+									<label class="col-md-4 control-label">Select Circle</label>  
+									<div class="col-md-4 inputGroupContainer">
+										<div class="input-group">
+											<span class="input-group-addon"><i class="glyphicon glyphicon-list"></i></span>
+											<select class="form-control" name = "circles" id="circles"  >
+												<?php $circle_name = $this->session->userdata('circle_name');
+												if($circle_name == 'All'){
+												?><option value="Select">Select Circle</option>
+												<?php
+												}
+												?>
+												<?php
+												foreach($circles as $row)
+												{
+												 echo '<option value="'.$row->circle_name.'">'.$row->circle_name.'</option>';
+												}
+												?>							
+											</select>
+										</div>
 									</div>
 								</div>
-							</div>
 							
-							<div class="form-group">
-							  <label class="col-md-4 control-label" >Select GP</label> 
-								<div class="col-md-4 inputGroupContainer">
-								<div class="input-group">
-							  <span class="input-group-addon"><i class="glyphicon glyphicon-list"></i></span>
-								<select class="form-control" name = "gp" id="gp" >
-								</select>
+								<div class="form-group">
+									<label class="col-md-4 control-label" >Select Block</label> 
+										<div class="col-md-4 inputGroupContainer">
+											<div class="input-group">
+												<span class="input-group-addon"><i class="glyphicon glyphicon-list"></i></span>
+												<select class="form-control" name = "blocks" id="blocks" >							
+												</select>
+											</div>
+										</div>
+								</div>							
+								<div class="form-group">
+									<label class="col-md-4 control-label" >Select GP</label> 
+										<div class="col-md-4 inputGroupContainer">
+											<div class="input-group">
+												<span class="input-group-addon"><i class="glyphicon glyphicon-list"></i></span>
+												<select class="form-control" name = "gp" id="gp" >
+												</select>
+											</div>
+										</div>
+								</div>							
+							
+								<div class="form-group">
+									<label class="col-md-4 control-label">Location/Village Name</label>  
+										<div class="col-md-4 inputGroupContainer">
+											<div class="input-group">
+												<span class="input-group-addon"><i class="glyphicon glyphicon-map-marker"></i></span>
+												<input  name="location" placeholder="Enter Location/Village Name" class="form-control"  type="text" id="location">
+											</div>
+										</div>
 								</div>
-							  </div>
-							</div>							
 							
-							<div class="form-group">
-							  <label class="col-md-4 control-label">Location/Village Name</label>  
-							  <div class="col-md-4 inputGroupContainer">
-							  <div class="input-group">
-							   <span class="input-group-addon"><i class="glyphicon glyphicon-map-marker"></i></span>
-							  <input  name="location" placeholder="Enter Location/Village Name" class="form-control"  type="text" id="location">
+								<div class="form-group">
+									<label class="col-md-4 control-label">Nearest Landmark</label>  
+										<div class="col-md-4 inputGroupContainer">
+											<div class="input-group">
+												<span class="input-group-addon"><i class="glyphicon glyphicon-map-marker"></i></span>
+												<input  name="landmark" placeholder="Enter Nearest Landmark" class="form-control"  type="text" id="landmark">
+											</div>
+										</div>
 								</div>
-							  </div>
-							</div>
 							
-							<div class="form-group">
-							  <label class="col-md-4 control-label">Nearest Landmark</label>  
-							  <div class="col-md-4 inputGroupContainer">
-							  <div class="input-group">
-							  <span class="input-group-addon"><i class="glyphicon glyphicon-map-marker"></i></span>
-							  <input  name="landmark" placeholder="Enter Nearest Landmark" class="form-control"  type="text" id="landmark">
-							</div>
-							  </div>
-							</div>
-							
-							<div class="form-group">
-							  <label class="col-md-4 control-label">Latitude</label>  
-							  <div class="col-md-4 inputGroupContainer">
-							  <div class="input-group">
-							  <span class="input-group-addon"><i class="glyphicon glyphicon-globe"></i></span>
-							  <input id="latitude" placeholder="Enter Latitude" class="form-control"  type="text">
-							</div>
-							  </div>
-							</div>
-							
-							<div class="form-group">
-							  <label class="col-md-4 control-label">Longitude</label>  
-							  <div class="col-md-4 inputGroupContainer">
-							  <div class="input-group">
-							  <span class="input-group-addon"><i class="glyphicon glyphicon-globe"></i></span>
-							  <input id="longitude" placeholder="Enter Longitude" class="form-control"  type="text">
-							</div>
-							  </div>
-							</div>
-							
-							<div class="form-group">
-							  <label class="col-md-4 control-label">Subject</label>  
-							  <div class="col-md-4 inputGroupContainer">
-							  <div class="input-group">
-							  <span class="input-group-addon"><i class="glyphicon glyphicon-comment"></i></span>
-							  <input  name="subject" placeholder="Enter Subject" class="form-control"  type="text" id="subject">
-							</div>
-							  </div>
-							</div>
-							
-							<div class="form-group">
-							  <label class="col-md-4 control-label">Incident Date</label>  
-							  <div class="col-md-4 inputGroupContainer">
-							  <div class="input-group" id="datepicker">
-							  <span class="input-group-addon"><i class="glyphicon glyphicon-calendar"></i></span>
-							 <input class="form-control" id="date" name="datepicker" placeholder="DD/MM/YYYY" type="text" data-bind="value: startDate, event: {change: savePerishableDate}"/>
-							</div>
-							</div>
-							</div>
-							
-							<div class="form-group">
-							  <label class="col-md-4 control-label">Incident Time</label>  
-							  <div class="col-md-4 inputGroupContainer">
-								<div class="input-group bootstrap-timepicker">
-									<span class="input-group-addon"><i class="glyphicon glyphicon-time"></i></span>
-									<input id="timepicker" type="text" class="form-control input-small">
+								<div class="form-group">
+									<label class="col-md-4 control-label">Latitude</label>  
+										<div class="col-md-4 inputGroupContainer">
+											<div class="input-group">
+												<span class="input-group-addon"><i class="glyphicon glyphicon-globe"></i></span>
+												<input id="latitude" placeholder="Enter Latitude" class="form-control"  type="text">
+											</div>
+										</div>
+									<label class="control-label"><font color="red"><font size="2">(Optional)</font></font></label>
 								</div>
-							  </div>
-							</div>
 							
-							<div class="form-group">
-							  <label class="col-md-4 control-label">Reported By</label>  
-							  <div class="col-md-4 inputGroupContainer">
-							  <div class="input-group">
-							  <span class="input-group-addon"><i class="glyphicon glyphicon-user"></i></span>
-							  <input  name="reported_by" placeholder="Enter Name" class="form-control"  type="text" id="reported_by">
+								<div class="form-group">
+									<label class="col-md-4 control-label">Longitude</label>  
+										<div class="col-md-4 inputGroupContainer">
+											<div class="input-group">
+												<span class="input-group-addon"><i class="glyphicon glyphicon-globe"></i></span>
+												<input id="longitude" placeholder="Enter Longitude" class="form-control"  type="text">
+											</div>
+										</div>
+									<label class="control-label"><font color="red"><font size="2">(Optional)</font></font></label>
 								</div>
-							  </div>
-							</div>
 							
-							<div class="form-group">
-							  <label class="col-md-4 control-label">Contact No.</label>  
-								<div class="col-md-4 inputGroupContainer">
-								<div class="input-group">
-									<span class="input-group-addon"><i class="glyphicon glyphicon-earphone"></i></span>
-									<input id="contact_no" class="form-control" type="text">
+								<div class="form-group">
+									<label class="col-md-4 control-label">Subject</label>  
+										<div class="col-md-4 inputGroupContainer">
+											<div class="input-group">
+												<span class="input-group-addon"><i class="glyphicon glyphicon-comment"></i></span>
+												<input  name="subject" placeholder="Enter Subject" class="form-control"  type="text" id="subject">
+											</div>
+										</div>
 								</div>
-							  </div>
-							</div>
 							
+								<div class="form-group">
+									<label class="col-md-4 control-label">Incident Date</label>  
+										<div class="col-md-4 inputGroupContainer">
+											<div class="input-group" id="datepicker">
+												<span class="input-group-addon"><i class="glyphicon glyphicon-calendar"></i></span>
+												<input class="form-control" id="date" name="datepicker" placeholder="DD/MM/YYYY" type="text" data-bind="value: startDate, event: {change: savePerishableDate}"/>
+											</div>
+										</div>
+								</div>
+								
+								<div class="form-group">
+									<label class="col-md-4 control-label">Incident Time</label>  
+										<div class="col-md-4 inputGroupContainer">
+											<div class="input-group bootstrap-timepicker">
+												<span class="input-group-addon"><i class="glyphicon glyphicon-time"></i></span>
+												<input id="timepicker" type="text" class="form-control input-small">
+											</div>
+										</div>
+								</div>
+								
+								<div class="form-group">
+									<label class="col-md-4 control-label">Reported By</label>  
+										<div class="col-md-4 inputGroupContainer">
+											<div class="input-group">
+												<span class="input-group-addon"><i class="glyphicon glyphicon-user"></i></span>
+												<input  name="reported_by" placeholder="Enter Name" class="form-control"  type="text" id="reported_by">
+											</div>
+										</div>
+								</div>
+								
+								<div class="form-group">
+									<label class="col-md-4 control-label">Contact No.</label>  
+									<div class="col-md-4 inputGroupContainer">
+									<div class="input-group">
+										<span class="input-group-addon"><i class="glyphicon glyphicon-earphone"></i></span>
+										<input id="contact_no" class="form-control" type="text">
+									</div>
+								  </div>
+								</div>
+								
 							<div class="form-group">
 							  <label class="col-md-4 control-label">Report in Brief</label>  
 								<div class="col-md-4 inputGroupContainer">
-								<div class="input-group">
-									<span class="input-group-addon"><i class="glyphicon glyphicon-comment"></i></span>
-									<textarea class="form-control" id="report_brief" name="report_brief" rows="12" placeholder="Write Report details here.."></textarea>
-									
-									
-									<!--HIDDEN INCIDENT ID FIELD -->
-									 <div class="result" style="display:none;" id="incident_id"></div> 
+									<div class="input-group">
+										<span class="input-group-addon"><i class="glyphicon glyphicon-comment"></i></span>
+										<textarea class="form-control" id="report_brief" name="report_brief" rows="12" placeholder="Write Report details here.."></textarea>															
+										<!--HIDDEN INCIDENT ID FIELD -->
+										<div class="result" style="display:none;" id="incident_id"></div> 
+									</div>
 								</div>
-							  </div>
 							</div>
 							
 							<div class="form-group">
 							    <label class="col-sm-4 control-label">Select First Image</label>
-								<div class="col-md-4 inputGroupContainer">
-								<div class="input-group">
-									<span class="input-group-addon"><i class="glyphicon glyphicon-picture"></i></span>
-									<input type="file" id="file0" class="form-control" accept='image/jpeg,image/jpg,image/png'>
-									<img id="uploaded_img_0" src="#" class="img-thumbnail" alt="No Image" />
-									<!--<button type="button" class="btn btn-warning form-control">UPLOAD<span class="glyphicon glyphicon-upload"></span></button>-->
-									<button type="button" class="btn btn-danger form-control" id="button_cancel_1" style="display:none;" onclick = "return removeImage1();" >Remove <span class="glyphicon  glyphicon-remove"></span></button>
-								</div>
-							  </div>
+									<div class="col-md-4 inputGroupContainer">
+										<div class="input-group">
+											<span class="input-group-addon"><i class="glyphicon glyphicon-picture"></i></span>
+											<input type="file" id="file0" class="form-control" accept='image/jpeg,image/jpg,image/png'>
+											<img id="uploaded_img_0" src="#" class="img-thumbnail" alt="No Image" />
+											<!--<button type="button" class="btn btn-warning form-control">UPLOAD<span class="glyphicon glyphicon-upload"></span></button>-->
+											<button type="button" class="btn btn-danger form-control" id="button_cancel_1" style="display:none;" onclick = "return removeImage1();" >Remove <span class="glyphicon  glyphicon-remove"></span></button>
+										</div>
+									</div>
+									<label class="control-label"><font color="red"><font size="2">(Optional)</font></font></label>
 							</div>
 							
 							<div class="form-group">
 							    <label class="col-sm-4 control-label">Select Second Image</label>
-								<div class="col-md-4 inputGroupContainer">
-								<div class="input-group">
-									<span class="input-group-addon"><i class="glyphicon glyphicon-picture"></i></span>
-									<input type="file" id="file1" class="form-control" accept='image/jpeg,image/jpg,image/png'>
-									<img id="uploaded_img_1" src="#" class="img-thumbnail" alt="No Image" />
-									<!--<button type="button" class="btn btn-warning form-control">UPLOAD<span class="glyphicon glyphicon-upload"></span></button>-->
-									<button type="button" class="btn btn-danger form-control" id="button_cancel_2" style="display:none;" onclick = "return removeImage2();" >Remove <span class="glyphicon  glyphicon-remove"></span></button>
-								</div>
-							  </div>
+									<div class="col-md-4 inputGroupContainer">
+										<div class="input-group">
+											<span class="input-group-addon"><i class="glyphicon glyphicon-picture"></i></span>
+											<input type="file" id="file1" class="form-control" accept='image/jpeg,image/jpg,image/png'>
+											<img id="uploaded_img_1" src="#" class="img-thumbnail" alt="No Image" />
+											<!--<button type="button" class="btn btn-warning form-control">UPLOAD<span class="glyphicon glyphicon-upload"></span></button>-->
+											<button type="button" class="btn btn-danger form-control" id="button_cancel_2" style="display:none;" onclick = "return removeImage2();" >Remove <span class="glyphicon  glyphicon-remove"></span></button>
+										</div>
+									</div>
+									<label class="control-label"><font color="red"><font size="2">(Optional)</font></font></label>
 							</div>
 							
 							<div class="form-group">
 							    <label class="col-sm-4 control-label">Select Third Image</label>
-								<div class="col-md-4 inputGroupContainer">
-								<div class="input-group">
-									<span class="input-group-addon"><i class="glyphicon glyphicon-picture"></i></span>
-									<input type="file" id="file2" class="form-control" accept='image/jpeg,image/jpg,image/png'>
-									<img id="uploaded_img_2" src="#" class="img-thumbnail" alt="No Image" />
-									<!--<button type="button" class="btn btn-warning form-control">UPLOAD<span class="glyphicon glyphicon-upload"></span></button>-->
-									<button type="button" class="btn btn-danger form-control" id="button_cancel_3" style="display:none;" onclick = "return removeImage3();" >Remove <span class="glyphicon  glyphicon-remove"></span></button>
-								</div>
-							  </div>
+									<div class="col-md-4 inputGroupContainer">
+										<div class="input-group">
+											<span class="input-group-addon"><i class="glyphicon glyphicon-picture"></i></span>
+											<input type="file" id="file2" class="form-control" accept='image/jpeg,image/jpg,image/png'>
+											<img id="uploaded_img_2" src="#" class="img-thumbnail" alt="No Image" />
+											<!--<button type="button" class="btn btn-warning form-control">UPLOAD<span class="glyphicon glyphicon-upload"></span></button>-->
+											<button type="button" class="btn btn-danger form-control" id="button_cancel_3" style="display:none;" onclick = "return removeImage3();" >Remove <span class="glyphicon  glyphicon-remove"></span></button>
+										</div>
+									</div>
+									<label class="control-label"><font color="red"><font size="2">(Optional)</font></font></label>
 							</div>
 							
 							<div class="form-group">
-							  <label class="col-md-4 control-label"></label>
-							  <div class="col-md-4"><br>
-								<button type="button" class="btn btn-success form-control" onclick="return onClickReportSend();">SEND REPORT<span class="glyphicon glyphicon-send"></span></button>
-							  </div>
+								<label class="col-md-4 control-label"></label>
+									<div class="col-md-4"><br>
+										<button type="button" class="btn btn-success form-control" onclick="return onClickReportSend();">SEND REPORT<span class="glyphicon glyphicon-send"></span></button>
+									</div>
 							</div>
-							</fieldset>
-							</form>
-							</div>
-								</div>
+						</fieldset>
+					</form>
+				</div>
+			</div>
 		</div>
 		<div class = "col-sm-2">
 		</div>
@@ -421,7 +422,7 @@
 								
 								var report_brief =  document.getElementById("report_brief").value;
 								
-								
+								var phonenoformat = /^\d{10}$/;
 								var regular_exp = new RegExp("\\([+-]?(90(\\.0+)?|([1-8][0-9]|[1-9])(\\.\\d+)?), [+-]?(180(\\.0+)?|(1[0-7][0-9]|[1-9][0-9]|[1-9])(\\.\\d+)?)\\)");
 								
 
@@ -494,131 +495,190 @@
 									iqwerty.toast.Toast('Please Enter Contact Number !!');
 									return;
 								}
-								
+								if(!contact_no.match(phonenoformat))
+								{
+										iqwerty.toast.Toast('You have entered an invalid contact number!');
+										return;
+								}
 								if(report_brief == "")
 								{
 									iqwerty.toast.Toast('Please Enter Report Details !!');
 									return;
 								}
-																
-								sendReport(selected_circle,selected_block,selected_gp,latitude,longitude,location,landmark,subject,incident_date,incident_time,reported_by,contact_no,report_brief);
-							}
-							
-							function sendReport(selected_circle,selected_block,selected_gp,latitude,longitude,location,landmark,subject,incident_date,incident_time,reported_by,contact_no,report_brief)
-							{
-								$.ajax({
-											url:"<?php echo site_url('Incident/sendIncidentReport');?>",
-											method:"POST",
-											data:{selected_circle:selected_circle,selected_block:selected_block,selected_gp:selected_gp,latitude:latitude,longitude:longitude,location:location,landmark:landmark,subject:subject,incident_date:incident_date,incident_time:incident_time,reported_by:reported_by,contact_no:contact_no,report_brief:report_brief},
-											type: "POST",
-											cache: false,
-											success: function(data){													
-												$(".result").html(data); 
-												uploadimage();
-											}
-
-								});
-							}
-							
-							function uploadimage()
-							{								
-								var incident_id = document.getElementById('incident_id').innerHTML;
-								var formdata = new FormData();
 								var file1 = document.getElementById('file0').files[0];
 								var file2 = document.getElementById('file1').files[0];
 								var file3 = document.getElementById('file2').files[0];
+								if(file1)
+								{
+									if(file1.size > 50000)
+									{
+										iqwerty.toast.Toast('File too Big, Please select a file less than 50kb !!');
+										return;
+									}
+				
+								}
+								if(file2)
+								{
+									if(file1.size > 50000)
+									{
+										iqwerty.toast.Toast('File too Big, Please select a file less than 50kb !!');
+										return;
+									}
+										
+								}
+								if(file3)
+								{
+									if(file1.size > 50000)
+									{
+										iqwerty.toast.Toast('File too Big, Please select a file less than 50kb !!');
+										return;
+									}										
+										
+								}			
+								var allowedExtensions = /(\.jpg|\.jpeg|\.png)$/i;
 								
 								if(file1)
 								{
-									if ($.inArray(file1.type, ['image/png','image/jpg','image/jpeg']) == -1)
+									var image1 = document.getElementById('file0');
+									var image1Path = image1.value;
+									if(!allowedExtensions.exec(image1Path))
 									{
-										iqwerty.toast.Toast('Please select a PNG/JPG/JPEG file!!');
-										return;
-										
-									}
-									else
-									{
-										if(file1.size > 50000)
-										{
-											iqwerty.toast.Toast('File too Big, Please select a file less than 50kb !!');
+											iqwerty.toast.Toast('Please select a PNG/JPG/JPEG file!!');
 											return;
-										}
-										else
-										{
-											formdata.append('file_1',file1);
-										}
 									}
 								}
 								
 								if(file2)
 								{
-									if ($.inArray(file2.type, ['image/png','image/jpg','image/jpeg']) == -1)
+									var image2 = document.getElementById('file1');
+									var image2Path = image2.value;
+									if(!allowedExtensions.exec(image2Path))
 									{
-										iqwerty.toast.Toast('Please select a PNG/JPG/JPEG file!!');
-										return;
-										
-									}
-									else
-									{
-										if(file1.size > 50000)
-										{
-											iqwerty.toast.Toast('File too Big, Please select a file less than 50kb !!');
+											iqwerty.toast.Toast('Please select a PNG/JPG/JPEG file!!');
 											return;
-										}
-										else
-										{
-										formdata.append('file_2',file2);
-										}
 									}
 								}
 								
 								if(file3)
 								{
-									if ($.inArray(file1.type, ['image/png','image/jpg','image/jpeg']) == -1)
+									var image3 = document.getElementById('file2');
+									var image3Path = image1.value;
+									if(!allowedExtensions.exec(image3Path))
 									{
-										iqwerty.toast.Toast('Please select a PNG/JPG/JPEG file!!');
-										return;
-										
-									}
-									else
-									{
-										if(file1.size > 50000)
-										{
-											iqwerty.toast.Toast('File too Big, Please select a file less than 50kb !!');
+											iqwerty.toast.Toast('Please select a PNG/JPG/JPEG file!!');
 											return;
-										}
-										else
-										{
-										formdata.append('file_3',file3);
-										}
 									}
 								}
 								
+								
+								
+										
+								var noImage = 0;
 								if(!file1 && !file2 && !file3)
-								{
-									iqwerty.toast.Toast('Report Sent Successfully!!');
-									return;
-								}
+								{	
+									noImage = 1;
+									sendReportWithNoimage(selected_circle,selected_block,selected_gp,latitude,longitude,location,landmark,subject,incident_date,incident_time,reported_by,contact_no,report_brief);
+									
+								}																
 								else
 								{
-									formdata.append('incident_id',incident_id);								
+									sendReportWithImage(selected_circle,selected_block,selected_gp,latitude,longitude,location,landmark,subject,incident_date,incident_time,reported_by,contact_no,report_brief);																		
+								}
+																
+								
+							}
+							function sendReportWithNoimage(selected_circle,selected_block,selected_gp,latitude,longitude,location,landmark,subject,incident_date,incident_time,reported_by,contact_no,report_brief)
+							{								
+									$.ajax({
+												url:"<?php echo site_url('Incident/sendIncidentReport');?>",
+												method:"POST",
+												data:{selected_circle:selected_circle,selected_block:selected_block,selected_gp:selected_gp,latitude:latitude,longitude:longitude,location:location,landmark:landmark,subject:subject,incident_date:incident_date,incident_time:incident_time,reported_by:reported_by,contact_no:contact_no,report_brief:report_brief},
+												type: "POST",
+												cache: false,
+												success: function(data){	
+													if(data != 0)
+													{												
+														$(".result").html(data); 													
+														iqwerty.toast.Toast('Report Sent Successfully!!');	
+														window.location.href="<?php echo base_url('Incident/viewIncidents');?>";	
+													}
+													else
+													{
+														iqwerty.toast.Toast('Internal server error ...Please TRY again!!');
+														return;
+													}
+													
+												}
+
+									});
+							}
+							function sendReportWithImage(selected_circle,selected_block,selected_gp,latitude,longitude,location,landmark,subject,incident_date,incident_time,reported_by,contact_no,report_brief)
+							{
+									$.ajax({
+												url:"<?php echo site_url('Incident/sendIncidentReport');?>",
+												method:"POST",
+												data:{selected_circle:selected_circle,selected_block:selected_block,selected_gp:selected_gp,latitude:latitude,longitude:longitude,location:location,landmark:landmark,subject:subject,incident_date:incident_date,incident_time:incident_time,reported_by:reported_by,contact_no:contact_no,report_brief:report_brief},
+												type: "POST",
+												cache: false,
+												success: function(data){	
+													if(data != 0)
+													{												
+														$(".result").html(data); 
+														uploadImage();
+													}
+													else
+													{
+														iqwerty.toast.Toast('Internal server error ...Please TRY again!!');
+														return;
+													}
+													
+												}
+
+									});
+							}
+							
+							
+							function uploadImage()
+							{	
+									var noImage = 0;
+									var incident_id = document.getElementById('incident_id').innerHTML;
+									
+									
+									var file1 = document.getElementById('file0').files[0];
+									var file2 = document.getElementById('file1').files[0];
+									var file3 = document.getElementById('file2').files[0];
+								
+									var formdata = new FormData();
+									if(file1)
+									{
+										formdata.append('file_1',file1);
+									}
+									if(file2)
+									{
+										formdata.append('file_2',file2);
+									}
+									if(file3)
+									{
+										formdata.append('file_3',file3);
+									}
+									
+									formdata.append('noImage',noImage);	
+									formdata.append('incident_id',incident_id);		
+															
 									$.ajax({
 											url: "<?php echo site_url('Incident/uploadImage');?>",
 											type: 'post',
 											data: formdata,
 											contentType: false,
 											processData: false,
-											success: function(response)
+											success: function(data)
 											{
-
 													iqwerty.toast.Toast('Report Sent Successfully !!');
 													window.location.href="<?php echo base_url('Incident/viewIncidents');?>";	
-												
-													
+											
 											}
-										});
-								}								
-								
+									});
+																								
 							}	
 						</script>
 	</body>

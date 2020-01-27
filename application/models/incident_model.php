@@ -157,7 +157,8 @@
 				}
 				else
 				{
-					$path_url = $this->config->base_url('upload/'.$incident_id);
+					$database_name = $this->session->userdata('database_name');
+					$path_url = $this->config->base_url('upload/'.$database_name."/".$incident_id);
 					log_message('info','##########INSIDE upload_image_to_server FUNC::path_url:: '.$path_url);
 					
 					$this->db->set('dir_name',$path_url);
@@ -175,10 +176,10 @@
 					log_message('info','##########INSIDE upload_image FUNC::filename:: '.$file_name);				
 					log_message('info','##########INSIDE upload_image FUNC::incident_id:: '.$incident_id);
 					log_message('info','##########INSIDE upload_image FUNC::temp_file_name:: '.$temp_file_name);
-				
+					$database_name = $this->session->userdata('database_name');
 					/* Location */
 					$location = 'upload/'.$file_name;				
-					$path  =  'upload/'.$incident_id;				
+					$path  =  'upload/'.$database_name."/".$incident_id;				
 				
 					if(!is_dir($path)) //create the folder if it's not already exists
 					{
@@ -253,21 +254,22 @@
 				$image_2_path = null;
 				$image_3_path = null;
 				
+					$database_name = $this->session->userdata('database_name');
 					log_message('info','##########INSIDE get_circle_name FUNC:: dir EXIST');
-					if (file_exists('./upload/'.$incident_id.'/'.$incident_id.'_photo_1.jpg'))
+					if (file_exists('./upload/'.$database_name."/".$incident_id.'/'.$incident_id.'_photo_1.jpg'))
 					{
 						log_message('info','##########INSIDE get_circle_name FUNC:: PHOTO 1 EXIST');
-						$image_1_path = base_url('upload/'.$incident_id.'/'.$incident_id.'_photo_1.jpg');
+						$image_1_path = base_url('upload/'.$database_name."/".$incident_id.'/'.$incident_id.'_photo_1.jpg');
 					}
-					if (file_exists('./upload/'.$incident_id.'/'.$incident_id.'_photo_2.jpg'))
+					if (file_exists('./upload/'.$database_name."/".$incident_id.'/'.$incident_id.'_photo_2.jpg'))
 					{
 						log_message('info','##########INSIDE get_circle_name FUNC:: PHOTO 2 EXIST');
-						$image_2_path = base_url('upload/'.$incident_id.'/'.$incident_id.'_photo_2.jpg');
+						$image_2_path = base_url('upload/'.$database_name."/".$incident_id.'/'.$incident_id.'_photo_2.jpg');
 					}
-					if (file_exists('./upload/'.$incident_id.'/'.$incident_id.'_photo_3.jpg'))
+					if (file_exists('./upload/'.$database_name."/".$incident_id.'/'.$incident_id.'_photo_3.jpg'))
 					{
 						log_message('info','##########INSIDE get_circle_name FUNC:: PHOTO 3 EXIST');
-						$image_3_path = base_url('upload/'.$incident_id.'/'.$incident_id.'_photo_3.jpg');
+						$image_3_path = base_url('upload/'.$database_name."/".$incident_id.'/'.$incident_id.'_photo_3.jpg');
 					}
 					
 				

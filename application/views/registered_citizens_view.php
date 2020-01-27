@@ -48,7 +48,7 @@
 				<table class="table table-striped table-bordered table-hover" id="registered-citizens-table">
 					<tbody style ="cursor:pointer;">							
 						<thead style="background-color: black;color: white;">
-									<td><strong>Citizen ID</strong></td>
+									<td><strong>Sl No.</strong></td>
 									<td><strong>Circle Name</strong></td>
 									<td><strong>Block Name</strong></td>
 									<td><strong>GP Name</strong></td>
@@ -59,9 +59,10 @@
 									<td><strong>Area/Locality/Street</strong></td>
 									<td><strong>Email ID</strong></td>
 						</thead>
-						<?php foreach((array)$data_reg_citizen_details as $citizen){?>
+						<?php $counter = 0;
+						foreach((array)$data_reg_citizen_details as $citizen){?>
 								<tr>
-									<td><?php echo $citizen['citizen_id']; ?></td>
+									<td><?php echo ++$counter; ?></td>
 									<td><?php echo $citizen['circle']; ?></td>
 									<td><?php echo $citizen['block']; ?></td>
 									<td><?php echo $citizen['gp']; ?></td>
