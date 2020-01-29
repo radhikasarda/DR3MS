@@ -2,7 +2,8 @@
 	<head>
 		<meta name="viewport" content="width=device-width, initial-scale=1">
 		<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/css/bootstrap.min.css" type="text/css">
-		
+		<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-select/1.12.2/css/bootstrap-select.min.css">
+		<link rel="stylesheet" href="<?php echo base_url().'assets/css/toast.css'?>" type="text/css">
 		
 		<style>
 			
@@ -34,7 +35,8 @@
 		<script type="text/javascript" src="<?php echo base_url().'assets/js/jquery-3.3.1.js'?>"></script>
 		<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/js/bootstrap.min.js"></script>
 		<script type="text/javascript" src="<?php echo base_url().'assets/js/Chart.js'?>"></script>		
-
+		<script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-select/1.12.2/js/bootstrap-select.min.js"></script>
+		<script type="text/javascript" src="<?php echo base_url().'assets/js/toast.js'?>"></script>
 	<div class= "dashboard-container" >	
 		<?php $this->load->view('header_view');?>
 		
@@ -312,7 +314,7 @@
   
 </script>
 <script>
-			/*$(document).ready(function() {
+			$(document).ready(function() {
 					$('#all-incidents-table').find('tr').click(function () {
 						 var incident_id = $(this).find('td:first').text();
 						 var request_from_incident = "true";
@@ -334,7 +336,7 @@
 							});
 					});
 					
-			}); */
+			}); 
 
 			function onClickSendInstructions()
 			{
@@ -358,7 +360,14 @@
 
 				});			
 			}
-			
+			function onClickReset()
+			{
+				onClickSendInstructions();
+			}
+			function onClickBack()
+			{
+				location.reload();
+			}
 			function onClickSendMessage()
 			{
 				var recipient_id_list = $('#framework').val().toString();

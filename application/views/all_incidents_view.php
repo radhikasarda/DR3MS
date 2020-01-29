@@ -137,6 +137,7 @@
 			}	
 			function onClickSendInstructions()
 			{
+				
 				var incident_id =  document.getElementById("id").value;
 				$.ajax({
 											url:"<?php echo site_url('Incident/onClickSendInstructions');?>",
@@ -157,6 +158,15 @@
 				});			
 			}
 			
+			function onClickReset()
+			{
+				onClickSendInstructions();
+			}
+			
+			function onClickBack()
+			{
+				location.reload();
+			}
 			function onClickSendMessage()
 			{
 				var recipient_id_list = $('#framework').val().toString();

@@ -58,7 +58,9 @@
 							<div class="col-sm-11 col-sm-offset-1">
 							<div class="form-group" >	
 							<button type="button" class="btn btn-success" onClick="onClickSendMessage();" id="btn-send">Send&nbsp;<i class='glyphicon glyphicon-send' aria-hidden='true'></i></button>
-							<button type="button" class="btn btn-danger" onClick="onClickDiscard();" id="btn-reset">Discard&nbsp;<i class='glyphicon glyphicon-trash' aria-hidden='true'></i></button>
+							
+							<button type="button" class="btn btn-danger" onClick="onClickReset();" id="btn-reset">Reset&nbsp;<i class='glyphicon glyphicon-repeat' aria-hidden='true'></i></button>
+							<button type="button" class="btn btn-warning" onClick="onClickBack();" id="btn-reset">Back&nbsp;<i class='glyphicon glyphicon-arrow-left' aria-hidden='true'></i></button>
 							</div>
 							</div>
 							</form>
