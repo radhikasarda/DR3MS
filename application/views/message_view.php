@@ -191,7 +191,11 @@
 			{							 
 				var reply_msg = $('#reply-forward-text').val();
 				var parent_message_id = document.getElementById('id').value;
-				
+				if(reply_msg == '')
+				{
+					iqwerty.toast.Toast('Please type a reply message !!');	
+					return;
+				}
 				$.ajax({
 											url:"<?php echo site_url('Message/onSendReplyClick');?>",
 											method:"POST",

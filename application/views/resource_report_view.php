@@ -168,13 +168,12 @@
 											data:{block_id:$('#blocks').val(),circle_id:$('#circles').val(),gp_id:$('#gp').val(),resource_id:$('#resources').val()},
 											type: "POST",
 											cache: false,
-											success: function(data){
-												//alert(data);
+											success: function(data){											
 												$('#report-table').html(data); 
 											}
 
 							});
-							//$("#report-circlewise-all-resource").show();  
+							
 						}				 
 					</script>
 					</div>
