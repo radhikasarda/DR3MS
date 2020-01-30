@@ -581,12 +581,12 @@
 			
 			function onClickInboxForward()
 			{
-				
+				var incident_id = document.getElementById('inc_id').value;
 				var message_id = document.getElementById('id').value;
 				$.ajax({
 											url:"<?php echo site_url('Message/onClickInboxForward');?>",
 											method:"POST",
-											data:{message_id:message_id},
+											data:{message_id:message_id,incident_id:incident_id},
 											type: "POST",
 											cache: false,
 											success: function(data){																
@@ -623,11 +623,11 @@
 				
 				var message_id = document.getElementById('id').value;
 				
-			
+				var incident_id = document.getElementById('incident_id').value;
 				$.ajax({
 											url:"<?php echo site_url('Message/onSendForwardMsgClick');?>",
 											method:"POST",
-											data:{message_id:message_id,recipient_id_list:recipient_id_list,subject:subject,msg:msg},
+											data:{message_id:message_id,recipient_id_list:recipient_id_list,subject:subject,msg:msg,incident_id:incident_id},
 											type: "POST",
 											cache: false,
 											success: function(data)

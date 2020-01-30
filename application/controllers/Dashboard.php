@@ -76,6 +76,6 @@
 			$data = array_merge($data_last_login,$data_registered_citizens);
 			$this->load->view('registered_citizens_view',$data);
 		}
-		
+
 	}  
 ?> 

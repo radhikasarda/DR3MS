@@ -22,7 +22,7 @@
 			
 			
 		</style>
-		<title>DR3MS::Password Change</title>
+		<title>DR3MS::Password Reset</title>
 		<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
 		
 			
@@ -48,34 +48,38 @@
 		<div class = "col-sm-2">
 		</div>
 		<div class = "col-sm-8">
-		<div class="password-change">
+		<div class="password-reset">
 			<div class="container">
-				<form class="well form-horizontal" id="password_change_form" action="<?php echo base_url("Password/changePassword");?>"  method="POST">
+				<form class="well form-horizontal" id="password_reset_form" action="<?php echo base_url("Password/resetPassword");?>"  method="POST">
 					<fieldset>
-						<legend><center><h2><b>Change Your Password Here !!</b></h2></center></legend><br>					
+						<legend><center><h2><b>Reset Password</b></h2></center></legend><br>					
 							<div class="form-group">
-							  <label class="col-md-4 control-label">Enter Current Password</label>  
+							  <label class="col-md-4 control-label">Select User</label>  
 								<div class="col-md-4 inputGroupContainer">								
-									<input  name="current_password"  class="form-control" minlength="5"  maxlength="5"  pattern="[0-9]+" type="text" id="current_password" required>
+									<select name = "users" id="users" class="form-control">
+												<option value="select">Select User </option>
+												<?php
+												foreach($users as $user){
+												?>
+												
+												<option value="<?php echo $user; ?>"><?php echo $user; ?>
+												</option>
+												<?php
+												}
+												?>
+									</select>
 								</div>
 							</div>
 							<div class="form-group">
-							  <label class="col-md-4 control-label">Enter New Password</label>  
+							  <label class="col-md-4 control-label">Enter Your Password</label>  
 								<div class="col-md-4 inputGroupContainer">								
-									<input  name="new_password"  class="form-control"   minlength="5"  maxlength="5"  pattern="[0-9]+" type="password" id="new_password" required>
-									<label class="control-label"><font color="red"><font size="2">Maximum 5 digits allowed(Use only numbers)</font></font></label>
-								</div>
-							</div>
-							<div class="form-group">
-							  <label class="col-md-4 control-label">Retype New Password</label>  
-								<div class="col-md-4 inputGroupContainer">								
-									<input  name="retype_password"  class="form-control"  minlength="5" maxlength="5"  pattern="[0-9]+" type="password" id="retype_password" required>
+									<input  name="password"  class="form-control" type="password" id="password" >
 								</div>
 							</div>
 							<div class="form-group">
 							  <label class="col-md-4 control-label"></label>
 								<div class="col-md-4"><br>
-									<button type="submit" class="btn btn-success form-control">Change Password</button>
+									<button type="submit" class="btn btn-success form-control" onClick="return onClickReset();">Reset Password</button>
 							  </div>
 							</div>
 					</fieldset>
@@ -85,14 +89,35 @@
 		</div>
 		</div>					
 		<script>
-			<?php if($this->session->flashdata('oldPasswordError')){  ?>
-			iqwerty.toast.Toast("<?php echo $this->session->flashdata('oldPasswordError'); ?>");
-			<?php } else if($this->session->flashdata('retypePasswordError')){  ?>
-			iqwerty.toast.Toast("<?php echo $this->session->flashdata('retypePasswordError'); ?>");
+			function onClickReset()
+			{
+				var user = document.getElementById('users').value;
+				
+				if(user == 'select')
+				{
+					iqwerty.toast.Toast("Select a User !!");
+					return false;
+				}
+			
+				var password = document.getElementById('password').value;
+				
+				if(password == '')
+				{
+					iqwerty.toast.Toast("Please Enter Password !!");
+					return false;
+				}
+				
+				document.getElementById('password_reset_form').submit();
+				return true;
+			}
+		
+			
+			<?php if($this->session->flashdata('PasswordError')){  ?>
+			iqwerty.toast.Toast("<?php echo $this->session->flashdata('PasswordError'); ?>");
 			<?php } else if($this->session->flashdata('setPasswordError')){  ?>
 			iqwerty.toast.Toast("<?php echo $this->session->flashdata('setPasswordError'); ?>");
-			<?php } else if($this->session->flashdata('passwordSetSuccess')){  ?>
-			iqwerty.toast.Toast("<?php echo $this->session->flashdata('passwordSetSuccess'); ?>");
+			<?php } else if($this->session->flashdata('passwordResetSuccess')){  ?>
+			iqwerty.toast.Toast("<?php echo $this->session->flashdata('passwordResetSuccess'); ?>");
 			<?php } ?>
 		</script>
 	</body>

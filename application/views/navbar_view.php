@@ -37,7 +37,8 @@
 								<li><a href="<?php echo base_url("Dashboard/viewUserInfo");?>"><b>User Information</b></a></li>
 								<li><a href="<?php echo base_url("Dashboard/viewRegisteredCitizens");?>"><b>Registered Citizens</b></a></li>
 								<li><a href="<?php echo base_url("Password/loadChangePasswordView");?>"><b>Change Your Password</b></a></li>
-								<li><a href=""><b>Reset User Password</b></a></li>
+								<li><a href="<?php echo base_url("Password/loadResetPasswordView");?>"><b>Reset User Password</b></a></li>
+								<li><a href="<?php echo base_url("Audit_Trail");?>"><b>Audit Trail</b></a></li>
 							</ul>
 						</li>					
 						<?php } else {?>

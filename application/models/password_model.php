@@ -10,7 +10,18 @@
 			}
 
 
-
+			public function get_users()
+			{
+				$userid = $this->session->userdata('userid');
+				$result = $this->db->query("SELECT uid as user from user where uid NOT LIKE '$userid'")->result_array();;
+				$users = array(); 
+				foreach($result as $r) 
+				{ 
+					$users[$r['user']] = $r['user']; 
+				} 
+				
+				return $users;
+			}
 			public function validateOldPassword($oldPasswordOk,$userid,$current_password)
 			{
 				$this->db->select('password');
@@ -59,6 +70,90 @@
 				}
 				
 				return $newPasswordSet;
+			}
+			
+			public function resetPassword($passwordReset,$userid)
+			{
+				$default_p = $this->config->item('default_p');
+				
+				$newHashedPassword = password_hash($default_p, PASSWORD_DEFAULT);
+				
+				$data = array(
+					'password' => $newHashedPassword
+				);
+
+				$this->db->where('uid', $userid);
+				$this->db->update('user', $data);
+			
+				$affected_rows =  $this->db->affected_rows();
+				
+				if($affected_rows > 0)
+				{
+					$passwordReset = 1;
+				}
+				
+				return $passwordReset;
+				
+			}
+			
+			public function update_audit_trail_change_password_attempt($userid)
+			{
+				$activity = "Password Change Attempt";
+				if(!empty($_SERVER['HTTP_CLIENT_IP']))
+				{
+					//ip from share internet
+					$ip = $_SERVER['HTTP_CLIENT_IP'];
+				}
+				elseif(!empty($_SERVER['HTTP_X_FORWARDED_FOR']))
+				{
+					//ip pass from proxy
+					$ip = $_SERVER['HTTP_X_FORWARDED_FOR'];
+				}
+				else
+				{
+					$ip = $_SERVER['REMOTE_ADDR'];
+				}
+				
+				$data = array(
+						'userid' => $userid,
+						'activity_ip' => $ip,
+						'activity' => $activity
+				);
+				$this->db->set('userid', $userid);
+				$this->db->set('activity_ip', $ip);
+				$this->db->set('activity', $activity);
+				
+				$this->db->insert('audit_trail');	
+			}
+			
+			public function update_audit_trail_change_password_successful($userid)
+			{
+				$activity = "Password Change Successful";
+				if(!empty($_SERVER['HTTP_CLIENT_IP']))
+				{
+					//ip from share internet
+					$ip = $_SERVER['HTTP_CLIENT_IP'];
+				}
+				elseif(!empty($_SERVER['HTTP_X_FORWARDED_FOR']))
+				{
+					//ip pass from proxy
+					$ip = $_SERVER['HTTP_X_FORWARDED_FOR'];
+				}
+				else
+				{
+					$ip = $_SERVER['REMOTE_ADDR'];
+				}
+				
+				$data = array(
+						'userid' => $userid,
+						'activity_ip' => $ip,
+						'activity' => $activity
+				);
+				$this->db->set('userid', $userid);
+				$this->db->set('activity_ip', $ip);
+				$this->db->set('activity', $activity);
+				
+				$this->db->insert('audit_trail');	
 			}
 		}
 ?>

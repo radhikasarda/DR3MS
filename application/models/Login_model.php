@@ -106,5 +106,96 @@
 			$query = $this->db->get();	
 			return $query->row()->jurisdiction;
 		}
+		
+		public function update_audit_trail_login_attempt($username)
+		{
+			$activity = "Login Attempt";
+			if(!empty($_SERVER['HTTP_CLIENT_IP']))
+			{
+				//ip from share internet
+				$ip = $_SERVER['HTTP_CLIENT_IP'];
+			}
+			elseif(!empty($_SERVER['HTTP_X_FORWARDED_FOR']))
+			{
+				//ip pass from proxy
+				$ip = $_SERVER['HTTP_X_FORWARDED_FOR'];
+			}
+			else
+			{
+				$ip = $_SERVER['REMOTE_ADDR'];
+			}
+			
+			$data = array(
+					'userid' => $username,
+					'activity_ip' => $ip,
+					'activity' => $activity
+			);
+			$this->db->set('userid', $username);
+			$this->db->set('activity_ip', $ip);
+			$this->db->set('activity', $activity);
+			
+			$this->db->insert('audit_trail');	
+		
+		}
+		
+		public function update_audit_trail_login_successful($username)
+		{
+			$activity = "Login Successful";
+			if(!empty($_SERVER['HTTP_CLIENT_IP']))
+			{
+				//ip from share internet
+				$ip = $_SERVER['HTTP_CLIENT_IP'];
+			}
+			elseif(!empty($_SERVER['HTTP_X_FORWARDED_FOR']))
+			{
+				//ip pass from proxy
+				$ip = $_SERVER['HTTP_X_FORWARDED_FOR'];
+			}
+			else
+			{
+				$ip = $_SERVER['REMOTE_ADDR'];
+			}
+			
+			$data = array(
+					'userid' => $username,
+					'activity_ip' => $ip,
+					'activity' => $activity
+			);
+			$this->db->set('userid', $username);
+			$this->db->set('activity_ip', $ip);
+			$this->db->set('activity', $activity);
+			
+			$this->db->insert('audit_trail');
+		}
+		
+		public function update_audit_trail_logout($username)
+		{
+			$activity = "Logout";
+			if(!empty($_SERVER['HTTP_CLIENT_IP']))
+			{
+				//ip from share internet
+				$ip = $_SERVER['HTTP_CLIENT_IP'];
+			}
+			elseif(!empty($_SERVER['HTTP_X_FORWARDED_FOR']))
+			{
+				//ip pass from proxy
+				$ip = $_SERVER['HTTP_X_FORWARDED_FOR'];
+			}
+			else
+			{
+				$ip = $_SERVER['REMOTE_ADDR'];
+			}
+			
+			$data = array(
+					'userid' => $username,
+					'activity_ip' => $ip,
+					'activity' => $activity
+			);
+			$this->db->set('userid', $username);
+			$this->db->set('activity_ip', $ip);
+			$this->db->set('activity', $activity);
+			
+			$this->db->insert('audit_trail');
+		}
 	}  
 ?>  

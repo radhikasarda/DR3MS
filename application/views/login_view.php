@@ -160,6 +160,9 @@
 				<div class ="row" id ="guest-view"></div>
 		
 			<script>
+			$('select').on('change', function() {
+					document.getElementById('password').value = '';
+			});
 			<?php if($this->session->flashdata('validationFail')){  ?>
 			iqwerty.toast.Toast("<?php echo $this->session->flashdata('validationFail'); ?>");
 			<?php } ?>

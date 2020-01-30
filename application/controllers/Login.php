@@ -38,7 +38,7 @@
 			
 			log_message('info','##########login_encrypt_INFO_USER '.$enc_username);
 			log_message('info','##########login_eNCRYPT_INFO_PASS '.$enc_password);
-			
+				
 			$key = $this->session->userdata('key_val');
 			
 			log_message('info','##########KEY '.$key);
@@ -64,6 +64,9 @@
 			log_message('info','##########login_Decrypt_INFO_USER '.$username);
 			log_message('info','##########login_Decrypt_INFO_PASS '.$password);
 			
+			//Update audit trail login attempt
+			$this->login_model->update_audit_trail_login_attempt($username);
+			
 			// Validate the user 
 			$userid = $this->login_model->validate($username,$password);
 			
@@ -84,6 +87,9 @@
 				$this->load->library('session');
 				$this->session->set_userdata('userid', $userid);
 				$this->session->set_userdata('entrance', TRUE);
+				
+				//Update audit trail login successful
+				$this->login_model->update_audit_trail_login_successful($username);
 				
 				$circle_name  = $this->login_model->get_jurisdiction($userid);
 				
@@ -125,6 +131,9 @@
 		public function logout()
 		{
 			log_message('info','########## INSIDE logout');
+			$username = $this->session->userdata('userid');
+			//Update audit trail logout
+			$this->login_model->update_audit_trail_logout($username);
 			session_destroy();
 			redirect(base_url());
 			

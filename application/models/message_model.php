@@ -311,14 +311,13 @@
 			{
 				$userid = $this->session->userdata('userid');
 				$message_id = $this->input->post('message_id');
+				$incident_id = $this->input->post('incident_id');
+				log_message('info','##########INSIDE forward_inbox_msg FUNC::incident_id: '.$incident_id);
 				$i=0;
 				$this->db->select('*');
 				$this->db->from('message_comm');
 				$this->db->where('message_id', $message_id);
 				$query = $this->db->get();	
-				//$subject = "Fwd: ".$query->row()->subject;
-				//$msg = nl2br("---------- Forwarded message ---------\n".$query->row()->msg_body,false);
-				//log_message('info','##########INSIDE forward_inbox_msg FUNC::msg: '.$msg);
 				$query_recipients = $this->db->query("SELECT uid from user where uid NOT LIKE '$userid'");			
 				$recipients = $query_recipients->result();
 						
@@ -328,7 +327,7 @@
 				foreach($forward_msg_details as $row)
 				{
 					$list =  array(
-					
+								'incident_id' =>$incident_id,
 								'message_id' => $message_id,
 								'subject' => $row->subject,
 								'recipients' => $recipients,
@@ -347,7 +346,7 @@
 			{
 				$parent_message_id = $this->input->post('message_id');
 				$is_viewed = true;
-				
+				$incident_id = $this->input->post('incident_id');
 				$data = array(
 						'is_viewed' => $is_viewed					
 				);
@@ -363,6 +362,18 @@
 				
 				//insert into message_comm				
 				$insert_id = $this->insert_to_message_comm($msg_from,$subject,$msg,$parent_message_id);
+				
+				//update incident_id
+				if($incident_id != '')
+				{
+				
+				$data = array(
+						'incident_id' => $incident_id					
+				);
+
+				$this->db->where('message_id', $insert_id);
+				$this->db->update('message_comm', $data);
+				}
 				
 				//insert into message_recipient
 				$affected_rows = $this->insert_to_message_recipient($recipient_id_list,$insert_id);					

@@ -6,6 +6,7 @@
 			$subject = "Fwd: ".$row['subject'];
 			$msg = "---------- Forwarded message ---------".PHP_EOL .$row['msg_body'];
 			$message_id = $row['message_id'];
+			$incident_id = $row['incident_id'];
 			log_message('info','##########INSIDE data_forward_msg_details VIEW :: msg:: '.$msg);
 		}
 	
@@ -38,6 +39,7 @@
 					echo "<div class='col-sm-11'>";
 							echo "<input type='text' class='form-control select2-offscreen' name='subject' id='subject' value='$subject'>";
 							echo "<input type='hidden' class='form-control select2-offscreen' name='id' id='id' value='$message_id'>";
+							echo "<input type='hidden' class='form-control select2-offscreen' name='incident_id' id='incident_id' value='$incident_id'>";
 					echo "</div>";
 			echo "</div>";
 			echo "<br>";
