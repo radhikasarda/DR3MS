@@ -252,10 +252,16 @@
 			return $query;	
 		}
 
-		public function get_registered_citizens_data()
+		public function get_registered_citizens_data($start,$records_per_page)
 		{
-			$query_reg_citizen = $this->db->query("SELECT * from registered_citizens");
-			$gp_no =  $query_reg_citizen->row()->gp_no;
+			$end = $start+$records_per_page;
+			
+			$limit_start = $start - 1 ;
+			$offset = $records_per_page;
+			
+			$query = $this->db->query("SELECT registered_citizens.citizen_id,registered_citizens.name,registered_citizens.father_name,registered_citizens.contact_no,registered_citizens.village_name,registered_citizens.area_locality_street,registered_citizens.email_id,g.gp_name,b.block,c.circle_name FROM `registered_citizens` join gp g on g.gp_no = registered_citizens.gp_no join block b on b.b_s_no = g.b_s_no join circle c on c.c_s_no = b.c_s_no order by registered_citizens.citizen_id asc LIMIT $limit_start , $offset");
+			return $query->result();
+			/*$gp_no =  $query_reg_citizen->row()->gp_no;
 			
 			$this->db->select('*');
 			$this->db->from('gp');
@@ -305,9 +311,12 @@
 			
 			$data['data_reg_citizen_details'] = $registered_citizens_detail_data_list;
 
-			return $data;
+			return $data;*/
 		}
-		
-		
+		public function num_rows()
+		{		
+			$query = $this->db->query("SELECT * from registered_citizens");	
+			return $query->num_rows();
+		}
    }
 ?>

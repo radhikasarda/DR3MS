@@ -15,6 +15,7 @@
 			}
 			else{
 				$this->load->model('audit_trail_model');
+			
 			}
 			
 		}
@@ -37,10 +38,62 @@
 		}
 		
 		public function onClickSubmitSelectedData()
-		{			
-			$data_audit_trail_report = $this->audit_trail_model->get_audit_trail_report_data(); 
-			$data_audit_trail_report_view = $this->load->view('data_audit_trail_report_view.php',$data_audit_trail_report,TRUE);
-			echo $data_audit_trail_report_view;				
+		{	
+			$start = 1;
+			$records_per_page = 10;
+			$last_end = $this->input->post('last_end');
+			$last_start = $this->input->post('last_start');
+			$target = $this->input->post('target');
+			$total_rows = $this->audit_trail_model->num_rows();
+			log_message('info','##########INSIDE onClickSubmitSelectedData FUNC::total_rows :: '.$total_rows);
+			if($total_rows == 0)
+			{
+				$data['noData'] = 1;
+				$data_audit_trail_report_view = $this->load->view('no_data_view.php',$data,TRUE);
+				echo $data_audit_trail_report_view;	
+			}
+			else
+			{
+				if($target > 0)
+				{
+					log_message('info','##########INSIDE onClickSubmitSelectedData FUNC::Next button clicked :: ');
+					if($last_end != null)
+					{				
+						$start = $last_end + 1 ;				
+					}
+					log_message('info','##########INSIDE onClickSubmitSelectedData FUNC::start:: '.$start);
+			
+					if($total_rows < $start && $last_start != null)
+					{
+						$start = $last_start;
+						log_message('info','##########INSIDE onClickSubmitSelectedData FUNC::last_start:: '.$start);					
+					}
+				}
+				else
+				{
+					log_message('info','##########INSIDE onClickSubmitSelectedData FUNC::Prev button clicked :: ');
+					if($last_start != null && $last_start > $records_per_page)
+					{				
+						$start = $last_start - $records_per_page ;				
+					}
+					log_message('info','##########INSIDE onClickSubmitSelectedData FUNC::start:: '.$start);
+					
+					if($last_end != null)
+					{
+						$end = $last_start - 1;
+						log_message('info','##########INSIDE onClickSubmitSelectedData FUNC::last_start:: '.$start);					
+					}
+				}
+
+				log_message('info','##########INSIDE onClickSubmitSelectedData FUNC::total_rows:: '.$total_rows);
+				$data["audit"] = $this->audit_trail_model->get_audit_trail_report_data($start,$records_per_page); 
+				$data["start"] = $start;
+				$data["end"] = $start+$records_per_page - 1;
+				$data["total_records"] = $total_rows;
+			
+				$data_audit_trail_report_view = $this->load->view('data_audit_trail_report_view.php',$data,TRUE);
+				echo $data_audit_trail_report_view;	
+			}		
 		}
 		
    }

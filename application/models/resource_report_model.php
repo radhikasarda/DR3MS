@@ -127,9 +127,9 @@
 						}
 						
 						
-					}
-					
+					}					
 				}
+
 				$data['data_resource_report'] = $data_list;
 
 				return $data;

@@ -67,14 +67,71 @@
 		
 		public function viewRegisteredCitizens()
 		{
-			//Get users info
+			
 			$this->load->library('table');
-			$data_registered_citizens = $this->dashboard_model->get_registered_citizens_data();
+			$start = 1;
+			$records_per_page = 10;
+			$total_rows = $this->dashboard_model->num_rows();
+			log_message('info','##########INSIDE viewRegisteredCitizens FUNC::total_rows :: '.$total_rows);
+			if($total_rows == 0)
+			{
+				$data['noData'] = 1;
+				$this->load->view('no_data_view.php',$data,TRUE);	
+			}
 			
-			$data_last_login = $this->dashboard_model->get_last_login_time();
+			else
+			{
+				if (isset($_POST["submitForm"]))
+				{
+					$formSubmit = $this->input->post('submitForm');
+					$last_end = $this->input->post('last_end');
+					$last_start = $this->input->post('last_start');
+					if( $formSubmit == 'next' )
+					{
+						if($last_end != null)
+						{				
+							$start = $last_end + 1 ;				
+						}
+						log_message('info','##########INSIDE viewRegisteredCitizens FUNC::start:: '.$start);
+				
+						if($total_rows < $start && $last_start != null)
+						{
+							$start = $last_start;
+							log_message('info','##########INSIDE viewRegisteredCitizens FUNC::last_start:: '.$start);					
+						}
+					}
+					
+					if($formSubmit == 'prev' )
+					{
+						log_message('info','##########INSIDE viewRegisteredCitizens FUNC::Prev button clicked :: ');
+						if($last_start != null && $last_start > $records_per_page)
+						{				
+							$start = $last_start - $records_per_page ;				
+						}
+						log_message('info','##########INSIDE viewRegisteredCitizens FUNC::start:: '.$start);
+						
+						if($last_end != null)
+						{
+							$end = $last_start - 1;
+							log_message('info','##########INSIDE viewRegisteredCitizens FUNC::last_start:: '.$start);					
+						}
+					}
+				}
 			
-			$data = array_merge($data_last_login,$data_registered_citizens);
-			$this->load->view('registered_citizens_view',$data);
+			
+			
+				$data['citizen'] = $this->dashboard_model->get_registered_citizens_data($start,$records_per_page);
+				$data["start"] = $start;
+				$data["end"] = $start+$records_per_page - 1;
+				$data["total_records"] = $total_rows;
+				
+				$data_last_login = $this->dashboard_model->get_last_login_time();
+			
+				$data = array_merge($data_last_login,$data);
+				$this->load->view('registered_citizens_view',$data);
+			}
+			
+			
 		}
 
 	}  

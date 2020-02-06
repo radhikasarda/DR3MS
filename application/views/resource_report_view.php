@@ -189,7 +189,9 @@
 			<div class="container" style="overflow-x:auto;overflow-y:auto;">
 					<table id ="report-table" class="table table-striped table-bordered">					
 					</table>
+					
 			</div>
+			
 		</div>
 		
 		<div id ="detailed-info">			

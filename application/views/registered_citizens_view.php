@@ -23,7 +23,7 @@
 		
 	</head>
 	
-	<body style="overflow-x:none;overflow-y:none;">
+	<body style="overflow-x:auto;overflow-y:auto;">
 		
 		<script src="<?php echo base_url().'assets/js/jquery-3.3.1.min.js'?>"></script>
 		<script src="<?php echo base_url().'assets/js/jquery.min.js'?>"></script>
@@ -39,12 +39,24 @@
 		<div id="navbar-view">
 		<?php $this->load->view('navbar_view');?>
 		</div>	
-		
-				<div class ="row">
+		<form method="POST" action="<?php echo base_url("Dashboard/viewRegisteredCitizens");?>">
+		<div class ="row">
 		<div class = "col-sm-2">
 		</div>
 		<div class ="col-sm-8" style="margin-top:-10px;">
-			<div id="registered-citizens-table-div" class="container" style="overflow-x:auto;overflow-y:auto;height:800px;width:auto !important;">                                                                                     
+		<?php
+		  $start = $start;
+		  $end = $end;
+		  $total_records = $total_records;	
+		  if($total_records <= $end)
+		  {
+			 $end = $total_records;
+		  }
+		?>
+			<div id="registered-citizens-table-div" class="container" style="overflow-x:auto;overflow-y:auto;height:800px;width:auto !important;">  
+				<h4><?php 
+			echo "Showing (".$start."-".$end.") records out of ".$total_records; ?>
+			</h4>
 				<table class="table table-striped table-bordered table-hover" id="registered-citizens-table">
 					<tbody style ="cursor:pointer;">							
 						<thead style="background-color: black;color: white;">
@@ -59,26 +71,37 @@
 									<td><strong>Area/Locality/Street</strong></td>
 									<td><strong>Email ID</strong></td>
 						</thead>
-						<?php $counter = 0;
-						foreach((array)$data_reg_citizen_details as $citizen){?>
+						<?php $counter =  $start;
+						foreach ($citizen as $citizen) :?>
 								<tr>
-									<td><?php echo ++$counter; ?></td>
-									<td><?php echo $citizen['circle']; ?></td>
-									<td><?php echo $citizen['block']; ?></td>
-									<td><?php echo $citizen['gp']; ?></td>
-									<td><?php echo $citizen['name']; ?></td>
-									<td><?php echo $citizen['father_name']; ?></td>
-									<td><?php echo $citizen['contact_no']; ?></td>
-									<td><?php echo $citizen['village_name']; ?></td>
-									<td><?php echo $citizen['area_locality_street']; ?></td>
-									<td><?php echo $citizen['email_id']; ?></td>
-									
+									<td><?php echo $counter; ?></td>
+									<td><?= $citizen->circle_name ?></td>
+									<td><?= $citizen->block ?></td>
+									<td><?= $citizen->gp_name ?></td>
+									<td><?= $citizen->name ?></td>
+									<td><?= $citizen->father_name ?></td>
+									<td><?= $citizen->contact_no ?></td>
+									<td><?= $citizen->village_name ?></td>
+									<td><?= $citizen->area_locality_street ?></td>
+									<td><?= $citizen->email_id ?></td>
 								</tr>     
-						<?php }?>  
+						<?php $counter ++;
+						endforeach; 
+						log_message('info','##########INSIDE reg_citizen_view::end:: '.$end);?> 
+						<input type='hidden' class='form-control select2-offscreen' name='last_end' id='last_end' value='<?php echo $end; ?>'>					 
+						<input type='hidden' class='form-control select2-offscreen' name='last_start' id='last_start' value='<?php echo $start; ?>'>						
 					</tbody>
 				</table>
+				<div class="pagination">
+					<button type="submit" class="button" name="submitForm" value="prev"><< Previous</button>
+					<button type="submit" class="button" name="submitForm" value="next">Next >></button>
+				</div>	
 			</div>
+		</div>	
 		</div>
-		</div>
+		</form>
+		<script>
+		
+		</script>
 	</body>
 </html>

@@ -94,24 +94,48 @@
 					<div class = "row">						
 					</div>
 					<div class = "row">				
-						<button type="button" class="btn btn-primary" onclick="return GetSelectedData();" style="margin-top:25px;margin-left:5px;">SUBMIT</button>	
+						<button type="button" class="btn btn-primary" onclick="return GetSelectedData(null);" style="margin-top:25px;margin-left:5px;">SUBMIT</button>	
 					</div>
 				</div>
 			</div>
 		</nav>
-		<div id ="report-audit-trail">
-			<div class="container" style="overflow-x:auto;overflow-y:auto;">
-					<table id ="report-table" class="table table-striped table-bordered">					
-					</table>
-			</div>
-		</div>
+		<div class="container" id="report-table">
+			
+		</div>				
 		<script>
 			$(document).ready(function(){
 				$('.input-group.date').datepicker({format: "yyyy-mm-dd"}); 
+
 			});
-			
-			function GetSelectedData()
+			function GetPreviousData(last_end = null,last_start = null)
 			{
+				var prev = -1;
+				return GetSelectedData(prev,last_end,last_start);
+			}
+			
+			function GetNextData(last_end = null,last_start = null)
+			{
+				var next = 1;
+				return GetSelectedData(next,last_end,last_start);
+				
+			}
+			
+			
+			function GetSelectedData(target,last_end = null,last_start = null)
+			{
+				//alert("test");
+				if(last_end != null)
+				{	
+					//alert("inside if");
+					var last_end = document.getElementById('last_end').value;
+				}
+				if(last_end != null)
+				{	
+			
+					var last_start = document.getElementById('last_start').value;
+					//alert(last_start);
+				
+				}
 				var user = document.getElementById('users').value;
 				
 				var fromDate =  document.getElementById("fromDate").value;
@@ -138,18 +162,21 @@
 				var toDateTime = toDate + " " +"23:59:59";
 
 				$.ajax({
-							url:"<?php echo site_url('Audit_Trail/onClickSubmitSelectedData');?>",
+							url:"<?php echo site_url('Audit_Trail/onClickSubmitSelectedData')?>",
 							method:"POST",
-							data:{user:user,fromDateTime:fromDateTime,toDateTime:toDateTime},
+							data:{user:user,fromDateTime:fromDateTime,toDateTime:toDateTime,last_end:last_end,last_start:last_start,target:target},
 							type: "POST",
 							cache: false,
 							success: function(data)
-							{											
+							{								
 								$('#report-table').html(data); 
 							}
 
 				});
-			}	
+			}
+				
 		</script>
+		
+	
 	</body>
 </html>
