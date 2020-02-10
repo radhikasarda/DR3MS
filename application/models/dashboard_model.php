@@ -135,7 +135,7 @@
 		{
 				
 			$user = $this->session->userdata('userid');
-			$query = $this->db->query("SELECT a.*,b.* FROM message_comm a JOIN message_recipient b on a.message_id=b.message_id WHERE b.recipient_id LIKE '$user' ORDER BY a.`msg_saved_date` DESC");
+			$query = $this->db->query("SELECT a.*,b.* FROM message_comm a JOIN message_recipient b on a.message_id=b.message_id WHERE b.recipient_id LIKE '$user' ORDER BY a.`msg_saved_date` DESC LIMIT 10 ");
 			$data_inbox['user_msg'] = null;	
 			$data_inbox['user_msg'] =  $query->result();
 			return $data_inbox;				
@@ -313,10 +313,43 @@
 
 			return $data;*/
 		}
-		public function num_rows()
+		
+		public function num_reg_citizens()
 		{		
 			$query = $this->db->query("SELECT * from registered_citizens");	
 			return $query->num_rows();
 		}
+		
+		public function get_all_incidents()
+		{
+			$userid = $this->session->userdata('userid');
+			$c_s_no = $this->get_c_s_no($userid);
+				
+			
+			if($c_s_no == 0)
+			{	
+				log_message('info','##########INSIDE get_all_incidents FUNC:: C S no = 0');	
+				$query = $this->db->query("SELECT * FROM incident_report ORDER BY reporting_date_time DESC LIMIT 10 ");
+			}
+				
+			else
+			{
+				$query = $this->db->query("SELECT * FROM `incident_report` join gp g on incident_report.gp_no = g.gp_no join block b on g.b_s_no = b.b_s_no JOIN circle c on b.c_s_no = c.c_s_no  where c.c_s_no = ".$c_s_no." ORDER BY `incident_report`.`reporting_date_time` DESC LIMIT 10 ");							
+			}
+								
+			return $query->result();
+		}
+		
+		public function get_c_s_no($userid)
+		{
+			$query = $this->db->query("SELECT c_s_no FROM user where uid LIKE '$userid'");
+			$c_s_no = null;
+			foreach ($query->result() as $row)
+			{
+				$c_s_no = $row->c_s_no;
+			}
+			return $c_s_no;
+		}		
+		
    }
 ?>

@@ -40,36 +40,68 @@
 		</div>
 		<div id="navbar-view">
 		<?php $this->load->view('navbar_view');?>
-		</div>	
-		<div class ="row">
-		<div class = "col-sm-2">
 		</div>
-		<div class ="col-sm-8" style="margin-top:-10px;">
-			<div id="all-incidents-table-div" class="container" style="overflow-x:auto;overflow-y:auto;height:800px;width:auto !important;">                                                                                     
-				<table class="table table-striped table-bordered table-hover" id="all-incidents-table">
-					<tbody style ="cursor:pointer;">							
-						<thead style="background-color: black;color: white;">
-							<th style="display:none;"><strong>INCIDENT ID</strong></th>							
-							<th><strong>INCIDENT DATE</strong></th>
-							<th><strong>INCIDENT TIME</strong></th>
-							<th><strong>LOCATION</strong></th>
-							<th><strong>SUBJECT</strong></th>
-							<th><strong>DETAILS</strong></th>
-						</thead>
-						<?php foreach((array)$incident as $incident){?>	
-						<tr>
-							<td class= "incident_id" name ="incident_id" id ="incident_id" style="display:none;"><?=$incident->incident_id;?></td>
-							<td class ="incident_date"><?=$incident->incident_date;?></td>
-							<td class ="incident_time"><?=$incident->incident_time;?></td>
-							<td class ="location"><?=$incident->location_village_name;?></td>
-							<td class ="subject"><?=$incident->subject;?></td>
-							<td><button onClick="return OnClickViewIncidentDetails();"><strong>View In Detail</strong></button></td>
-						</tr>
-						<?php }?>
-					</tbody>
-				</table>
+
+		<div class="container">
+			<div class ="row">
+				<div class="col-md-12">
+					<div class="row" id="all-incidents-table-div">
+									
+							
+						<?php
+							$start = $start;
+							$end = $end;
+							$total_records = $total_records;	
+							if($total_records <= $end)
+							{
+								$end = $total_records;
+							}
+						?>	
+						<div class="pagination">
+							<form method="POST" action="<?php echo base_url("Incident/viewIncidents");?>">			
+								<button type="submit" class="button" name="submitForm" value="prev" style="margin-top:10px;position: absolute; left: 0;background-color: #FFB700;border: none; padding: 5px 20px;font-weight:bold;"><< Previous</button>
+								<button type="submit" class="button" name="submitForm" value="next" style="margin-top:10px;position: absolute; right: 0;background-color: #FFB700;border: none; padding: 5px 20px;font-weight:bold;">Next >></button>
+								<input type='hidden' class='form-control select2-offscreen' name='last_end' id='last_end' value='<?php echo $end; ?>'>					 
+								<input type='hidden' class='form-control select2-offscreen' name='last_start' id='last_start' value='<?php echo $start; ?>'>
+								<br>
+							</form>
+						</div>
+						<h4><?php 
+							echo "Showing (".$start."-".$end.") records out of ".$total_records; ?>
+						</h4>
+						<table class="table table-striped table-bordered table-hover" id="all-incidents-table">												
+							<thead style="background-color: black;color: white;">
+								<tr>
+									<th style="display:none;"><strong>INCIDENT ID</strong></th>							
+									<th><strong>INCIDENT DATE</strong></th>
+									<th><strong>INCIDENT TIME</strong></th>
+									<th><strong>LOCATION</strong></th>
+									<th><strong>SUBJECT</strong></th>
+									<th><strong>DETAILS</strong></th>
+								</tr>
+							</thead>
+							<tbody style ="cursor:pointer;">		
+								<?php
+									$counter =  $start;
+									foreach($incident as $incident):?>	
+									<tr>
+										<td class= "incident_id" name ="incident_id" id ="incident_id" style="display:none;"><?=$incident->incident_id;?></td>
+										<td class ="incident_date"><?=$incident->incident_date;?></td>
+										<td class ="incident_time"><?=$incident->incident_time;?></td>
+										<td class ="location"><?=$incident->location_village_name;?></td>
+										<td class ="subject"><?=$incident->subject;?></td>
+										<td><button onClick="OnClickViewIncidentDetails();"><strong>View In Detail</strong></button></td>
+									</tr>
+								<?php $counter ++;
+								endforeach; 
+								log_message('info','##########INSIDE all_incidents_view::end:: '.$end);?> 
+								
+							</tbody>
+						</table>
+						
+					</div>
+				</div>
 			</div>
-		</div>
 		</div>
 		<div class = "row">
 		<div class = "col-sm-2">
@@ -97,7 +129,6 @@
 		window.onload = addRowHandlers();
 			function OnClickViewIncidentDetails()
 			{
-			
 			var table = document.getElementById("all-incidents-table");
 	
 			var rows = table.getElementsByTagName("tr");
@@ -126,7 +157,7 @@
 											data:{incident_id:incident_id,request_from_incident:request_from_incident},
 											type: "POST",
 											cache: false,
-											success: function(data){		
+											success: function(data){	
 												$("#all-incidents-table-div").hide();  
 												$("#incident-details").show(); 											
 												$('#incident-details').html(data);
@@ -135,6 +166,10 @@
 
 				});
 			}	
+			function onClickBackToAllIncidents()
+			{
+				location.reload();
+			}
 			function onClickSendInstructions()
 			{
 				

@@ -9,13 +9,45 @@
 				$this->db=$db;						
 			}  
 			
-			public function get_sent_msg()
+			public function num_inbox_message()
 			{
-				$i = 0;
-				$data_list = array();
 				$user = $this->session->userdata('userid');
-				$query = $this->db->query("SELECT * from message_comm where msg_from like '$user' ORDER BY `msg_saved_date` DESC;");
-				$sent_msg_details = $query->result();
+				$query = $this->db->query("SELECT a.*,b.* FROM message_comm a JOIN message_recipient b on a.message_id=b.message_id WHERE b.recipient_id LIKE '$user' ");
+				return $query->num_rows();
+			}
+			
+			public function get_inbox_messages($start,$records_per_page)
+			{
+				$user = $this->session->userdata('userid');
+				$end = $start+$records_per_page;
+			
+				$limit_start = $start - 1 ;
+				$offset = $records_per_page;
+				
+				$query = $this->db->query("SELECT a.*,b.* FROM message_comm a JOIN message_recipient b on a.message_id=b.message_id WHERE b.recipient_id LIKE '$user' ORDER BY a.`msg_saved_date` DESC LIMIT $limit_start , $offset");
+				return $query->result();
+			}
+			
+			public function num_sent_message()
+			{
+				$user = $this->session->userdata('userid');
+				$query = $this->db->query("SELECT * from message_comm where msg_from like '$user'");
+				return $query->num_rows();
+			}
+			public function get_sent_msg($start,$records_per_page)
+			{
+				//$i = 0;
+				//$data_list = array();
+				$user = $this->session->userdata('userid');
+				$end = $start+$records_per_page;
+			
+				$limit_start = $start - 1 ;
+				$offset = $records_per_page;
+				
+				$query = $this->db->query("SELECT * from message_comm where msg_from like '$user' ORDER BY `msg_saved_date` DESC LIMIT $limit_start , $offset ");
+				
+				return $query->result();
+				/*$sent_msg_details = $query->result();
 				$data['sent_msg_details'] = $sent_msg_details;
 				foreach($sent_msg_details as $row)
 				{
@@ -30,16 +62,30 @@
 				}
 				$data['data_sent_msg'] = $data_list;
 
-				return $data;
+				return $data;*/
 			}
 			
-			public function get_draft_msg()
+			public function num_draft_message()
 			{
-				$i = 0;
-				$data_list = array();
 				$user = $this->session->userdata('userid');
-				$query = $this->db->query("SELECT * from draft_message where msg_from like '$user' ORDER BY `draft_create_date` DESC;");
-				$darft_msg_details = $query->result();
+				$query = $this->db->query("SELECT * from draft_message where msg_from like '$user'");
+				return $query->num_rows();				
+			}
+			public function get_draft_msg($start,$records_per_page)
+			{
+				//$i = 0;
+				//$data_list = array();
+				$user = $this->session->userdata('userid');
+				$end = $start+$records_per_page;
+			
+				$limit_start = $start - 1 ;
+				$offset = $records_per_page;
+				
+				$query = $this->db->query("SELECT * from draft_message where msg_from like '$user' ORDER BY `draft_create_date` DESC LIMIT $limit_start , $offset ");
+				
+				return $query->result();
+				
+				/*$darft_msg_details = $query->result();
 				$data['darft_msg_details'] = $darft_msg_details;
 				foreach($darft_msg_details as $row)
 				{
@@ -54,7 +100,7 @@
 				}
 				$data['data_draft_msg'] = $data_list;
 
-				return $data;
+				return $data;*/
 			}
 			
 			public function get_reciepent_list()

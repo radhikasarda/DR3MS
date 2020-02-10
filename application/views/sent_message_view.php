@@ -63,29 +63,54 @@
 			<a class="compose" href="<?php echo base_url("Message/compose");?>"><b><i class="glyphicon glyphicon-plus" aria-hidden="true"></i>&ensp;Compose Message</b></a>
 			<!--<a class="bin" href="<?php echo base_url("Message/bin");?>"><b><i class="glyphicon glyphicon-trash" aria-hidden="true"></i>&ensp;Deleted Messages</b></a>-->
 		</div>
-		<div  class="col-sm-10" style="margin-top:-10px;margin-left:200px;">
-			<div id ="sent-messages-div" class="container" style="overflow-x:auto;overflow-y:auto;height:800px;width:auto !important;"> 
+		<div id ="sent-messages-div" class="container" style="overflow-x:auto;overflow-y:auto;height:800px;width:auto !important;"> 
+			<div  class="col-md-10" style="margin-top:-30px;margin-left:200px;">			
+				<div class ="row">
+					<?php
+							$start = $start;
+							$end = $end;
+							$total_records = $total_records;	
+							if($total_records <= $end)
+							{
+								$end = $total_records;
+							}
+						?>	
+						<div class="pagination">
+							<form method="POST" action="<?php echo base_url("Message/getSentMsg");?>">			
+								<button type="submit" class="button" name="submitForm" value="prev" style="margin-top:10px;position: absolute; left: 0;background-color: #FFB700;border: none; padding: 5px 20px;font-weight:bold;"><< Previous</button>
+								<button type="submit" class="button" name="submitForm" value="next" style="margin-top:10px;position: absolute; right: 0;background-color: #FFB700;border: none; padding: 5px 20px;font-weight:bold;">Next >></button>
+								<input type='hidden' class='form-control select2-offscreen' name='last_end' id='last_end' value='<?php echo $end; ?>'>					 
+								<input type='hidden' class='form-control select2-offscreen' name='last_start' id='last_start' value='<?php echo $start; ?>'>
+								<br>
+							</form>
+						</div>
+						<h4><?php 
+							echo "Showing (".$start."-".$end.") records out of ".$total_records; ?>
+						</h4>						
 					<table class="table table-striped table-bordered table-hover"  id ="sent-msg-table">
-						<tbody style ="cursor:pointer;">
 						<thead style ="background-color: black;color: white;">
-							<th style="display:none;"><strong>MSG ID</strong></th>	
-							<th><strong>Date</strong></th>
-							<th><strong>Subject</strong></th>
-							<th><strong>Details</strong></th>
+							<tr>
+								<th style="display:none;"><strong>MSG ID</strong></th>	
+								<th><strong>Date</strong></th>
+								<th><strong>Subject</strong></th>
+								<th><strong>Details</strong></th>
+							</tr>
 						</thead>
-						<?php foreach($data_sent_msg as $row)
-						{?>
+						<tbody style ="cursor:pointer;">
+						<?php foreach($sent_msg as $message):
+						?>
 						<tr>
-						<td class= "msg_id" name ="msg_id" id ="msg_id" style="display:none;"><?php echo $row['msg_id'];?></td>
-						<td class = "date"><?php echo $row['msg_create_date'];?></td>
-						<td class = 'subject'><?php echo $row['subject'];?></td>
-	
-						<td><button onClick="return OnClickViewDetails();"><strong>View In Detail</strong></button></td>
-						
+							<td class= "msg_id" name ="msg_id" id ="msg_id" style="display:none;"><?=$message->message_id;?></td>
+							<td class = "date"><?=$message->msg_saved_date;?></td>
+							<td class = 'subject'><?=$message->subject;?></td>		
+							<td><button onClick="return OnClickViewDetails();"><strong>View In Detail</strong></button></td>
+							
 						</tr>
-						<?php } ?>
+						<?php endforeach; 
+						log_message('info','##########INSIDE sent_msg_view::end:: '.$end); ?>
 						</tbody>
 					</table>
+				</div>
 			</div>
 		</div>		
 		<div class="col-sm-10 "style="margin-top:-10px;margin-left:200px;display:none;" id="message-details">

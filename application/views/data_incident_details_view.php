@@ -268,9 +268,16 @@
 							<div class="form-group">
 							  <label class="col-md-4 control-label"></label>
 							  <div class="col-md-4"><br>
-								<button type="button" class="btn btn-success form-control" onclick="return onClickSendInstructions();">SEND INSTRUCTIONS<span class="glyphicon glyphicon-send"></span></button>
+								<button type="button" class="btn btn-success form-control" onclick="return onClickSendInstructions();">SEND INSTRUCTIONS<span class="glyphicon glyphicon-send"></span></button>								
 							  </div>
 							</div>
+							<div class="form-group">
+							  <label class="col-md-4 control-label"></label>
+							  <div class="col-md-4"><br>						
+								<button type="button" class="btn btn-danger form-control" onclick="return onClickBackToAllIncidents();">BACK</button>
+							  </div>
+							</div>
+							
 							<?php } else { ?>
 							<div class="form-group">
 							  <label class="col-md-4 control-label"></label>

@@ -12,6 +12,11 @@
 	?>
 	<div class="col-md-12">
 		<div class="row">
+			<div class="pagination">
+				<input type="button" class="button" value="<< Previous" style="margin-top:10px;position: absolute; left: 0;background-color: #FFB700;border: none; padding: 5px 20px;font-weight:bold;" onclick="return GetPreviousData(<?php echo $end+1 .",".$start ?>);">
+				<input type="button" class="button" value="Next >>" style="margin-top:10px;position: absolute; right: 0;background-color: #FFB700;border: none; padding: 5px 20px;font-weight:bold;" onclick="return GetNextData(<?php echo $end+1 .",".$start ?>);">
+				<br>
+			</div>
 			<h4><?php 
 			echo "Showing (".$start."-".$end.") records out of ".$total_records; ?></h4>
 			<table  class="table table-striped table-bordered">									
@@ -57,9 +62,8 @@
 				</tbody>
 			</table>
 		</div>
+		
 	</div>
+		
 </div>
-<div class="pagination">
-	<input type="button" class="button" value="<< Previous" onclick="return GetPreviousData(<?php echo $end+1 .",".$start ?>);">
-	<input type="button" class="button" value="Next >>" onclick="return GetNextData(<?php echo $end+1 .",".$start ?>);">
-</div>							
+						

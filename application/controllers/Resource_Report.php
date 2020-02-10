@@ -65,10 +65,78 @@
 		public function onClickSubmit()
 		{
 			log_message('info','##########INSIDE SUBMIT FUNC::');
-			$data_report_circlewise = $this->resource_report_model->get_report_data(); 
-			$data_report_view = $this->load->view('data_resource_report_view.php',$data_report_circlewise,TRUE);
-			echo $data_report_view;
+			
+			$start = 1;
+			$no_gp_per_page = 10;
+			$last_end = $this->input->post('last_end');
+			$last_start = $this->input->post('last_start');
+			log_message('info','##########INSIDE onClickSubmit FUNC::last_start :: '.$last_start);
+			log_message('info','##########INSIDE onClickSubmit FUNC::last_end :: '.$last_end);
+			
+			$target = $this->input->post('target');
+			log_message('info','##########INSIDE onClickSubmit FUNC::target :: '.$target);
+			$total_gp = $this->resource_report_model->count_gp(); 
+			$total_resource = $this->resource_report_model->count_resource_type(); 
+			$total_rows = $total_gp * $total_resource;			
+			log_message('info','##########INSIDE onClickSubmit FUNC::total_rows :: '.$total_rows);
+			
+			//$no_gp_current_page = $no_gp_per_page;
+			if($total_rows == 0)
+			{
+				$data['noData'] = 1;
+				$this->load->view('no_data_view.php',$data,TRUE);	
+			}
+			
+			else
+			{	
+				if($target != '')
+				{
+					if($target > 0)
+					{
+						log_message('info','##########INSIDE onClickSubmit FUNC::Next button clicked :: ');
+						if($last_end != null)
+						{				
+							$start = $last_end + 1 ;				
+						}
+						log_message('info','##########INSIDE onClickSubmit FUNC::start:: '.$start);
 				
+						if($total_gp <= $last_end && $last_start != null)
+						{
+							$start = $last_start;
+							log_message('info','##########INSIDE onClickSubmit FUNC::last_start:: '.$start);
+							//$no_gp_current_page = $total_gp-$last_start;						
+						}
+					}
+					else
+					{
+						log_message('info','##########INSIDE onClickSubmit FUNC::Prev button clicked :: ');
+						if($last_start != null && $last_start > $no_gp_per_page)
+						{				
+							$start = $last_start - $no_gp_per_page ;				
+						}
+						log_message('info','##########INSIDE onClickSubmit FUNC::start:: '.$start);
+						
+						if($last_end != null)
+						{
+							$end = $last_start - 1;
+							log_message('info','##########INSIDE onClickSubmit FUNC::last_start:: '.$start);					
+						}
+					}
+				}
+				log_message('info','##########INSIDE onClickSubmit FUNC::total_rows:: '.$total_rows);
+				//$data_report_circlewise = $this->resource_report_model->get_report_data(); 
+				//$data_report_view = $this->load->view('data_resource_report_view.php',$data_report_circlewise,TRUE);
+				//echo $data_report_view;
+				$data = $this->resource_report_model->get_report_data($start,$no_gp_per_page); 
+				$data["start"] = $start;
+				$data["end"] = $start+$no_gp_per_page - 1;
+				$data["total_records"] = $total_rows;
+				$data["no_gp_per_page"] = $no_gp_per_page;
+				//$data["no_gp_current_page"]= $no_gp_current_page;
+				$data["total_gp"] = $total_gp;
+				$data_report_view = $this->load->view('data_resource_report_view.php',$data,TRUE);
+				echo $data_report_view;	
+			}	
 		}
 		
 		public function onRowClick()

@@ -46,7 +46,7 @@
 			$fromDateTime = $this->input->post('fromDateTime');
 			$toDateTime = $this->input->post('toDateTime');
 			
-			$end = $start+$records_per_page;
+			//$end = $start+$records_per_page;
 			
 			$limit_start = $start - 1 ;
 			$offset = $records_per_page;

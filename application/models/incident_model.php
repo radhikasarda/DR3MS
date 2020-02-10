@@ -216,27 +216,36 @@
 					//}
 			}
 			
-			public function get_all_incidents()
+			public function get_all_incidents($start,$records_per_page)
 			{
 				$userid = $this->session->userdata('userid');
 				$c_s_no = $this->get_c_s_no($userid);
 				
+				$end = $start+$records_per_page;
+			
+				$limit_start = $start - 1 ;
+				$offset = $records_per_page;
+			
 				if($c_s_no == 0)
-				{			
-					$this->db->select('*');
-					$this->db->from('incident_report');
-					$this->db->order_by("reporting_date_time", "desc");
-					$query = $this->db->get();
+				{	
+					log_message('info','##########INSIDE get_all_incidents FUNC:: C S no = 0');	
+					//$this->db->select('*');
+					//$this->db->from('incident_report');
+					//$this->db->order_by("reporting_date_time", "desc");
+					//$this->db->limit($limit_start, $offset); 
+					//$query = $this->db->get();
+					$query = $this->db->query("SELECT * FROM incident_report ORDER BY reporting_date_time DESC LIMIT $limit_start , $offset ");
 				}
 				
 				else
 				{
-					$query=$this->db->query("SELECT * FROM `incident_report` join gp g on incident_report.gp_no = g.gp_no join block b on g.b_s_no = b.b_s_no JOIN circle c on b.c_s_no = c.c_s_no  where c.c_s_no = ".$c_s_no." ORDER BY `incident_report`.`reporting_date_time` DESC");							
+					$query = $this->db->query("SELECT * FROM `incident_report` join gp g on incident_report.gp_no = g.gp_no join block b on g.b_s_no = b.b_s_no JOIN circle c on b.c_s_no = c.c_s_no  where c.c_s_no = ".$c_s_no." ORDER BY `incident_report`.`reporting_date_time` DESC LIMIT $limit_start , $offset ");							
 				}
 				
-				$data_all_incidents['incident'] = null;	
-				$data_all_incidents['incident'] =  $query->result();
-				return $data_all_incidents;	
+				//$data_all_incidents['incident'] = null;	
+				//$data_all_incidents['incident'] =  $query->result();
+				//return $data_all_incidents;	
+				return $query->result();
 			}
 			
 			public function get_incident_details()
@@ -381,6 +390,29 @@
 				
 				return ($affected_rows != 1) ? false : true;
 
+			}
+			
+			public function num_incidents()
+			{
+				$userid = $this->session->userdata('userid');
+				$c_s_no = $this->get_c_s_no($userid);
+				
+				if($c_s_no == 0)
+				{			
+					return $this->db->count_all('incident_report');
+				}
+				
+				else
+				{
+					$this->db->where('c_s_no',$c_s_no);
+					$this->db->from('incident_report');
+					$this->db->join('gp', 'incident_report.gp_no = gp.gp_no');
+					$this->db->join('block', 'gp.b_s_no = block.b_s_no');
+					$this->db->join('circle', 'block.c_s_no = circle.c_s_no');
+					return $this->db->count_all_results();
+					
+					//$query=$this->db->query("SELECT * FROM `incident_report` join gp g on incident_report.gp_no = g.gp_no join block b on g.b_s_no = b.b_s_no JOIN circle c on b.c_s_no = c.c_s_no  where c.c_s_no = ".$c_s_no." ORDER BY `incident_report`.`reporting_date_time` DESC");							
+				}
 			}
 		}
 ?>

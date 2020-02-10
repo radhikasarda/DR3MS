@@ -21,33 +21,194 @@
 	
 		public function index()  
 		{ 
-			$this->load->model('dashboard_model');	
-			$data_last_login = $this->dashboard_model->get_last_login_time();
-			//Load inbox messages data
-			$data_inbox = $this->dashboard_model->get_inbox_messages();
+			$start = 1;
+			$records_per_page = 10;
+			$total_rows = $this->message_model->num_inbox_message();
+			log_message('info','##########INSIDE Message index FUNC::total_rows :: '.$total_rows);
+			if($total_rows == 0)
+			{
+				$data['noData'] = 1;
+				$this->load->view('no_data_view.php',$data,TRUE);	
+			}
 			
-			$data = array_merge($data_last_login,$data_inbox);
-			$this->load->view('message_view',$data);
+			else
+			{			
+				if (isset($_POST["submitForm"]))
+				{
+					$formSubmit = $this->input->post('submitForm');
+					$last_end = $this->input->post('last_end');
+					$last_start = $this->input->post('last_start');
+					if( $formSubmit == 'next' )
+					{
+						if($last_end != null)
+						{				
+							$start = $last_end + 1 ;				
+						}
+						log_message('info','##########INSIDE Message index FUNC::start:: '.$start);
+				
+						if($total_rows < $start && $last_start != null)
+						{
+							$start = $last_start;
+							log_message('info','##########INSIDE Message index FUNC::last_start:: '.$start);					
+						}
+					}
+					
+					if($formSubmit == 'prev' )
+					{
+						log_message('info','##########INSIDE Message index FUNC::Prev button clicked :: ');
+						if($last_start != null && $last_start > $records_per_page)
+						{				
+							$start = $last_start - $records_per_page ;				
+						}
+						log_message('info','##########INSIDE Message index FUNC::start:: '.$start);
+						
+						if($last_end != null)
+						{
+							$end = $last_start - 1;
+							log_message('info','##########INSIDE Message index FUNC::last_start:: '.$start);					
+						}
+					}
+				}
+			
+				$data['inbox_message'] = $this->message_model->get_inbox_messages($start,$records_per_page);
+				$data["start"] = $start;
+				$data["end"] = $start+$records_per_page - 1;
+				$data["total_records"] = $total_rows;
+				
+				$this->load->model('dashboard_model');				
+				$data_last_login = $this->dashboard_model->get_last_login_time();
+			
+				$data = array_merge($data_last_login,$data);
+				$this->load->view('message_view',$data);
+			
+			}
 		}
 		
 		public function getSentMsg()
 		{
-			$this->load->model('dashboard_model');	
-			$data_last_login = $this->dashboard_model->get_last_login_time();
-			//Load sent messages
-			$data_sent_msg = $this->message_model->get_sent_msg(); 
-			$data = array_merge($data_last_login,$data_sent_msg);
-			$this->load->view('sent_message_view',$data);
+			$start = 1;
+			$records_per_page = 10;
+			$total_rows = $this->message_model->num_sent_message();
+			log_message('info','##########INSIDE Message getSentMsg FUNC::total_rows :: '.$total_rows);
+			if($total_rows == 0)
+			{
+				$data['noData'] = 1;
+				$this->load->view('no_data_view.php',$data,TRUE);	
+			}
+			
+			else
+			{			
+				if (isset($_POST["submitForm"]))
+				{
+					$formSubmit = $this->input->post('submitForm');
+					$last_end = $this->input->post('last_end');
+					$last_start = $this->input->post('last_start');
+					if( $formSubmit == 'next' )
+					{
+						if($last_end != null)
+						{				
+							$start = $last_end + 1 ;				
+						}
+						log_message('info','##########INSIDE Message getSentMsg FUNC::start:: '.$start);
+				
+						if($total_rows < $start && $last_start != null)
+						{
+							$start = $last_start;
+							log_message('info','##########INSIDE Message getSentMsg FUNC::last_start:: '.$start);					
+						}
+					}
+					
+					if($formSubmit == 'prev' )
+					{
+						log_message('info','##########INSIDE Message getSentMsg FUNC::Prev button clicked :: ');
+						if($last_start != null && $last_start > $records_per_page)
+						{				
+							$start = $last_start - $records_per_page ;				
+						}
+						log_message('info','##########INSIDE Message getSentMsg FUNC::start:: '.$start);
+						
+						if($last_end != null)
+						{
+							$end = $last_start - 1;
+							log_message('info','##########INSIDE Message getSentMsg FUNC::last_start:: '.$start);					
+						}
+					}
+				}
+				
+				$this->load->model('dashboard_model');	
+				$data_last_login = $this->dashboard_model->get_last_login_time();
+				//Load sent messages
+				$data['sent_msg'] = $this->message_model->get_sent_msg($start,$records_per_page);
+				$data["start"] = $start;
+				$data["end"] = $start+$records_per_page - 1;
+				$data["total_records"] = $total_rows;
+				
+				$data = array_merge($data_last_login,$data);
+				$this->load->view('sent_message_view',$data);
+			}
 		}
 		
 		public function getDraftMsg()
 		{
-			$this->load->model('dashboard_model');	
-			$data_last_login = $this->dashboard_model->get_last_login_time();
-			//Load sent messages
-			$data_draft_msg = $this->message_model->get_draft_msg(); 
-			$data = array_merge($data_last_login,$data_draft_msg);
-			$this->load->view('draft_message_view',$data);
+			$start = 1;
+			$records_per_page = 10;
+			$total_rows = $this->message_model->num_draft_message();
+			log_message('info','##########INSIDE Message getDraftMsg FUNC::total_rows :: '.$total_rows);
+			if($total_rows == 0)
+			{
+				$data['noData'] = 1;
+				$this->load->view('no_data_view.php',$data,TRUE);	
+			}
+			
+			else
+			{			
+				if (isset($_POST["submitForm"]))
+				{
+					$formSubmit = $this->input->post('submitForm');
+					$last_end = $this->input->post('last_end');
+					$last_start = $this->input->post('last_start');
+					if( $formSubmit == 'next' )
+					{
+						if($last_end != null)
+						{				
+							$start = $last_end + 1 ;				
+						}
+						log_message('info','##########INSIDE Message getDraftMsg FUNC::start:: '.$start);
+				
+						if($total_rows < $start && $last_start != null)
+						{
+							$start = $last_start;
+							log_message('info','##########INSIDE Message getDraftMsg FUNC::last_start:: '.$start);					
+						}
+					}
+					
+					if($formSubmit == 'prev' )
+					{
+						log_message('info','##########INSIDE Message getDraftMsg FUNC::Prev button clicked :: ');
+						if($last_start != null && $last_start > $records_per_page)
+						{				
+							$start = $last_start - $records_per_page ;				
+						}
+						log_message('info','##########INSIDE Message getDraftMsg FUNC::start:: '.$start);
+						
+						if($last_end != null)
+						{
+							$end = $last_start - 1;
+							log_message('info','##########INSIDE Message getDraftMsg FUNC::last_start:: '.$start);					
+						}
+					}
+				}
+				$this->load->model('dashboard_model');	
+				$data_last_login = $this->dashboard_model->get_last_login_time();
+				//Load sent messages
+				$data['draft_msg'] = $this->message_model->get_draft_msg($start,$records_per_page); 
+				$data["start"] = $start;
+				$data["end"] = $start+$records_per_page - 1;
+				$data["total_records"] = $total_rows;
+				
+				$data = array_merge($data_last_login,$data);
+				$this->load->view('draft_message_view',$data);
+			}
 		}
 		public function compose()
 		{

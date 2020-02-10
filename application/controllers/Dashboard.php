@@ -41,10 +41,9 @@
 			//Get last Login time of current user
 			$data_last_login = $this->dashboard_model->get_last_login_time();
 			
-			$this->load->model('incident_model');
-			$data_all_incidents = $this->incident_model->get_all_incidents();  
+			$data['incident'] = $this->dashboard_model->get_all_incidents();  
 			
-			$data = array_merge($data_chart,$data_resources,$data_inbox,$data_last_login,$data_all_incidents);
+			$data = array_merge($data_chart,$data_resources,$data_inbox,$data_last_login,$data);
 					
 			//Load DashBoard view
 			$this->load->view('dashboard_view_admin',$data);
@@ -71,7 +70,7 @@
 			$this->load->library('table');
 			$start = 1;
 			$records_per_page = 10;
-			$total_rows = $this->dashboard_model->num_rows();
+			$total_rows = $this->dashboard_model->num_reg_citizens();
 			log_message('info','##########INSIDE viewRegisteredCitizens FUNC::total_rows :: '.$total_rows);
 			if($total_rows == 0)
 			{
@@ -133,6 +132,7 @@
 			
 			
 		}
+	
 
 	}  
 ?> 

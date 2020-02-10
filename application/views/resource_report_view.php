@@ -160,16 +160,37 @@
 
 					<button type="button" class="btn btn-primary" onclick="return GetSelectedData();" style="margin-top:25px;">SUBMIT</button>					
 					<script>
-						function GetSelectedData()
+						function GetPreviousData(last_end = null,last_start = null)
 						{
+							var prev = -1;
+							return GetSelectedData(prev,last_end,last_start);
+						}
+						
+						function GetNextData(last_end = null,last_start = null)
+						{
+							var next = 1;
+							return GetSelectedData(next,last_end,last_start);
+							
+						}
+			
+						function GetSelectedData(target,last_end = null,last_start = null)
+						{
+							if(last_end != null)
+							{	
+								var last_end = document.getElementById('last_end').value;
+							}
+							if(last_end != null)
+							{							
+								var last_start = document.getElementById('last_start').value;											
+							}
 							$.ajax({
 											url:"<?php echo site_url('Resource_Report/onClickSubmit');?>",
 											method:"POST",
-											data:{block_id:$('#blocks').val(),circle_id:$('#circles').val(),gp_id:$('#gp').val(),resource_id:$('#resources').val()},
+											data:{block_id:$('#blocks').val(),circle_id:$('#circles').val(),gp_id:$('#gp').val(),resource_id:$('#resources').val(),last_end:last_end,last_start:last_start,target:target},
 											type: "POST",
 											cache: false,
 											success: function(data){											
-												$('#report-table').html(data); 
+												$('#report-circlewise-all-resource').html(data); 
 											}
 
 							});
@@ -185,12 +206,15 @@
 				<button  id="back-button" type="button"  class="btn btn-primary" onclick="onClickBack();" style="display:none;">BACK</button>
 				</div>
 		</div>
-		<div id ="report-circlewise-all-resource">
+		<!--<div id ="report-circlewise-all-resource">
 			<div class="container" style="overflow-x:auto;overflow-y:auto;">
 					<table id ="report-table" class="table table-striped table-bordered">					
 					</table>
 					
 			</div>
+			
+		</div>-->
+		<div class="container" id="report-circlewise-all-resource">
 			
 		</div>
 		
@@ -210,7 +234,7 @@
 			$('#row-detail-table').hide(); 
 		}
 		function OnClickViewDetails() {
-			
+
 		var table = document.getElementById("report-table");
 	
 			var rows = table.getElementsByTagName("tr");
@@ -255,7 +279,7 @@
 												$("#selection-bar").hide(); 
 												$("#back-button").show();
 												$('#row-detail-table').html(data);
-												$('#row-detail-table').show(); 												
+												//$('#row-detail-table').show(); 												
 											}
 
 							});

@@ -66,25 +66,30 @@
 			return $query;
 		}
 		
-		public function get_report_data()
-		{		
+		public function get_report_data($start,$no_gp_per_page)
+		{
+			log_message('info','##########INSIDE GET REPORT DATA::');
 			$i = 0;
 			$data_list = array();
 			$c_s_no = null;
 			$b_s_no = null;
 			$gp_no = null;
 			
-			log_message('info','##########INSIDE GET REPORT DATA:: ');
+			$end = $start + $no_gp_per_page;			
+			$limit_start = $start - 1 ;
+			$offset = $no_gp_per_page;
 			
+			log_message('info','##########INSIDE GET REPORT DATA:: limit_start '.$limit_start);
+			log_message('info','##########INSIDE GET REPORT DATA:: offset'.$offset);
 			$selected_circle = $this->input->post('circle_id');
-			
+			log_message('info','##########INSIDE GET REPORT DATA:: selected_circle '.$selected_circle);
 			if(($selected_circle)!= 'All')
 			{
 			$c_s_no = $this->getc_s_no($selected_circle);
 			}
 			
 			$selected_block = $this->input->post('block_id');
-			
+			log_message('info','##########INSIDE GET REPORT DATA:: selected_block '.$selected_block);
 			if(($selected_block)!= 'All')
 			{
 			$b_s_no = $this->get_b_s_no($selected_block);
@@ -95,45 +100,57 @@
 			{
 			$gp_no = $this->get_gp_no($selected_gp);
 			}
-			
+			log_message('info','##########INSIDE GET REPORT DATA:: selected_gp '.$selected_gp);
 			$selected_resource = $this->input->post('resource_id');
 
-				$query = $this->get_gp_details($c_s_no,$b_s_no,$gp_no);
+				$query = $this->get_gp_details($c_s_no,$b_s_no,$gp_no,$limit_start,$offset);
 				$gp_details = $query->result();
-				$data['gp_details'] = $gp_details;
-				foreach($gp_details as $row){
-					//log_message('info','##########GP LIST:: '.$row->gp_no .' '.$row->gp_name  );
-					$gp_no = $row->gp_no;
-					$query_selection = $this ->get_all_resource_types($selected_resource);
-					$resources_details = $query_selection->result();
-					foreach($resources_details as $row1){
-						//log_message('info','##########Resource LIST:: '.$row1->sno .' '.$row1->tname  );
-						$resource_type = $row1->tname ;
-						$query_res_quantity = $this ->get_resource_quantity($gp_no, $resource_type);
-						$res_quantity_details = $query_res_quantity->result();
-						foreach ($res_quantity_details as $row2)
-						{
-								//log_message('info','##########Resource LIST:: '.$row->circle_name.' '.$row->block.' '.$row->gp_no.' '.$row1->sno .' '.$row1->tname .' '.$row2->count_res  );
-								$list =  array(
-								'circle_name' => $row->circle_name,
-								'block' => $row->block,
-								'gp'  => $row->gp_name,
-								'resource_type' =>$row1->actual_name,
-								'resource_quantity' =>$row2->count_res
-								);
-								$data_list[$i]  = $list;
+				$gp_num_rows = $query->num_rows();
 				
-								$i++;
-						}
-						
-						
-					}					
+				if($gp_num_rows == 0)
+				{
+					log_message('info','##########INSIDE If gp_no = 0');
+					$start = $start-$offset;
+					return $this->get_report_data($start,$no_gp_per_page);
 				}
-
+				else
+				{
+					log_message('info','##########INSIDE If gp_no not = 0');
+					log_message('info','##########INSIDE GET REPORT DATA:: limit_start '.$limit_start);
+					$data['gp_details'] = $gp_details;
+					foreach($gp_details as $row){
+						log_message('info','##########GP LIST:: '.$row->gp_no .' '.$row->gp_name  );
+						$gp_no = $row->gp_no;
+						$query_selection = $this ->get_all_resource_types($selected_resource);
+						$resources_details = $query_selection->result();
+						foreach($resources_details as $row1){
+							log_message('info','##########Resource LIST:: '.$row1->sno .' '.$row1->tname  );
+							$resource_type = $row1->tname ;
+							$query_res_quantity = $this ->get_resource_quantity($gp_no, $resource_type);
+							$res_quantity_details = $query_res_quantity->result();
+							foreach ($res_quantity_details as $row2)
+							{
+									log_message('info','##########Resource LIST:: '.$row->circle_name.' '.$row->block.' '.$row->gp_no.' '.$row1->sno .' '.$row1->tname .' '.$row2->count_res  );
+									$list =  array(
+									'circle_name' => $row->circle_name,
+									'block' => $row->block,
+									'gp'  => $row->gp_name,
+									'resource_type' =>$row1->actual_name,
+									'resource_quantity' =>$row2->count_res
+									);
+									$data_list[$i]  = $list;
+					
+									$i++;
+							}
+							
+							
+						}					
+					}
+				
 				$data['data_resource_report'] = $data_list;
 
 				return $data;
-			
+				}	
 		}
 		
 		public function getc_s_no($selected_circle)
@@ -229,7 +246,7 @@
 			return $query;
 		}
 		
-		public function get_gp_details($c_s_no,$b_s_no,$gp_no)
+		public function get_gp_details($c_s_no,$b_s_no,$gp_no,$limit_start,$offset)
 		{
 			$cir = 1;
 
@@ -245,7 +262,7 @@
 			{
 				$cir = $cir ." AND g.gp_no = '$gp_no'";
 			}
-			$q= "SELECT * from gp g join block b on b.b_s_no = g.b_s_no JOIN circle c on c.c_s_no = b.c_s_no where ".$cir." ORDER BY circle_name, block , gp_name";
+			$q = "SELECT * from gp g join block b on b.b_s_no = g.b_s_no JOIN circle c on c.c_s_no = b.c_s_no where ".$cir." ORDER BY circle_name, block , gp_name LIMIT $limit_start , $offset ";
 			$query = $this->db->query($q);
 			log_message('info','##########INSIDE get_all_gp_details QUERY::::::: '.$q);	
 			return $query;
@@ -268,6 +285,7 @@
 	
 		public function get_row_detailed_info()
 		{
+			
 			$circle_name = $this->input->post('circle');
 			$block_name = $this->input->post('block');
 			$gp_name = $this->input->post('gp');
@@ -587,6 +605,44 @@
 			$data['data_report_detailed_info'] = $resource_detail_data_list;
 
 			return $data;
+		}
+		public function count_gp()
+		{
+			$selected_circle = $this->input->post('circle_id');
+			$selected_block = $this->input->post('block_id');
+			$selected_gp = $this->input->post('gp_id');
+			
+			log_message('info','##########INSIDE count_gp:: selected_circle '.$selected_circle);
+			log_message('info','##########INSIDE count_gp:: selected_block '.$selected_block);
+			log_message('info','##########INSIDE count_gp:: selected_gp '.$selected_gp);
+			
+			if($selected_gp != 'All')//if gp is selected so there will be one gp
+			{
+				return 1;
+			}
+			if($selected_circle != 'All')//if gp is selected so there will be one gp
+			{
+				$this->db->where('circle_name',$selected_circle);
+			}
+			if($selected_block != 'All')//if gp is selected so there will be one gp
+			{
+				$this->db->where('block',$selected_block);
+			}
+			$this->db->from('gp');
+			$this->db->join('block', 'block.b_s_no = gp.b_s_no');
+			$this->db->join('circle', 'circle.c_s_no = block.c_s_no');
+			$count = $this->db->count_all_results();
+			log_message('info','##########INSIDE count_gp:: count '.$count);
+			return $count ;
+			
+			//$query = $this->db->query("SELECT * from gp");	
+			//return $query->num_rows();
+		}
+		
+		public function count_resource_type()
+		{
+			$query = $this->db->query("SELECT * from selection");	
+			return $query->num_rows();
 		}
 		
    }

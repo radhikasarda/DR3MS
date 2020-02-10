@@ -68,12 +68,75 @@
 		
 		public function viewIncidents()
 		{
-			$this->load->model('dashboard_model');	
-			$data_last_login = $this->dashboard_model->get_last_login_time();
-			$data_all_incidents = $this->incident_model->get_all_incidents(); 
+			$this->load->model('dashboard_model');
+			$start = 1;
+			$records_per_page = 10;
+			$total_rows = $this->incident_model->num_incidents();
+			log_message('info','##########INSIDE viewIncidents FUNC::total_rows :: '.$total_rows);
+			if($total_rows == 0)
+			{
+				log_message('info','##########INSIDE if total rows = 0 :: ');
+				$data['noData'] = 1;
+				$this->load->view('no_data_view.php',$data,TRUE);	
+			}
 			
-			$data = array_merge($data_last_login,$data_all_incidents);
-			$this->load->view('all_incidents_view',$data);
+			else
+			{
+				log_message('info','##########INSIDE if total rows not = 0 :: ');
+				if (isset($_POST["submitForm"]))
+				{
+					log_message('info','##########INSIDE isset submitform :: ');
+					
+					$formSubmit = $this->input->post('submitForm');
+					$last_end = $this->input->post('last_end');
+					$last_start = $this->input->post('last_start');
+					log_message('info','##########INSIDE viewIncidents FUNC::last_end:: '.$last_end);
+					log_message('info','##########INSIDE viewIncidents FUNC::last_start:: '.$last_start);
+					
+					if( $formSubmit == 'next' )
+					{
+						if($last_end != null)
+						{				
+							$start = $last_end + 1 ;				
+						}
+						log_message('info','##########INSIDE viewIncidents FUNC::start:: '.$start);
+				
+						if($total_rows < $start && $last_start != null)
+						{
+							$start = $last_start;
+							log_message('info','##########INSIDE viewIncidents FUNC::last_start:: '.$start);					
+						}
+					}
+					
+					if($formSubmit == 'prev' )
+					{
+						log_message('info','##########INSIDE viewIncidents FUNC::Prev button clicked :: ');
+						if($last_start != null && $last_start > $records_per_page)
+						{				
+							$start = $last_start - $records_per_page ;				
+						}
+						log_message('info','##########INSIDE viewIncidents FUNC::start:: '.$start);
+						
+						if($last_end != null)
+						{
+							$end = $last_start - 1;
+							log_message('info','##########INSIDE viewIncidents FUNC::last_start:: '.$start);					
+						}
+					}
+				}
+				$data['incident'] = $this->incident_model->get_all_incidents($start,$records_per_page);
+				$data["start"] = $start;
+				$data["end"] = $start+$records_per_page - 1;
+				$data["total_records"] = $total_rows;
+				
+				
+				$data_last_login = $this->dashboard_model->get_last_login_time();
+				//$data_all_incidents = $this->incident_model->get_all_incidents(); 
+				$data = array_merge($data_last_login,$data);
+				//$data = array_merge($data_last_login,$data_all_incidents);
+				$this->load->view('all_incidents_view',$data);
+			}	
+			
 		}
 		
 		public function OnClickViewIncidentDetails()

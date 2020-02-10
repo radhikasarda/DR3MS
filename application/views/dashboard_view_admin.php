@@ -52,163 +52,151 @@
 		<script type="text/javascript" src="<?php echo base_url().'assets/js/Chart.js'?>"></script>				
 		<script type="text/javascript" src="<?php echo base_url().'assets/js/toast.js'?>"></script>
 		
-		<div class= "dashboard-container" >	
-			<?php $this->load->view('header_view');?>		
-			<div>
-				<?php $this->load->view('navbar_view');?>
+		<div class= "header-container" id = "header-container" >
+			<div class = "header">
+				<?php $this->load->view('header_view');?>
 			</div>
+		</div>
+		<div id="navbar-view">
+		<?php $this->load->view('navbar_view');?>
+		</div>
+		<div class="dashboard-body-container" id="dashboard-body-container" style="margin-left:15px;margin-right:15px;">		
 			<div id ="sidebar" class="sidebar" style="margin:0;padding:0;width:200px;background-color:#FFB700;position:absolute;height:100%;margin-top:-20px;display:none;">			
-		    <a class="active" href="<?php echo base_url("Message/");?>"><b><i class="glyphicon glyphicon-inbox" aria-hidden="true"></i>&ensp;Inbox</b></a>
-			<a class="sent" href="<?php echo base_url("Message/getSentMsg");?>"><b><i class="glyphicon glyphicon-send" aria-hidden="true"></i>&ensp;Sent Messages</b></a>
-			<a class ="draft" href="<?php echo base_url("Message/getDraftMsg");?>"><b><i class="glyphicon glyphicon-pencil" aria-hidden="true"></i>&ensp;Draft Mesages</b></a>
-			<a class="compose" href="<?php echo base_url("Message/compose");?>"><b><i class="glyphicon glyphicon-plus" aria-hidden="true"></i>&ensp;Compose Message</b></a>
-			</div>	
-			<div class="dashboard-body-container" id="dashboard-body-container">
-				<div class = "row" style="width:100%;border-style: solid;margin:0px;">
-					<div class="col-sm-6" >	
-						<div class="chart-container" style="width:100%;">
-							<div class="bar-chart-container" style=" width:100%height:100%;">
-								<h4 style="text-align:center;"><b><u>Resources Present In each Circle</u></b></h4>
-								<canvas id="bar-chart" style="width:100%; height:300px;">
-								</canvas>
-							</div>
-						</div>				
+				<a class="active" href="<?php echo base_url("Message/");?>"><b><i class="glyphicon glyphicon-inbox" aria-hidden="true"></i>&ensp;Inbox</b></a>
+				<a class="sent" href="<?php echo base_url("Message/getSentMsg");?>"><b><i class="glyphicon glyphicon-send" aria-hidden="true"></i>&ensp;Sent Messages</b></a>
+				<a class ="draft" href="<?php echo base_url("Message/getDraftMsg");?>"><b><i class="glyphicon glyphicon-pencil" aria-hidden="true"></i>&ensp;Draft Mesages</b></a>
+				<a class="compose" href="<?php echo base_url("Message/compose");?>"><b><i class="glyphicon glyphicon-plus" aria-hidden="true"></i>&ensp;Compose Message</b></a>
+			</div>
+			<!--- For table--No of resource in each circle  --->
+			<input type='hidden' class='form-control select2-offscreen' name='circle_id' id='circle_id'>					 
+			<input type='hidden' class='form-control select2-offscreen' name='block_id' id='block_id' >
+			<input type='hidden' class='form-control select2-offscreen' name='gp_id' id='gp_id' >					 
+			<input type='hidden' class='form-control select2-offscreen' name='resource_id' id='resource_id'>
+			<div class ="row">
+				<div class="col-md-12">
+					<div class ="row" style="border:solid black;">
+						<div class="col-md-6" style="border:solid black;">
+							<h4 style="text-align:center;"><b><u>Resources Present In each Circle</u></b></h4>
+							<canvas id="bar-chart">
+							</canvas>
+						</div>
+						<div class="col-md-6" style="border:solid black;overflow-x:auto;">
+							<h4 style="text-align:center;"><b><u>No. Of Resources In Each Circle</u></b></h4>			
+							<h4><font color="red">Click on Rows for Details !!</font></h4>     
+							<table class="table table-bordered table-hover"  id="all-resources-table" style="height:407px;">		
+								<thead style="background-color: black;color: white;">													
+									<tr>
+										<th><strong>Circle</strong></th>
+											<?php $user=$this->session->userdata('userid');
+												if ($user == "Admin" ||$user == "DC" || $user == "ADC" || $user == "NDRF"){ 
+													foreach((array)$circle_info as $circle_info){?>
+														<th><strong><?=$circle_info->circle_name;?></strong></th>
+												<?php }																														
+												} else {?>
+										<th><strong><?php echo $this->session->userdata('circle_name');?></strong></th>
+											<?php } ?>														
+									</tr> 
+								</thead>
+								<tbody>
+									<tr>
+										<td class= "assets" name ="assets" id ="assets"><strong>Assets</strong></td>
+											<?php foreach((array)$assets_info as $assets_info){?>
+										<td><?=$assets_info->no_of_assets;?></td>
+											<?php }?> 							
+									</tr>   
+									<tr>
+										<td class= "community_hall"><strong>Community hall</strong></td>
+											<?php foreach((array)$community_hall_info as $community_hall_info){?>
+										<td><?=$community_hall_info->no_of_community_hall;?></td>
+											<?php }?> 
+									</tr>
+									<tr>
+										<td class= "health_centre"><strong>Health Centre</strong></td>
+											<?php foreach((array)$health_centre_info as $health_centre_info){?>
+										<td><?=$health_centre_info->no_of_health_centre;?></td>
+											<?php }?>
+									</tr>								
+									<tr>
+										<td class= "institution"><strong>Institutions</strong></td>
+											<?php foreach((array)$institution_info as $institution_info){?>
+										<td><?=$institution_info->no_of_institution;?></td>
+											<?php }?> 
+									</tr>								
+									<tr>
+										<td class= "embankment" ><strong>Embankment</strong></td>
+											<?php foreach((array)$embankment_info as $embankment_info){?>							
+										<td><?=$embankment_info->no_of_embankment;?></td>
+											<?php }?>
+									</tr>
+									<tr>
+										<td class= "handpump"><strong>HandPump and Ring Wells</strong></td>
+											<?php foreach((array)$handpump_info as $handpump_info){?>							
+										<td><?=$handpump_info->no_of_hand_pump_ring_well;?></td>
+											<?php }?>
+									</tr>
+									<tr>
+										<td class= "inaccessible"><strong>Inaccessible Area</strong></td>
+											<?php foreach((array)$inaccessible_info as $inaccessible_info){?>							
+										<td><?=$inaccessible_info->no_of_inaccessible_area;?></td>
+											<?php }?> 
+									</tr>
+								</tbody>
+							</table>
+						</div>
 					</div>
-					<div class="col-sm-6" style="border-left:solid black;">
-						<div class="messages-container" style="width:100%;height:350px;">
+					<div class ="row" style="border:solid black;">
+						<div class="col-md-6" style="border:solid black;">
 							<h4 style="text-align:center;"><b><u>INBOX</u></b></h4>
-							<h4><font color="red">Click on Rows for Details !!</font></h4>                                                                      
-							<div class="table-responsive" style="overflow-x:auto;overflow-y:auto;height:270px;border:solid black;">          
-								<table class="table table-striped table-bordered table-hover"  id="all-messages-table">	
-										<thead style="background-color:black;color:white;">													
-											<tr>
-												<th style="display:none;"><strong>MSG ID</strong></th>
-												<th><strong>FROM</strong></th>
-												<th><strong>SUBJECT</strong></th>
-											</tr> 
-										</thead>
-										<tbody>
-										<?php foreach((array)$user_msg as $user_msg){?>	
+							<h4><font color="red">Click on Rows for Details !!</font></h4> 
+							<table class="table table-bordered table-hover"  id="all-messages-table">	
+								<thead style="background-color:black;color:white;">													
+									<tr>
+										<th style="display:none;"><strong>MSG ID</strong></th>
+										<th><strong>FROM</strong></th>
+										<th><strong>SUBJECT</strong></th>
+									</tr> 
+								</thead>
+								<tbody>
+									<?php  foreach((array)$user_msg as $user_msg){?>	
 										<tr>
 											<td class= "msg_id" name ="msg_id" id ="msg_id"  style="display:none;"><?=$user_msg->message_id;?></td>	
 											<td class= "msg_from"><?=$user_msg->msg_from;?></td>
 											<td class= "subject" ><?=$user_msg->subject;?></td>								
 										</tr>
-										<?php }?>
-										</tbody>
-								</table>						
-							</div>
+									<?php }?>
+								</tbody>
+							</table>	
+						</div>
+						<div class="col-md-6" style="border:solid black;">
+							<h4 style="text-align:center;"><b><u>Recent Incidents</u></b></h4>	
+							<h4><font color="red">Click on Rows for Details !!</font></h4> 
+							<table class="table table-bordered table-hover"  id="all-incidents-table">	
+								<thead style="background-color:black;color:white;">													
+									<tr>
+										<th style="display:none;"><strong>INCIDENT ID</strong></th>
+										<th><strong>INCIDENT DATE</strong></th>
+										<th><strong>INCIDENT TIME</strong></th>
+										<th><strong>LOCATION</strong></th>
+										<th><strong>SUBJECT</strong></th>
+									</tr> 
+								</thead>
+								<tbody>	
+									<?php foreach($incident as $incident):?>
+										<tr>
+											<td class= "incident_id" name ="incident_id" id ="incident_id" style="display:none;"><?=$incident->incident_id;?></td>
+											<td class ="incident_date"><?=$incident->incident_date;?></td>
+											<td class ="incident_time"><?=$incident->incident_time;?></td>
+											<td class ="location"><?=$incident->location_village_name;?></td>
+											<td class ="subject"><?=$incident->subject;?></td>
+										</tr>
+									<?php endforeach; ?>
+								</tbody>
+							</table>
 						</div>
 					</div>
 				</div>
-		
-				<div class = "row" style="width:100%;border-style: solid;margin:0px;">
-					<div class="col-sm-6 ">
-						<div class="resources-info-container" >
-							<h4 style="text-align:center;"><b><u>No. Of Resources In Each Circle</u></b></h4>						
-								<div class="container"style="width:100%;">   
-									<h4><font color="red">Click on Rows for Details !!</font></h4>     
-										<div class="table-responsive" style="height:300px;border:solid black;overflow-x:auto;overflow-y:auto;" >          
-											<table class="table table-striped table-bordered table-hover"  id="all-resources-table">		
-												<thead style="background-color: black;color: white;">													
-													<tr>
-														<th><strong>Circle</strong></th>
-														<?php $user=$this->session->userdata('userid');
-														if ($user == "Admin" ||$user == "DC" || $user == "ADC" || $user == "NDRF"){ 
-															foreach((array)$circle_info as $circle_info){?>
-																<th><strong><?=$circle_info->circle_name;?></strong></th>
-														<?php }
-															
-															
-														 } else {?>
-															<th><strong><?php echo $this->session->userdata('circle_name');?></strong></th>
-														<?php } ?>														
-													</tr> 
-												</thead>
-												<tbody>
-													<tr>
-														<td class= "assets" name ="incident_id" id ="incident_id"><strong>Assets</strong></td>
-														<?php foreach((array)$assets_info as $assets_info){?>
-															<td><?=$assets_info->no_of_assets;?></td>
-														<?php }?> 							
-													</tr>   
-													<tr>
-														<td class= "community_hall"><strong>Community Halls</strong></td>
-														<?php foreach((array)$community_hall_info as $community_hall_info){?>
-															<td><?=$community_hall_info->no_of_community_hall;?></td>
-														<?php }?> 
-													</tr>
-													<tr>
-														<td class= "health_centre"><strong>Health Centres</strong></td>
-														<?php foreach((array)$health_centre_info as $health_centre_info){?>
-															<td><?=$health_centre_info->no_of_health_centre;?></td>
-														<?php }?>
-													</tr>								
-													<tr>
-														<td class= "institution"><strong>Institutions</strong></td>
-														<?php foreach((array)$institution_info as $institution_info){?>
-															<td><?=$institution_info->no_of_institution;?></td>
-														<?php }?> 
-													</tr>								
-													<tr>
-														<td class= "embankment" ><strong>Embankments</strong></td>
-														<?php foreach((array)$embankment_info as $embankment_info){?>							
-															<td><?=$embankment_info->no_of_embankment;?></td>
-														<?php }?>
-													</tr>
-													<tr>
-														<td class= "handpump"><strong>Hand Pump & Ring Wells</strong></td>
-														<?php foreach((array)$handpump_info as $handpump_info){?>							
-															<td><?=$handpump_info->no_of_hand_pump_ring_well;?></td>
-														<?php }?>
-													</tr>
-													<tr>
-														<td class= "inaccessible"><strong>Inaccessible Area</strong></td>
-														<?php foreach((array)$inaccessible_info as $inaccessible_info){?>							
-															<td><?=$inaccessible_info->no_of_inaccessible_area;?></td>
-														<?php }?> 
-													</tr>
-													</tbody>
-												</table>
-											</div>
-									</div>
-							</div>		
-					</div>
-			
-					<div class="col-sm-6 "  style="border-left: solid;">			
-						<div class="user-info-container" >
-							<h4 style="text-align:center;"><b><u>Recent Incidents</u></b></h4>			
-								<div class="container" style="width:100%;">        
-									<h4><font color="red">Click on Rows for Details !!</font></h4>      
-										<div class="table-responsive" style="height:300px;border:solid black;overflow-x:auto;overflow-y:auto;">          
-											<table class="table table-striped table-bordered table-hover" id="all-incidents-table">
-												<thead style="background-color: black;color: white;">
-													<tr>
-														<th style="display:none;"><strong>INCIDENT ID</strong></th>							
-														<th><strong>INCIDENT DATE</strong></th>
-														<th><strong>INCIDENT TIME</strong></th>
-														<th><strong>LOCATION</strong></th>
-														<th><strong>SUBJECT</strong></th>
-													</tr> 
-												</thead>
-												<?php foreach((array)$incident as $incident){?>	
-												<tbody>
-													<tr>
-														<td class= "incident_id" name ="incident_id" id ="incident_id" style="display:none;"><?=$incident->incident_id;?></td>
-														<td class ="incident_date"><?=$incident->incident_date;?></td>
-														<td class ="incident_time"><?=$incident->incident_time;?></td>
-														<td class ="location"><?=$incident->location_village_name;?></td>
-														<td class ="subject"><?=$incident->subject;?></td>
-													</tr>
-												</tbody>
-												<?php }?>  
-											</table>
-										</div>
-								</div>
-						</div>
-					</div>
 			</div>
-		</div>
+		</div>							
 		<div class = "row">
 			<div class = "col-sm-2">
 			</div>
@@ -261,11 +249,8 @@
 				<button  id="back-button" type="button"  class="btn btn-primary" onclick="onClickBack();" style="display:none;">BACK</button>
 			</div>
 		</div>
-		<div id ="report-circlewise-all-resource">
-			<div class="container" style="overflow-x:auto;overflow-y:auto;">
-				<table id ="report-table" class="table table-striped table-bordered">					
-				</table>
-			</div>
+		<div class="container" id="report-circlewise-all-resource">
+			
 		</div>
 		<div id ="detailed-info">			
 			<div class="container" style="overflow-x:auto;overflow-y:auto;">				
@@ -396,29 +381,67 @@
 
 							});
 					});
-					
+					//For table--No. of Resource in each circle
 					$('#all-resources-table tbody').find('tr').click(function () {
-						 var resource_name = $(this).find('td:first').text();
-						 var circle_name = "All";
-						 var block_name = "All";
-						 var gp_name = "All";
-						 
+						var resource_name = $(this).find('td:first').text();	
+						var circle_id =	"All";
+						var block_id =	"All";
+						var gp_id =	"All";
+						
+						document.getElementById('circle_id').value = circle_id;
+						document.getElementById('block_id').value = block_id ;
+						document.getElementById('gp_id').value = gp_id ;
+						document.getElementById('resource_id').value = resource_name;
+						
+						GetSelectedData(null,null,null,circle_id,block_id,gp_id,resource_name);
+						
+					}); 
+				}); 
+						function GetPreviousData(last_end = null,last_start = null)
+						{
+							var prev = -1;
+							return GetSelectedData(prev,last_end,last_start);
+						}
+						
+						function GetNextData(last_end = null,last_start = null)
+						{
+							var next = 1;
+							return GetSelectedData(next,last_end,last_start);
+							
+						}
+			
+						function GetSelectedData(target,last_end = null,last_start = null)
+						{
+							alert("hii");
+							var resource_name = document.getElementById('resource_id').value;	
+							var circle_id =	document.getElementById('circle_id').value;
+							var block_id =	document.getElementById('block_id').value;
+							var gp_id =	document.getElementById('gp_id').value;
+						
+							if(last_end != null)
+							{	
+								var last_end = document.getElementById('last_end').value;
+							}
+							if(last_end != null)
+							{							
+								var last_start = document.getElementById('last_start').value;											
+							}
 							$.ajax({
 											url:"<?php echo site_url('Resource_Report/onClickSubmit');?>",
 											method:"POST",
-											data:{block_id:block_name,circle_id:circle_name,gp_id:gp_name,resource_id:resource_name},
+											data:{block_id:block_id,circle_id:circle_id,gp_id:gp_id,resource_id:resource_name,last_end:last_end,last_start:last_start,target:target},
 											type: "POST",
 											cache: false,
-											success: function(data){		
-												$("#dashboard-body-container").hide();  
+											success: function(data){											
+												$('#report-circlewise-all-resource').html(data); 
+												$("#dashboard-body-container").hide(); 
 												$("#footer-div").hide();
-												$('#report-table').html(data); 											
 											}
 
 							});
+							
+						}			
 					
-					}); 
-			}); 
 			function onClickSendInstructions()
 			{
 				var incident_id =  document.getElementById("id").value;
