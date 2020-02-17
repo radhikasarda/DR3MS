@@ -116,10 +116,29 @@
 			
 			if($otp_entered_trim == $otp_generated_trim)
 			{
-				log_message('info','########## setGuestEntrance');
-				$this->load->library('session');			
-				$this->session->set_userdata('entrance', TRUE); 
-				redirect('/Guest');
+				if(!$this->session->userdata('citizen_reg_btn_clicked'))
+				{
+					log_message('info','########## setGuestEntrance');
+					$this->load->library('session');			
+					$this->session->set_userdata('entrance', TRUE); 
+					redirect('/Guest');
+				}
+				else
+				{
+					$contact_no = $this->session->userdata('contact');
+					$data['reg_user_info'] = $this->login_model->check_user_exist($contact_no);
+					
+					$this->load->library('session');			
+					$this->session->set_userdata('entrance', TRUE);
+					
+					$this->load->model('citizen_model');					
+					$data['circles'] = $this->citizen_model->get_circles(); 		
+					
+					$data['user_exist'] = 1;
+					$this->load->view('citizen_registration_view',$data);
+					
+				}
+			
 			}
 			else
 			{

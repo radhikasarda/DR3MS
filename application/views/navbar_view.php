@@ -40,7 +40,8 @@
 								<li><a href="<?php echo base_url("Password/loadResetPasswordView");?>"><b>Reset User Password</b></a></li>
 								<li><a href="<?php echo base_url("Audit_Trail/");?>"><b>Audit Trail</b></a></li>
 							</ul>
-						</li>					
+						</li>
+						<li><a href="<?php echo base_url("Dashboard/panicBtnClicked");?>"><b>PANIC BUTTON</b></a></li>
 						<?php } else {?>
 						
 						<li><a href="<?php echo base_url("Password/loadChangePasswordView");?>"><b>CHANGE PASSWORD</b></a></li>

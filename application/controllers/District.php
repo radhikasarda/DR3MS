@@ -53,8 +53,11 @@
 		{
 			log_message('info','##########Loading CitizenRegistrationView');
 			$this->load->library('session');			
-			$this->session->set_userdata('entrance', TRUE); 
-			redirect('/Citizen');
+			$this->session->set_userdata('citizen_reg_btn_clicked', TRUE); 
+			$this->load->view('guest_view');
+			//$this->load->library('session');			
+			//$this->session->set_userdata('entrance', TRUE); 
+			//redirect('/Citizen');
 		}
 		
 	}

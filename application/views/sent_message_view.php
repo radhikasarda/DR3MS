@@ -63,18 +63,29 @@
 			<a class="compose" href="<?php echo base_url("Message/compose");?>"><b><i class="glyphicon glyphicon-plus" aria-hidden="true"></i>&ensp;Compose Message</b></a>
 			<!--<a class="bin" href="<?php echo base_url("Message/bin");?>"><b><i class="glyphicon glyphicon-trash" aria-hidden="true"></i>&ensp;Deleted Messages</b></a>-->
 		</div>
+		<?php
+			if($noData == 1)
+			{ ?>
+			<div class="container"  style="overflow-x:auto;overflow-y:auto;height:800px;width:auto !important;">				
+				<div class ="col-md-10" style="margin-left:800px;">
+					<div class ="row">	
+						<h1>No Data to Display !!</h1>
+					</div>
+				</div>
+			</div>
+			<?php  } else {						 
+					$start = $start;
+					$end = $end;
+					$total_records = $total_records;	
+					if($total_records <= $end)
+					{
+						$end = $total_records;
+					}
+					
+		?>	
 		<div id ="sent-messages-div" class="container" style="overflow-x:auto;overflow-y:auto;height:800px;width:auto !important;"> 
 			<div  class="col-md-10" style="margin-top:-30px;margin-left:200px;">			
-				<div class ="row">
-					<?php
-							$start = $start;
-							$end = $end;
-							$total_records = $total_records;	
-							if($total_records <= $end)
-							{
-								$end = $total_records;
-							}
-						?>	
+				<div class ="row">					
 						<div class="pagination">
 							<form method="POST" action="<?php echo base_url("Message/getSentMsg");?>">			
 								<button type="submit" class="button" name="submitForm" value="prev" style="margin-top:10px;position: absolute; left: 0;background-color: #FFB700;border: none; padding: 5px 20px;font-weight:bold;"><< Previous</button>
@@ -112,7 +123,7 @@
 					</table>
 				</div>
 			</div>
-		</div>		
+		</div>	<?php } ?>	
 		<div class="col-sm-10 "style="margin-top:-10px;margin-left:200px;display:none;" id="message-details">
 				<div class ="message-details-container">
 					<div class="container"> 

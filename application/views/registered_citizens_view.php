@@ -39,6 +39,28 @@
 		<div id="navbar-view">
 		<?php $this->load->view('navbar_view');?>
 		</div>
+		<?php
+			if($noData == 1)
+			{ ?>
+			<div class="container">
+				<div class ="row">
+					<div class ="col-md-12" style="margin-left:400px;">
+						<div class ="row">	
+							<h1>No Data to Display !!</h1>
+						</div>
+					</div>
+				</div>
+			</div>
+			<?php  } else {						 
+					$start = $start;
+					$end = $end;
+					$total_records = $total_records;	
+					if($total_records <= $end)
+					{
+						$end = $total_records;
+					}
+					
+		?>	
 		<div class="container">
 			<div class ="row">
 				<div class ="col-md-12">
@@ -51,16 +73,7 @@
 						<input type='hidden' class='form-control select2-offscreen' name='last_start' id='last_start' value='<?php echo $start; ?>'>	
 						<br>
 						</form>
-						</div>	
-						<?php
-							$start = $start;
-							$end = $end;
-							$total_records = $total_records;	
-							if($total_records <= $end)
-							{
-								$end = $total_records;
-							}
-						?>		
+						</div>			
 						<h4><?php 
 							echo "Showing (".$start."-".$end.") records out of ".$total_records; ?>
 						</h4>
@@ -100,6 +113,6 @@
 					</div>
 				</div>	
 			</div>
-		</div>
+			</div> <?php } ?>
 	</body>
 </html>

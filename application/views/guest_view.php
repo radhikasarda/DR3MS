@@ -127,21 +127,21 @@
 			<p>Enter OTP:</p>	
 			<input type="text" class="form-control" name="otp" id="otp">		
 			</div>
-			
+			<br>
 			<div class = "form-group" id="btn-get-otp">
 			<button type="button"  class="btn btn-primary"  onClick = "return validateMobileNo();" style="margin-left:50px;width:150px;font-size:15;">GET OTP</button>
 			</div>
-			
 			<div class = "form-group" id="btn-submit-otp" style="display:none;">
 			<button type="button"  class="btn btn-primary"  onClick = "return submitOtp();" style="margin-left:50px;width:150px;font-size:15;">SUBMIT OTP</button>
 			</div>
 			
 			</form>
-			<div class = "form-group" id="or" style="margin-left:110px;"><p>OR</p></div>
-			
-			<form role="form" name="regloginform" id="regloginform" action="<?php echo base_url("District/");?>"  method="POST" >
+			<br>
+			<br>
+			<br>
+			<form role="form" name="regloginform" id="regloginform" action="<?php echo base_url("Guest/onClickBackToLogin");?>"  method="POST" >
 			<div class = "form-group" id="btn-registered-user">
-			<button type="submit"  class="btn btn-primary" style="margin-left:30px;width:200px;font-size:15;">Login as a Registered User</button>
+			<button type="submit"  class="btn btn-danger" style="margin-left:30px;width:200px;font-size:15;">Back to Login</button>
 			</div>
 			</form>
 	</div>

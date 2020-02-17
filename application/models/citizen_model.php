@@ -15,33 +15,43 @@
 			public function get_circles()	 
 			{
 				log_message('info','##########INSIDE citizen_model get_circles FUNC::');
-				$query = $this->db->select('*')-> get('circle');
-				return $query;
+				//$query = $this->db->select('*')-> get('circle');
+				//return $query;
+				$this->db->select('circle_name');
+				$this->db->from('circle');
+				$query = $this->db->get();
+				return $query->result_array();
 				
 			}
 			
 			public function get_blocks($selected_circle)	
 			{
 				log_message('info','##########INSIDE get_blocks FUNC::selected_circle '.$selected_circle);
-				$query = $this->db->query("SELECT b.block as block FROM block b join circle c ON b.c_s_no=c.c_s_no WHERE c.circle_name LIKE '$selected_circle';");
+				/*$query = $this->db->query("SELECT b.block as block FROM block b join circle c ON b.c_s_no=c.c_s_no WHERE c.circle_name LIKE '$selected_circle';");
 				$output = '<option value="Select">Select Block</option>';
 				foreach($query->result() as $row)
 				{
 				  $output .= '<option value="'.$row->block.'">'.$row->block.'</option>';
 				}
-				return $output;	   
+				return $output;	 */ 	
+				$query = $this->db->query("SELECT b.block as block FROM block b join circle c ON b.c_s_no=c.c_s_no WHERE c.circle_name LIKE '$selected_circle';");
+				return $query->result_array();
 			}	
 			
 			
 			public function get_gp($selected_block)
 			{
-				$query = $this->db->query("SELECT g.gp_name as gp FROM gp g join block b ON g.b_s_no=b.b_s_no WHERE b.block LIKE '$selected_block';");
+				/*$query = $this->db->query("SELECT g.gp_name as gp FROM gp g join block b ON g.b_s_no=b.b_s_no WHERE b.block LIKE '$selected_block';");
 				$output = '<option value="Select">Select GP</option>';
 				foreach($query->result() as $row)
 				{
 				  $output .= '<option value="'.$row->gp.'">'.$row->gp.'</option>';
 				}
-				return $output;	
+				return $output;	*/
+
+				$query = $this->db->query("SELECT g.gp_name as gp FROM gp g join block b ON g.b_s_no=b.b_s_no WHERE b.block LIKE '$selected_block';");
+				return $query->result_array();
+				
 			}
 			
 			public function register_citizen()

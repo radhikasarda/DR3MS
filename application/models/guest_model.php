@@ -17,6 +17,7 @@
 				$query = $this->db->select('*')-> get('circle');
 				return $query;
 				
+				
 			}
 			
 			public function get_blocks($selected_circle)	

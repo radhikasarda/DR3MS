@@ -75,12 +75,12 @@
 			<div class ="row">
 				<div class="col-md-12">
 					<div class ="row" style="border:solid black;">
-						<div class="col-md-6" style="border:solid black;">
+						<div class="col-md-6" style="border:solid black;height:500px;overflow-x:auto;overflow-y:auto;">
 							<h4 style="text-align:center;"><b><u>Resources Present In each Circle</u></b></h4>
 							<canvas id="bar-chart">
 							</canvas>
 						</div>
-						<div class="col-md-6" style="border:solid black;overflow-x:auto;">
+						<div class="col-md-6" style="border:solid black;height:500px;overflow-x:auto;overflow-y:auto;">
 							<h4 style="text-align:center;"><b><u>No. Of Resources In Each Circle</u></b></h4>			
 							<h4><font color="red">Click on Rows for Details !!</font></h4>     
 							<table class="table table-bordered table-hover"  id="all-resources-table" style="height:407px;">		
@@ -145,7 +145,7 @@
 						</div>
 					</div>
 					<div class ="row" style="border:solid black;">
-						<div class="col-md-6" style="border:solid black;">
+						<div class="col-md-6" style="border:solid black;height:370px;overflow-x:auto;overflow-y:auto;">
 							<h4 style="text-align:center;"><b><u>INBOX</u></b></h4>
 							<h4><font color="red">Click on Rows for Details !!</font></h4> 
 							<table class="table table-bordered table-hover"  id="all-messages-table">	
@@ -167,7 +167,7 @@
 								</tbody>
 							</table>	
 						</div>
-						<div class="col-md-6" style="border:solid black;">
+						<div class="col-md-6" style="border:solid black;height:370px;overflow-x:auto;overflow-y:auto;">
 							<h4 style="text-align:center;"><b><u>Recent Incidents</u></b></h4>	
 							<h4><font color="red">Click on Rows for Details !!</font></h4> 
 							<table class="table table-bordered table-hover"  id="all-incidents-table">	

@@ -77,7 +77,7 @@
 			{
 				log_message('info','##########INSIDE if total rows = 0 :: ');
 				$data['noData'] = 1;
-				$this->load->view('no_data_view.php',$data,TRUE);	
+				//$this->load->view('no_data_view.php',$data,TRUE);	
 			}
 			
 			else
@@ -128,14 +128,14 @@
 				$data["start"] = $start;
 				$data["end"] = $start+$records_per_page - 1;
 				$data["total_records"] = $total_rows;
-				
-				
+				$data['noData'] = 0;
+			}	
 				$data_last_login = $this->dashboard_model->get_last_login_time();
 				//$data_all_incidents = $this->incident_model->get_all_incidents(); 
 				$data = array_merge($data_last_login,$data);
 				//$data = array_merge($data_last_login,$data_all_incidents);
 				$this->load->view('all_incidents_view',$data);
-			}	
+				
 			
 		}
 		

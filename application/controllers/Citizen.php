@@ -27,16 +27,16 @@
 			}
 			else
 			{
-				
-				$data_circles['circles'] = $this->citizen_model->get_circles()->result(); 		
-				$this->load->view('citizen_registration_view',$data_circles);
+				$data['user_exist'] = 0;
+				$data['circles'] = $this->citizen_model->get_circles(); 	
+				$this->load->view('citizen_registration_view',$data);
 			}
 		}
 		
 		//For filling combobox
 		public function get_blocks()
 		{
-			$circle_id = $this->input->post('circle_id');
+			/*$circle_id = $this->input->post('circle_id');
 			log_message('info','##########INSIDE get_blocks FUNC::CIRCLE ID'.$circle_id);
 			if($this->input->post('circle_id'))
 			{
@@ -44,18 +44,30 @@
 				$selected_circle = $this->input->post('circle_id');			
 				echo $this->citizen_model->get_blocks($selected_circle);
 			}
-			
+			*/
+			$json = array();
+			$selected_circle = $this->input->post('circleID');
+			log_message('info','##########INSIDE get_blocks FUNC::CIRCLE ID'.$selected_circle);
+			$json = $this->citizen_model->get_blocks($selected_circle);
+			header('Content-Type: application/json');
+			echo json_encode($json);
 		}
 		
 		//For filling combobox
 		public function get_gp()
 		{	
-			if($this->input->post('block_id'))
+			/*if($this->input->post('block_id'))
 			{
 				log_message('info','##########INSIDE get_gp FUNC::');
 				$selected_block = $this->input->post('block_id');
 				echo $this->citizen_model->get_gp($selected_block);
-			}
+			}*/
+			$json = array();
+			$selected_block = $this->input->post('blockID');
+			log_message('info','##########INSIDE get_blocks FUNC::BLOCK ID'.$selected_block);
+			$json = $this->citizen_model->get_gp($selected_block);
+			header('Content-Type: application/json');
+			echo json_encode($json);
 		}
 		
 		public function register_citizen()

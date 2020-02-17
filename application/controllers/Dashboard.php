@@ -75,7 +75,7 @@
 			if($total_rows == 0)
 			{
 				$data['noData'] = 1;
-				$this->load->view('no_data_view.php',$data,TRUE);	
+				//$this->load->view('no_data_view.php',$data,TRUE);	
 			}
 			
 			else
@@ -115,24 +115,35 @@
 							log_message('info','##########INSIDE viewRegisteredCitizens FUNC::last_start:: '.$start);					
 						}
 					}
+				
+			
+			
 				}
-			
-			
-			
+				
 				$data['citizen'] = $this->dashboard_model->get_registered_citizens_data($start,$records_per_page);
 				$data["start"] = $start;
 				$data["end"] = $start+$records_per_page - 1;
 				$data["total_records"] = $total_rows;
+				$data['noData'] = 0;
+				
+				}
 				
 				$data_last_login = $this->dashboard_model->get_last_login_time();
 			
 				$data = array_merge($data_last_login,$data);
 				$this->load->view('registered_citizens_view',$data);
-			}
+			
 			
 			
 		}
-	
+		
+		public function panicBtnClicked()
+		{
+			log_message('info','##########INSIDE panicBtnClicked FUNC::');
+			$query = $this->db->query("SELECT * from registered_citizens");
+				
+			$reg_citizens = $query->result();
+		}
 
 	}  
 ?> 

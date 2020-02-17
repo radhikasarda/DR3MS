@@ -77,6 +77,12 @@
 			echo $result;
 		}
 		
+		public function onClickBackToLogin()
+		{
+			$this->load->model('district_model');
+			$selected_district = $this->session->userdata('selected_district');
+			$this->district_model->loadLoginView($selected_district);
+		}
 		public function logout()
 		{
 			log_message('info','########## INSIDE logout');

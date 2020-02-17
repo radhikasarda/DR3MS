@@ -41,22 +41,32 @@
 		<div id="navbar-view">
 		<?php $this->load->view('navbar_view');?>
 		</div>
-
+		<?php
+			if($noData == 1)
+			{ ?>
+			<div class="container">	
+				<div class ="row">
+				   <div class ="col-md-12" style="margin-left:400px;">
+						<div class ="row">	
+						<h1>No Data to Display !!</h1>
+						</div>
+					</div>
+				</div>
+			</div>
+			<?php  } else {						 
+					$start = $start;
+					$end = $end;
+					$total_records = $total_records;	
+					if($total_records <= $end)
+					{
+						$end = $total_records;
+					}
+					
+		?>	
 		<div class="container">
 			<div class ="row">
 				<div class="col-md-12">
 					<div class="row" id="all-incidents-table-div">
-									
-							
-						<?php
-							$start = $start;
-							$end = $end;
-							$total_records = $total_records;	
-							if($total_records <= $end)
-							{
-								$end = $total_records;
-							}
-						?>	
 						<div class="pagination">
 							<form method="POST" action="<?php echo base_url("Incident/viewIncidents");?>">			
 								<button type="submit" class="button" name="submitForm" value="prev" style="margin-top:10px;position: absolute; left: 0;background-color: #FFB700;border: none; padding: 5px 20px;font-weight:bold;"><< Previous</button>
@@ -102,7 +112,7 @@
 					</div>
 				</div>
 			</div>
-		</div>
+			</div> <?php } ?>
 		<div class = "row">
 		<div class = "col-sm-2">
 		</div>

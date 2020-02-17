@@ -28,7 +28,7 @@
 			if($total_rows == 0)
 			{
 				$data['noData'] = 1;
-				$this->load->view('no_data_view.php',$data,TRUE);	
+				//$this->load->view('no_data_view.php',$data,TRUE);	
 			}
 			
 			else
@@ -74,18 +74,21 @@
 				$data["start"] = $start;
 				$data["end"] = $start+$records_per_page - 1;
 				$data["total_records"] = $total_rows;
+				$data['noData'] = 0;
 				
+			}
 				$this->load->model('dashboard_model');				
 				$data_last_login = $this->dashboard_model->get_last_login_time();
 			
 				$data = array_merge($data_last_login,$data);
 				$this->load->view('message_view',$data);
 			
-			}
+			
 		}
 		
 		public function getSentMsg()
 		{
+			$this->load->model('dashboard_model');	
 			$start = 1;
 			$records_per_page = 10;
 			$total_rows = $this->message_model->num_sent_message();
@@ -93,7 +96,6 @@
 			if($total_rows == 0)
 			{
 				$data['noData'] = 1;
-				$this->load->view('no_data_view.php',$data,TRUE);	
 			}
 			
 			else
@@ -135,17 +137,19 @@
 					}
 				}
 				
-				$this->load->model('dashboard_model');	
-				$data_last_login = $this->dashboard_model->get_last_login_time();
+			
+				
 				//Load sent messages
 				$data['sent_msg'] = $this->message_model->get_sent_msg($start,$records_per_page);
 				$data["start"] = $start;
 				$data["end"] = $start+$records_per_page - 1;
 				$data["total_records"] = $total_rows;
-				
-				$data = array_merge($data_last_login,$data);
-				$this->load->view('sent_message_view',$data);
+				$data['noData'] = 0;
 			}
+			$data_last_login = $this->dashboard_model->get_last_login_time();
+			$data = array_merge($data_last_login,$data);
+			$this->load->view('sent_message_view',$data);
+			
 		}
 		
 		public function getDraftMsg()
@@ -157,7 +161,7 @@
 			if($total_rows == 0)
 			{
 				$data['noData'] = 1;
-				$this->load->view('no_data_view.php',$data,TRUE);	
+				//$this->load->view('no_data_view.php',$data,TRUE);	
 			}
 			
 			else
@@ -198,17 +202,19 @@
 						}
 					}
 				}
-				$this->load->model('dashboard_model');	
-				$data_last_login = $this->dashboard_model->get_last_login_time();
+				
 				//Load sent messages
 				$data['draft_msg'] = $this->message_model->get_draft_msg($start,$records_per_page); 
 				$data["start"] = $start;
 				$data["end"] = $start+$records_per_page - 1;
 				$data["total_records"] = $total_rows;
-				
+				$data['noData'] = 0;
+			}	
+				$this->load->model('dashboard_model');	
+				$data_last_login = $this->dashboard_model->get_last_login_time();
 				$data = array_merge($data_last_login,$data);
 				$this->load->view('draft_message_view',$data);
-			}
+			
 		}
 		public function compose()
 		{

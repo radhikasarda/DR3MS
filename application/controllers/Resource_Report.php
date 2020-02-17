@@ -84,7 +84,9 @@
 			if($total_rows == 0)
 			{
 				$data['noData'] = 1;
-				$this->load->view('no_data_view.php',$data,TRUE);	
+				$this->load->view('no_data_view.php',$data,TRUE);
+				$data_resource_report_view = $this->load->view('no_data_view.php',$data,TRUE);
+				echo $data_resource_report_view;	
 			}
 			
 			else
