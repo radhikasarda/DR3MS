@@ -100,8 +100,58 @@
 				redirect('/Dashboard');
 			}
 		}
+		
+		public function loadCitizenRegistration()
+		{
+						
+			$contact_no = $this->session->userdata('contact');	
+			log_message('info','##########contact_no '.$contact_no);
+			$this->load->library('session');			
+			$this->session->set_userdata('entrance', TRUE);
+			$user_exist = 0;
+			$user_exist = $this->check_user_exist($contact_no,$user_exist);
+			log_message('info','##########user_exist '.$user_exist);	
+			if($user_exist == 1)
+			{
+				$this->session->set_userdata('user_exist', TRUE);
+			}else
+			{
+				$this->session->set_userdata('user_exist', FALSE);
+			}
+				
+			$user_exist_session = $this->session->userdata('user_exist');
+			log_message('info','########## user_exist_session'.$user_exist_session);				
+				
+			$this->load_citizen_registration_view();					
+			
+		}
+		
+		public function loadGuestReportView()
+		{
+						
+			$contact_no = $this->session->userdata('contact');	
+			log_message('info','##########contact_no '.$contact_no);
+			$this->load->library('session');			
+			$this->session->set_userdata('entrance', TRUE);
+			$user_exist = 0;
+			$user_exist = $this->check_user_exist($contact_no,$user_exist);
+			log_message('info','##########user_exist '.$user_exist);	
+			if($user_exist == 1)
+			{
+				$this->session->set_userdata('user_exist', TRUE);
+			}else
+			{
+				$this->session->set_userdata('user_exist', FALSE);
+			}
+				
+			$user_exist_session = $this->session->userdata('user_exist');
+			log_message('info','########## user_exist_session'.$user_exist_session);				
+				
+			$this->load_guest_report_view();					
+			
+		}
 	
-		public function validateGuestLogin()
+		/*public function validateGuestLogin()
 		{
 			$otp_generated = strval($this->input->post('otp-generated'));
 			$otp_entered = strval($this->input->post('otp'));
@@ -116,27 +166,35 @@
 			
 			if($otp_entered_trim == $otp_generated_trim)
 			{
-				if(!$this->session->userdata('citizen_reg_btn_clicked'))
+							
+				$contact_no = $this->session->userdata('contact');	
+				$this->load->library('session');			
+				$this->session->set_userdata('entrance', TRUE);
+				$user_exist = 0;
+				$user_exist = $this->check_user_exist($contact_no,$user_exist);
+				
+				if($user_exist == 1)
 				{
-					log_message('info','########## setGuestEntrance');
-					$this->load->library('session');			
-					$this->session->set_userdata('entrance', TRUE); 
-					redirect('/Guest');
+					$this->session->set_userdata('user_exist', TRUE);
+				}else
+				{
+					$this->session->set_userdata('user_exist', FALSE);
 				}
-				else
+				
+				$user_exist_session = $this->session->userdata('user_exist');
+				log_message('info','########## user_exist_session'.$user_exist_session);				
+				
+
+				if($this->session->userdata('citizen_reg_btn_clicked'))
 				{
-					$contact_no = $this->session->userdata('contact');
-					$data['reg_user_info'] = $this->login_model->check_user_exist($contact_no);
+					log_message('info','########## citizen_reg_btn_clicked');
+					$this->load_citizen_registration_view();				
 					
-					$this->load->library('session');			
-					$this->session->set_userdata('entrance', TRUE);
 					
-					$this->load->model('citizen_model');					
-					$data['circles'] = $this->citizen_model->get_circles(); 		
-					
-					$data['user_exist'] = 1;
-					$this->load->view('citizen_registration_view',$data);
-					
+				}else if($this->session->userdata('guest_report_btn_clicked'))
+				{
+					log_message('info','########## report_as_guest_clicked');
+					$this->load_guest_report_view();				
 				}
 			
 			}
@@ -146,6 +204,80 @@
 				redirect($_SERVER['HTTP_REFERER']);		
 			}
 			
+		}*/
+		public function validateCitizenPreviousDetails()
+		{
+			$contact_no = $this->input->post('contact_no');	
+			$citizen_name = $this->input->post('name');	
+			$citizen_father_name = $this->input->post('father_name');	
+			
+			log_message('info','##########contact_no '.$contact_no);			
+			$user_exist = 0;
+			$user_exist = $this->login_model->validateCitizenPreviousDetails($contact_no,$citizen_name,$citizen_father_name,$user_exist);
+			log_message('info','##########user_exist '.$user_exist);	
+			if($user_exist == 1)
+			{
+				$this->session->set_userdata('contact', $contact_no); 
+			}
+			echo $user_exist;
+		}
+		
+		public function check_user_exist($contact_no,$user_exist)
+		{
+			$user_exist = $this->login_model->check_user_exist($contact_no,$user_exist);
+			return $user_exist;
+		}
+		
+		public function load_guest_report_view()
+		{
+			$user_exist = $this->session->userdata('user_exist');
+			$contact_no = $this->session->userdata('contact');				
+			if($user_exist == 1)
+			{
+				$data['reg_user_info'] = $this->login_model->get_reg_user_info($contact_no);		
+			}
+			//$data['circles'] = $this->citizen_model->get_circles(); 
+			$this->load->model('guest_model');	
+			$data['circles'] = $this->guest_model->get_circles(); 
+			$data['user_exist'] = $user_exist;			
+			$this->load->view('guest_report_view',$data);
+		}
+		
+		public function load_citizen_registration_view()
+		{
+			log_message('info','########## inside load_citizen_registration_view');
+			$this->load->model('citizen_model');	
+			$user_exist = $this->session->userdata('user_exist');
+			$contact_no = $this->session->userdata('contact');	
+			if($user_exist == 1)
+			{
+				$data['reg_user_info'] = $this->login_model->get_reg_user_info($contact_no);		
+			}
+			$data['circles'] = $this->citizen_model->get_circles(); 		
+					
+			$data['user_exist'] = $user_exist;
+					
+			$this->load->view('citizen_registration_view',$data);
+					
+		}
+		/*For citiozens who have summited the report and then registering them*/
+		public function loadCitizenRegistrationViewGuest()
+		{
+			$this->load->model('citizen_model');	
+			$contact_no = $this->session->userdata('contact');
+			$data['circles'] = $this->citizen_model->get_circles(); 		
+					
+			$data['user_exist'] = 0;
+					
+			echo $this->load->view('citizen_registration_view',$data,TRUE);
+		}
+		
+		public function updateContactNo()
+		{
+			$contact_no = $this->input->post('contact_no');	
+			log_message('info','##########contact_no '.$contact_no);
+			$result = $this->login_model->update_contact_no($contact_no);
+			echo $result;
 		}
 		public function logout()
 		{

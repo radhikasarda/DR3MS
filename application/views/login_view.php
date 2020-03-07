@@ -1,4 +1,4 @@
-<html>
+<!--<html>
 	<head>
 		<meta charset="utf-8">
 		<meta name="viewport" content="width=device-width, initial-scale=1">
@@ -111,7 +111,7 @@
 	<script type="text/javascript" src="<?php echo base_url().'assets/js/toast.js'?>"></script>
 	<!--<script src="https://cdnjs.cloudflare.com/ajax/libs/cryptojs/3.1.2/rollups/aes.js"></script> -->
 	
-	<div class ="index-view" id="index-view" >
+<!--	<div class ="index-view" id="index-view" >
 		<?php $this->load->view('guest_header_view');?>
 			<div class="login-box" id="login-box">				
 				<img src="<?php echo base_url("assets/img/avatar.png");?>" class="avatar">
@@ -152,9 +152,9 @@
 					</div>
 				</form>
 				<div style="margin-left:110px;"><p>OR</p></div></br>
-				<form role="form" name="guestloginform" id="guestloginform" action="<?php echo base_url("District/loadCitizenRegistration");?>"  method="POST" >
+				<form role="form" name="guestloginform" id="guestloginform" action="<?php echo base_url("District/onClickCitizenRegistration");?>"  method="POST" >
 					<div class = "form-group">
-						<button type="submit"  class="btn btn-primary" style="margin-left:30px;width:200px;font-size:15;">Register as a Citizen</button>
+						<button type="submit"  class="btn btn-primary" style="margin-left:30px;width:200px;font-size:15;">Citizen Registration</button>
 					</div>
 				</form>
 				<div class ="row" id ="guest-view"></div>
@@ -166,6 +166,15 @@
 			<?php if($this->session->flashdata('validationFail')){  ?>
 			iqwerty.toast.Toast("<?php echo $this->session->flashdata('validationFail'); ?>");
 			<?php } ?>
+			$(document).ready(function() {
+				//To disable enter key on submit
+			  $(window).keydown(function(event){
+				if(event.keyCode == 13) {
+				  event.preventDefault();
+				  return false;
+				}
+			  });
+			});
 			function prepareFormData(){
 					
 		
@@ -247,4 +256,4 @@
 	</div>
 	</body>
 	
-</html>
+</html>-->

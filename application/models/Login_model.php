@@ -6,6 +6,7 @@
 			// Call the Model constructor  
 			parent::__construct();  
 			$database_name = $this->session->userdata('database_name');
+			log_message('info','##########database_name '.$database_name);
 			$db = $this->load->database($database_name, TRUE);
 			$this->db=$db;
 		}  
@@ -198,7 +199,78 @@
 			$this->db->insert('audit_trail');
 		}
 		
-		public function check_user_exist($contact_no)
+		public function check_user_exist($contact_no,$user_exist)
+		{
+			$this->db->select('*');
+			$this->db->from('registered_citizens');
+			$this->db->where('contact_no', $contact_no);
+			///$this->db->join('gp', 'gp.gp_no = registered_citizens.gp_no');
+			//$this->db->join('block', 'block.b_s_no = gp.b_s_no');
+			//$this->db->join('circle', 'circle.c_s_no = block.c_s_no');
+			$query = $this->db->get();	
+			if ($query->num_rows() > 0)
+			{
+				$user_exist = 1;
+				
+			}else
+			{
+				$user_exist = 0;
+			}
+			
+			return $user_exist;
+			/*if ($query->num_rows() > 0)
+			{
+					$data['user_exist'] = 1;
+					$data['reg_user_info'] = $query->result();
+			}
+			else
+			{
+				$data['user_exist'] = 1;
+				//$this->load->library('session');			
+				//$this->session->set_userdata('entrance', TRUE); 
+				//redirect('/Citizen');
+				
+			}*/
+			
+			//return $data;
+		}
+		
+		public function validateCitizenPreviousDetails($contact_no,$citizen_name,$citizen_father_name,$user_exist)
+		{
+			$this->db->select('*');
+			$this->db->from('registered_citizens');
+			$this->db->where('contact_no', $contact_no);
+			$this->db->where('name', $citizen_name);
+			$this->db->where('father_name', $citizen_father_name);
+			///$this->db->join('gp', 'gp.gp_no = registered_citizens.gp_no');
+			//$this->db->join('block', 'block.b_s_no = gp.b_s_no');
+			//$this->db->join('circle', 'circle.c_s_no = block.c_s_no');
+			$query = $this->db->get();	
+			if ($query->num_rows() > 0)
+			{
+				$user_exist = 1;
+				
+			}else
+			{
+				$user_exist = 0;
+			}
+			
+			return $user_exist;
+			
+		}
+		public function update_contact_no($contact_no)
+		{
+			$preveious_contact = $this->session->userdata('contact'); 
+			$this->db->set('contact_no', $contact_no);			
+			$this->db->where('contact_no', $preveious_contact);
+			
+			$this->db->update('registered_citizens');	
+			$affected_rows = 0;
+			$affected_rows =  $this->db->affected_rows();
+			log_message('info','########## update_contact_no::affected_rows '.$affected_rows);
+			return $affected_rows ;
+		}
+		public function get_reg_user_info($contact_no)
 		{
 			$this->db->select('*');
 			$this->db->from('registered_citizens');
@@ -207,17 +279,8 @@
 			$this->db->join('block', 'block.b_s_no = gp.b_s_no');
 			$this->db->join('circle', 'circle.c_s_no = block.c_s_no');
 			$query = $this->db->get();	
-			if ($query->num_rows() > 0)
-			{
-					return $query->result();
-			}
-			else
-			{
-				$this->load->library('session');			
-				$this->session->set_userdata('entrance', TRUE); 
-				redirect('/Citizen');
-				
-			}
+			
+			return $query->result();
 		}
 	}  
 ?>  

@@ -8,7 +8,7 @@
 				body{
 				margin: 0;
 				padding: 0;
-				background: url(<?php echo base_url("assets/img/Login_bg.jpg");?>);
+				background: url(<?php echo base_url("assets/img/bg.jpg");?>);
 				background-size: cover;
 				background-position: center;
 				font-family: sans-serif;
@@ -41,22 +41,39 @@
 		<div id="myModal" role="dialog" class="modal fade" data-backdrop="static" data-keyboard="false">
 			
 			<div class="modal-dialog modal-lg">
-				<!-- Modal content-->
 			<div class="modal-content">
 				<div class="modal-header">
-				<!--<button type="button" class="close" data-dismiss="modal">&times;</button>-->
-					<div class="row" style="margin-left:0px;margin-top:0px;"><?php $this->load->view('guest_header_view');?></div>
+					<div class="row">
+					<div class="col-lg-1" style="background-color: #333;padding-top: 10px;padding-bottom: 5px;margin-left:1px;">
+						<img src="<?php echo base_url("assets/img/as.png");?>" style=" width:39px;"/>
+					</div>
+					<div class="col-lg-10">
+						<div class ="row" style="margin-right:0px;">
+							<div class="col-sm-12" style ="background-color: #333;padding-top: 5px;padding-bottom: 0px;color: #FFDF00;" >
+								<h1 style ="margin: 0;text-align: center;font-size: 22px;">ASSAM STATE DISASTER MANAGEMENT AUTHORITY</h1>
+							</div>
+						</div>
+						<div class ="row" style="margin-right:0px;">
+							<div class="col-sm-12" style ="background-color: #333;padding-top: 5px;padding-bottom: 16px;color: white;" >
+								<h1 style ="margin: 0;text-align: center;font-size: 17px;">DISASTER RISK REDUCTION, REPORTING AND RESOURCE MANAGEMENT SYSTEM</h1>
+							</div>
+						</div>
+					</div>
+					<div class="col-lg-1" style="background-color: #333;padding-top: 10px;padding-bottom: 5px;margin-left:-15px;padding-right:73px;">
+						<img src="<?php echo base_url("assets/img/asdma.jpg");?>" style=" width:53px;"/>
+					</div>
+					</div>
 					
 				</div>
 				<div class="modal-body" >					
 					<div class="row" style="text-align:center;">
 					<div class="container" style="display: inline-block;">
-						<div class="col-sm-1" >							
+						<div class="col-lg-1" >							
 						</div>
-						<div class="col-sm-2" >
+						<div class="col-lg-2" >
 							 <h4>Select District :</h4>
 						</div>
-						<div class="col-sm-2">
+						<div class="col-lg-2">
 							<div class = "select-district">						
 								<select name = "districts" id="districts" style="background:#FFF;">
 									<option selected="selected" value = "select">Choose one</option>
@@ -72,9 +89,9 @@
 								</select>
 							</div>
 						</div>
-						<div class="col-sm-1" >							
+						<div class="col-lg-1" >							
 						</div>
-						<div class="col-sm-1">
+						<div class="col-lg-1">
 						<button type="button" class="btn btn-success" onClick="return getSelelctedDistrict()">SUBMIT</button>
 						</div>
 					</div>

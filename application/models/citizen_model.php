@@ -15,8 +15,6 @@
 			public function get_circles()	 
 			{
 				log_message('info','##########INSIDE citizen_model get_circles FUNC::');
-				//$query = $this->db->select('*')-> get('circle');
-				//return $query;
 				$this->db->select('circle_name');
 				$this->db->from('circle');
 				$query = $this->db->get();
@@ -27,13 +25,6 @@
 			public function get_blocks($selected_circle)	
 			{
 				log_message('info','##########INSIDE get_blocks FUNC::selected_circle '.$selected_circle);
-				/*$query = $this->db->query("SELECT b.block as block FROM block b join circle c ON b.c_s_no=c.c_s_no WHERE c.circle_name LIKE '$selected_circle';");
-				$output = '<option value="Select">Select Block</option>';
-				foreach($query->result() as $row)
-				{
-				  $output .= '<option value="'.$row->block.'">'.$row->block.'</option>';
-				}
-				return $output;	 */ 	
 				$query = $this->db->query("SELECT b.block as block FROM block b join circle c ON b.c_s_no=c.c_s_no WHERE c.circle_name LIKE '$selected_circle';");
 				return $query->result_array();
 			}	
@@ -41,25 +32,16 @@
 			
 			public function get_gp($selected_block)
 			{
-				/*$query = $this->db->query("SELECT g.gp_name as gp FROM gp g join block b ON g.b_s_no=b.b_s_no WHERE b.block LIKE '$selected_block';");
-				$output = '<option value="Select">Select GP</option>';
-				foreach($query->result() as $row)
-				{
-				  $output .= '<option value="'.$row->gp.'">'.$row->gp.'</option>';
-				}
-				return $output;	*/
-
 				$query = $this->db->query("SELECT g.gp_name as gp FROM gp g join block b ON g.b_s_no=b.b_s_no WHERE b.block LIKE '$selected_block';");
-				return $query->result_array();
-				
+				return $query->result_array();				
 			}
 			
 			public function register_citizen()
 			{
 				//add citizen details to database
-				$insert_id = $this->insert_citizen_details();
-				log_message('info','##########INSIDE insert_citizen_details FUNC::insert_id:: '.$insert_id);				
-				return $insert_id;
+				$affected_rows = $this->insert_citizen_details();
+				log_message('info','##########INSIDE insert_citizen_details FUNC::affected_rows:: '.$affected_rows);				
+				return $affected_rows;
 			}
 			
 			public function insert_citizen_details()
@@ -89,10 +71,10 @@
 				);
 
 				$this->db->insert('registered_citizens', $data);
-
-				$insert_id = $this->db->insert_id();
-			
-				return $insert_id;
+				$rows = 0;
+				$rows =  $this->db->affected_rows();
+				log_message('info','##########rows:: '.$rows);
+				return $rows;
 				
 			}
 			public function get_gp_no($gp_name)
@@ -102,6 +84,37 @@
 				$this->db->where('gp_name', $gp_name);
 				$query = $this->db->get();	
 				return $query->row()->gp_no;
+			}
+			
+			public function update_citizen()
+			{
+				$citizen_id = $this->input->post('citizen_id');	
+				$circle_name = $this->input->post('selected_circle');	
+				$block_name = $this->input->post('selected_block');
+				$gp_name = $this->input->post('selected_gp');
+				$name = $this->input->post('name');
+				$name_of_father = $this->input->post('name_of_father');
+				log_message('info','##########INSIDE update_citizen FUNC::name:: '.$name);
+				$contact = $this->input->post('contact');
+				$village = $this->input->post('village');
+				$area = $this->input->post('area');
+				$email = $this->input->post('email');
+				log_message('info','##########INSIDE update_citizen FUNC::email:: '.$email);
+				$gp_no = $this->get_gp_no($gp_name);
+				
+				$this->db->set('gp_no', $gp_no);
+				$this->db->set('name', $name);
+				$this->db->set('father_name', $name_of_father);
+				$this->db->set('village_name', $village);
+				$this->db->set('area_locality_street', $area);
+				$this->db->set('email_id', $email);				
+				$this->db->where('citizen_id', $citizen_id);
+				$this->db->update('registered_citizens');
+
+				$affected_rows = 0;
+				$affected_rows =  $this->db->affected_rows();
+				log_message('info','########## update_citizen::affected_rows '.$affected_rows);
+				return $affected_rows ;
 			}
 		}
 ?>

@@ -36,15 +36,6 @@
 		//For filling combobox
 		public function get_blocks()
 		{
-			/*$circle_id = $this->input->post('circle_id');
-			log_message('info','##########INSIDE get_blocks FUNC::CIRCLE ID'.$circle_id);
-			if($this->input->post('circle_id'))
-			{
-				log_message('info','##########INSIDE get_blocks FUNC::');
-				$selected_circle = $this->input->post('circle_id');			
-				echo $this->citizen_model->get_blocks($selected_circle);
-			}
-			*/
 			$json = array();
 			$selected_circle = $this->input->post('circleID');
 			log_message('info','##########INSIDE get_blocks FUNC::CIRCLE ID'.$selected_circle);
@@ -56,12 +47,6 @@
 		//For filling combobox
 		public function get_gp()
 		{	
-			/*if($this->input->post('block_id'))
-			{
-				log_message('info','##########INSIDE get_gp FUNC::');
-				$selected_block = $this->input->post('block_id');
-				echo $this->citizen_model->get_gp($selected_block);
-			}*/
 			$json = array();
 			$selected_block = $this->input->post('blockID');
 			log_message('info','##########INSIDE get_blocks FUNC::BLOCK ID'.$selected_block);
@@ -72,14 +57,16 @@
 		
 		public function register_citizen()
 		{
-				$result = $this->citizen_model->register_citizen();
-				if($result != 0)
-				{
-				session_destroy();
-				}
-				echo $result;
+			$result = $this->citizen_model->register_citizen();				
+			echo $result;
 		}
 		
+		
+		public function update_citizen_details()
+		{
+			$result = $this->citizen_model->update_citizen();
+			echo $result;
+		}
 		public function logout()
 		{
 			log_message('info','########## INSIDE logout');
