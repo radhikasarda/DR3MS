@@ -252,6 +252,7 @@
 			{
 				$incident_id = $this->input->post('incident_id');
 				$request_from_incident = $this->input->post('request_from_incident');
+				$request_from_guest = $this->input->post('request_from_guest');
 				$query = $this->db->query("SELECT * from incident_report where incident_id = '$incident_id'");
 				
 				$gp_no = $query->row()->gp_no;				
@@ -312,7 +313,8 @@
 								'image_1_path' => $image_1_path,
 								'image_2_path' => $image_2_path,
 								'image_3_path' => $image_3_path,
-								'request_from_incident' => $request_from_incident
+								'request_from_incident' => $request_from_incident,
+								'request_from_guest' => $request_from_guest
 								);
 								$data_incident_details_list[$i]  = $list;
 				

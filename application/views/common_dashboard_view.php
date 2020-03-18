@@ -53,11 +53,11 @@
 			}	
 
 			.process-step .btn:focus{outline:none}
-			.process{display:table;width:100%;position:relative; background:#f2f2f2;padding:15px;border-radius:10px;}
+			.process{display:table;width:99%;position:relative; background:#f2f2f2;padding:15px;border-radius:10px;padding-right:0px}
 			.process-row{display:table-row}
 			.process-step button[disabled]{opacity:1 !important;filter: alpha(opacity=100) !important}
-			.process-row:before{top:40px;bottom:0;position:absolute;content:" ";width:100%;height:1px;background-color:#ccc;z-order:0}	
-			.process-step{display:table-cell;text-align:center;position:relative}
+			.process-row:before{top:40px;bottom:0;position:absolute;content:" ";width:99%;height:1px;background-color:#ccc;z-order:0}	
+			.process-step{display:table-cell;text-align:center;position:relative;width:20%}
 			.process-step p{margin-top:4px}
 			.btn-circle{width:70px;height:70px;text-align:center;font-size:25px;border-radius:50%}
 				
@@ -80,7 +80,7 @@
 			
 	</style>
 	</head>	
-	<body style="overflow-x:auto;overflow-y:auto;width:100%;">
+	<body>
 		<script src="<?php echo base_url().'assets/js/jquery-3.3.1.min.js'?>"></script>
 		<script src="<?php echo base_url().'assets/js/jquery.min.js'?>"></script>
 		<script type="text/javascript" src="<?php echo base_url().'assets/js/jquery-3.3.1.js'?>"></script>
@@ -88,40 +88,48 @@
 		<script src="<?php echo base_url('assets/js/aes.js');?> "></script>
 		<script type="text/javascript" src="<?php echo base_url().'assets/js/Chart.js'?>"></script>				
 		<script type="text/javascript" src="<?php echo base_url().'assets/js/toast.js'?>"></script>		
-		<div class="row">
-				<?php $this->load->view('dr3ms_header_view');?>		
-		</div>
-		<div class="row">
-			<div class="col-lg-12">
-				<div class ="row" >				
-					<div class="process">
-						<div class="process-row nav nav-tabs">
-							<div class="process-step">
-								<button type="button" class="btn btn-info btn-circle"  onClick="return onClickDashboard();"><i class="glyphicon glyphicon-dashboard"></i></button>
-								<p><b>DASHBOARD</b></p>
-							</div>
-							<div class="process-step">
-								<button type="button" class="btn btn-default btn-circle" onClick="return onClickLogin();"><i class="glyphicon glyphicon-log-in"></i></button>
-								<p><b>LOGIN</b></p>
-							</div>
-							<div class="process-step">
-								<button type="button" class="btn btn-default btn-circle" onClick="return onClickRegister();"><i class="glyphicon glyphicon-user"></i></button>
-								<p><b>REGISTER</b></p>
-							</div>
-							<div class="process-step">
-								<button type="button" class="btn btn-default btn-circle" onClick="return onClickReport();"><i class="glyphicon glyphicon-pencil"></i></button>
-								<p><b>REPORT AN INCIDENT</b></p>
-							</div>							
-						</div>
-					</div>
-				</div>
-			</div>
-		</div>			
+		
 		<div class="page-wrapper">
+		
             <!-- ============================================================== -->
             <!-- Container fluid  -->
             <!-- ============================================================== -->
             <div class="container-fluid">
+				<div class="row" >
+					<?php $this->load->view('dr3ms_header_view');?>		
+				</div>
+				<div class="row">
+					<div class="col-lg-12">
+						<div class ="row">	
+							<div class="process" style="width:100%;">
+								<div class="process-row nav nav-tabs">
+									<div class="process-step">
+										<button type="button" class="btn btn-info btn-circle"  onClick="return onClickDashboard();"><i class="glyphicon glyphicon-dashboard"></i></button>
+										<p><b>DASHBOARD</b></p>
+									</div>
+									<div class="process-step">
+										<button type="button" class="btn btn-default btn-circle" onClick="return onClickLogin();"><i class="glyphicon glyphicon-log-in"></i></button>
+										<p><b>LOGIN</b></p>
+									</div>
+									<div class="process-step">
+										<button type="button" class="btn btn-default btn-circle" onClick="return onClickRegister();"><i class="glyphicon glyphicon-user"></i></button>
+										<p><b>REGISTER</b></p>
+									</div>
+									<div class="process-step">
+										<button type="button" class="btn btn-default btn-circle" onClick="return onClickReport();"><i class="glyphicon glyphicon-pencil"></i></button>
+										<p><b>REPORT</b></p>
+									</div>
+									<div class="process-step">
+										<form  method="POST" action="<?php echo base_url();?>">
+										<button type="submit" class="btn btn-default btn-circle"><i class="glyphicon glyphicon-map-marker"></i></button>
+										<p><b>CHANGE DISTRICT</b></p>
+										</form>
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>		
 				<div class="row page-titles">
                     <div class="col-md-5 col-12 align-self-center">
                         <h4><font color="black"><b>Selected District :&nbsp;<?php echo strtoupper($selected_district);?></b></font></h4>
@@ -132,11 +140,12 @@
                     <div class="col-lg-3">
                         <div class="card" style="background-color: #FF0000!important;">
                             <div class="card-body">
-                                <div class="d-flex no-block">
+                                <div class="d-flex no-block incidents-reported">
 									<div class="mr-3 align-self-center"><img src="<?php echo base_url("assets/img/incident.png");?>" alt="Incident" style="height: 90px;" ></div>
                                     <div class="align-self-center">
                                         <h3><b><font color="white">Incidents Reported</font></b></h3>
                                         <h2><?php echo $total_incidents; ?></h2></div>
+										<a href="<?php echo base_url("Common_Dashboard/viewIncidents");?>"></a>
                                 </div>
                             </div>
                         </div>
@@ -144,10 +153,10 @@
                     <div class="col-lg-3">
                         <div class="card" style="background-color: #7460ee!important;">
                             <div class="card-body">
-                                <div class="d-flex no-block">  
+                                <div class="d-flex no-block assets">  
 									<div class="mr-3 align-self-center"><img src="<?php echo base_url("assets/img/incident.png");?>" alt="Incident" style="height: 90px;" ></div>
                                     <div class="align-self-center">
-                                          <h3><b><font color="white">Total Assets</font></b></h3>
+                                          <h3><b><font color="white">Assets</font></b></h3>
 										  <?php foreach((array)$total_assets as $total_assets){
 												if($total_assets->no_of_assets == 0)
 												{
@@ -159,6 +168,7 @@
 										}
 											  ?>
 										  <h2><?=$assets;?></h2>
+										  <a href="<?php echo base_url("Common_Dashboard/viewAssetsReport");?>"></a>
 									</div>											
                                 </div>
                             </div>
@@ -167,10 +177,10 @@
                     <div class="col-lg-3">
                         <div class="card" style="background-color: #FFB700!important;">
                             <div class="card-body">
-                                <div class="d-flex no-block">    
+                                <div class="d-flex no-block health-centres">    
 									<div class="mr-3 align-self-center"><img src="<?php echo base_url("assets/img/incident.png");?>" alt="Incident" style="height: 90px;" ></div>
                                     <div class="align-self-center">
-                                          <h3><b><font color="black">Total Health Centres</font></b></h3>
+                                          <h3><b><font color="black">Health Centres</font></b></h3>
                                           <?php foreach((array)$total_health_centres as $total_health_centres){											  											  
 											  if($total_health_centres->no_of_health_centre == 0)
 												{
@@ -182,6 +192,7 @@
 										  }
 											  ?>
 										  <h2><?=$health_centres;?></h2>
+										   <a href="<?php echo base_url("Common_Dashboard/viewHealthCentresReport");?>"></a>
 									</div>	
                                 </div>
                             </div>
@@ -190,10 +201,10 @@
                     <div class="col-lg-3">
                         <div class="card" style="background-color: #06d79c!important;">
                             <div class="card-body">
-                                <div class="d-flex no-block">
+                                <div class="d-flex no-block institutions">
                                     <div class="mr-3 align-self-center"><img src="<?php echo base_url("assets/img/incident.png");?>" alt="Incident" style="height: 90px;" ></div>
                                     <div class="align-self-center">
-											<h3><b><font color="black">Total Institutions</font></b></h3>
+											<h3><b><font color="black">Institutions</font></b></h3>
                                           <?php foreach((array)$total_institutions as $total_institutions){
 											   if($total_institutions->no_of_institution == 0)
 												{
@@ -206,6 +217,7 @@
 											  
 											  ?>
 										  <h2><?=$institutions;?></h2></div>
+										  <a href="<?php echo base_url("Common_Dashboard/viewInstitutionsReport");?>"></a>
                                 </div>
                             </div>
                         </div>
@@ -279,19 +291,15 @@
                             <div class="card-body">
                                <div id="register-form">	
 																
-								<form role="form" name="registerForm" id="registerForm"  action="<?php echo base_url("login/loadCitizenRegistration");?>"  method="POST" style="padding:10px 15px 10px 15px;">											
+								<form role="form" name="registerForm" id="registerForm"  action="<?php echo base_url("Common_Dashboard/loadCitizenRegistration");?>"  method="POST" style="padding:10px 15px 10px 15px;">											
 									<h1>Register Here !!</h1>
 									<div class = "form-group" id="input-mobile-no">
 									<p>Enter Mobile No.:<i> [Only 10 digits accepted]</i></font></p>			
 									<input type="number" class="form-control" name="contact_no" placeholder="Enter Mobile No." id="contact_no" onkeypress="return isNumberKey(event)"  min="1111111111" max="9999999999" value="">			
 									</div>
-								
-									<div class = "form-group" name="view-otp" id="view-otp" style="display:none;" >	
-									<input type="text" class="form-control" name="otp-generated" id="otp-generated" readonly>	
-									</div>
-									
+							
 									<div class = "form-group" id="enter-otp" style="display:none;">
-									<p>Enter OTP:</p>	
+									<p>Enter OTP:<div class = "form-group" name="view-otp" id="view-otp" style="display:none;" ></div></p>
 									<input type="text" class="form-control" name="otp" id="otp">		
 									</div>
 									<br>
@@ -299,7 +307,7 @@
 									<button type="button"  class="btn btn-primary btn-block"  onClick = "return validateMobileNoRegisterForm();">GET OTP</button>
 									</div>
 									<div class = "form-group" id="btn-submit-otp" style="display:none;">
-									<button type="button"  class="btn btn-primary btn-block"  onClick = "return submitOtpRegisterForm()();" >SUBMIT OTP</button>
+									<button type="button"  class="btn btn-primary btn-block"  onClick = "return submitOtpRegisterForm();" >SUBMIT OTP</button>
 									</div>	
 
 									<div class = "form-group" id="change-mobile-number">
@@ -323,19 +331,14 @@
                             <div class="card-body">
                                <div id="guest-form">	
 									
-								<form role="form" name="guestLoginForm" id="guestLoginForm"  action="<?php echo base_url("login/loadGuestReportView");?>"  method="POST" style="padding:10px 15px 10px 15px;">
+								<form role="form" name="guestLoginForm" id="guestLoginForm"  action="<?php echo base_url("Common_Dashboard/loadGuestReportView");?>"  method="POST" style="padding:10px 15px 10px 15px;">
 									<h1>Enter Details !!</h1>
 								<div class = "form-group" id="input-mobile-no-guest">
 								<p>Enter Mobile No.:<i> [Only 10 digits accepted]</i></p>			
 								<input type="number" class="form-control" name="contact_no_guest" placeholder="Enter Mobile No." id="contact_no_guest" onkeypress="return isNumberKey(event)"  min="1111111111" max="9999999999" value="">			
 								</div>
-							
-								<div class = "form-group" name="view-otp-guest" id="view-otp-guest" style="display:none;" >	
-								<input type="text" class="form-control" name="otp-generated-guest" id="otp-generated-guest" readonly>	
-								</div>
-								
 								<div class = "form-group" id="enter-otp-guest" style="display:none;">
-								<p>Enter OTP:</p>	
+								<p>Enter OTP:<div class = "form-group" name="view-otp-guest" id="view-otp-guest" style="display:none;" ></div></p>	
 								<input type="text" class="form-control" name="otp-guest" id="otp-guest">		
 								</div>
 								<br>
@@ -364,7 +367,7 @@
                             <div class="card-body">
                                <div id="guest-form">	
 									
-								<form role="form" name="updateContactForm" id="updateContactForm"  action="<?php echo base_url("login/updateContact");?>"  method="POST" style="padding:10px 15px 10px 15px;">
+								<form role="form" name="updateContactForm" id="updateContactForm"  method="POST" style="padding:10px 15px 10px 15px;">
 								<h1>Enter Details !!</h1>
 								<div class = "form-group" id="input-mobile-no-previous">
 								<p>Enter Previous Mobile No.:</p>			
@@ -373,12 +376,12 @@
 								
 								<div class = "form-group" id="citizen-name">
 								<p>Enter Your Name:</p>	
-								<input type="text" class="form-control" name="citizen_name" id="citizen_name">		
+								<input type="text" class="form-control" name="citizen_name" id="citizen_name" placeholder="Enter Your Name">		
 								</div>
 								
 								<div class = "form-group" id="citizen-father-name">
 								<p>Enter Your Father's Name:</p>	
-								<input type="text" class="form-control" name="citizen_father_name" id="citizen_father_name">		
+								<input type="text" class="form-control" name="citizen_father_name" id="citizen_father_name" placeholder="Enter Your Father's Name">		
 								</div>
 								<div class = "form-group" id="enter-new-contact" style="display:none;">
 								<p>Enter New Number:</p>	
@@ -386,8 +389,13 @@
 								</div>
 								<br>
 								<div class = "form-group" id="btn-next">
-								<button type="button"  class="btn btn-primary btn-block"  onClick = "return validateCitizenPreviousDetails();">NEXT</button>
+								<button type="button"  class="btn btn-success btn-block"  onClick = "return validateCitizenPreviousDetails();">NEXT</button>
 								</div>
+								
+								<div class = "form-group" id="btn-back">
+								<button type="button"  class="btn btn-primary btn-block"  onClick = "return onClickRegister();">BACK</button>
+								</div>
+								
 								<div class = "form-group" id="btn-submit-new-contact" style="display:none;">
 								<button type="button"  class="btn btn-primary btn-block"  onClick = "return validateNewMobileNo();">UPDATE</button>
 								</div>								
@@ -516,6 +524,7 @@
 		$("#enter-new-contact").hide();
 		$("#input-mobile-no-previous").show();
 		$("#btn-next").show();
+		$("#btn-back").show();
 	}
 	function onClickDashboard()
 	{
@@ -623,7 +632,7 @@
 			}
 			else{
 				$.ajax({
-											url:"<?php echo site_url('Login/generateOtp');?>",
+											url:"<?php echo site_url('Common_Dashboard/generateOtp');?>",
 											method:"POST",
 											data:{contact_no:contact_no},
 											type: "POST",
@@ -634,8 +643,8 @@
 												$("#btn-submit-otp").show();
  												$("#enter-otp").show();
 												$("#view-otp").show(); 
-												document.getElementById('otp-generated').value = data;
-												
+												//document.getElementById('otp-generated').value = data;
+												document.getElementById('view-otp').innerHTML = data;
 											}
 
 				});
@@ -647,7 +656,7 @@
 		function submitOtpRegisterForm()
 		{
 			var submitted_otp = document.getElementById('otp').value;
-			var generated_otp = document.getElementById('otp-generated').value;
+			var generated_otp = document.getElementById('view-otp').innerHTML;
 			
 			if(submitted_otp == "")
 			{
@@ -692,7 +701,7 @@
 			}
 			else{
 				$.ajax({
-											url:"<?php echo site_url('Login/generateOtp');?>",
+											url:"<?php echo site_url('Common_Dashboard/generateOtp');?>",
 											method:"POST",
 											data:{contact_no:contact_no_guest},
 											type: "POST",
@@ -703,7 +712,7 @@
 												$("#btn-submit-otp-guest").show();
  												$("#enter-otp-guest").show();
 												$("#view-otp-guest").show(); 
-												document.getElementById('otp-generated-guest').value = data;
+												document.getElementById('view-otp-guest').innerHTML = data;
 												
 											}
 
@@ -716,7 +725,7 @@
 		function submitOtpGuestLoginForm()
 		{
 			var submitted_otp = document.getElementById('otp-guest').value;
-			var generated_otp = document.getElementById('otp-generated-guest').value;
+			var generated_otp = document.getElementById('view-otp-guest').innerHTML;
 			
 			if(submitted_otp == "")
 			{
@@ -764,7 +773,7 @@
 			}
 			else{
 				$.ajax({
-											url:"<?php echo site_url('Login/validateCitizenPreviousDetails');?>",
+											url:"<?php echo site_url('Common_Dashboard/validateCitizenPreviousDetails');?>",
 											method:"POST",
 											data:{contact_no:contact_no_previous,name:citizen_name,father_name:citizen_father_name},
 											type: "POST",
@@ -774,6 +783,7 @@
 												{
 													$("#input-mobile-no-previous").hide(); 
 													$("#btn-next").hide();
+													$("#btn-back").hide();
 													$("#citizen-name").hide();	
 													$("#citizen-father-name").hide();													
 													$("#btn-submit-new-contact").show();
@@ -811,7 +821,7 @@
 			
 			else {
 				$.ajax({
-											url:"<?php echo site_url('Login/updateContactNo');?>",
+											url:"<?php echo site_url('Common_Dashboard/updateContactNo');?>",
 											method:"POST",
 											data:{contact_no:contact_no_new},
 											type: "POST",
@@ -826,8 +836,8 @@
 													}
 													else
 													{
-														iqwerty.toast.Toast('Internal server error ...Please TRY again!!');
-														return;
+														iqwerty.toast.Toast('Updation Failed :: Probable reasons - 1. No fields changed by the User OR 2. Internal Server Error');
+														onClickRegister();
 													}
 												
 											}
@@ -919,8 +929,28 @@
 					document.getElementById('loginform').submit();
 					return true;
 			}
+			$(".incidents-reported").click(function() {
+				 window.location = $(this).find("a").attr("href"); 
+				return false;
+			});
+			$(".assets").click(function() {
+				 window.location = $(this).find("a").attr("href"); 
+				return false;
+			});
+			$(".health-centres").click(function() {
+				 window.location = $(this).find("a").attr("href"); 
+				return false;
+			});
 			
+			$(".institutions").click(function() {
+				 window.location = $(this).find("a").attr("href"); 
+				return false;
+			});
 			
+			<?php if($this->session->flashdata('validationFailed')){  ?>
+			onClickLogin();
+			iqwerty.toast.Toast("<?php echo $this->session->flashdata('validationFailed'); ?>");
+			<?php } ?>
 			</script>
 			
 </html>

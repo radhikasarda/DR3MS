@@ -7,16 +7,12 @@
 		$total_gp = $total_gp;
 		$no_gp_per_page = $no_gp_per_page;
 		$selected_district = $this->session->userdata('selected_district');
-		//$no_gp_current_page = $no_gp_current_page;
-		//if($total_records <= $end)
-		//{
-		//	$end = $total_records;
-		//}
 		if($total_gp <= $end)
 		{
 			$end = $total_gp;
 		}
 		$blank = "0";
+		
 ?>		
 <div class="col-md-12">
 		<div class="row">
@@ -27,6 +23,7 @@
 			<input type="button" class="button" value="Next >>" style="margin-top:10px;position: absolute; right: 0;background-color: #FFB700;border: none; padding: 5px 20px;font-weight:bold;" onclick="return GetNextData(<?php echo $end+1 .",".$start ?>);">
 			<br>
 		</div>
+		
 			<table  class="table table-striped table-bordered" id="report-table">									
 				<thead style="background-color: black;color: white;">				
 				<tr>
@@ -39,7 +36,8 @@
 				</tr>
 				<tbody style ='cursor:pointer;'>
 				<?php
-						foreach ($data_resource_report as $row): 
+					foreach ($data_resource_report as $row): 
+						
 					?>
 					<tr>
 					<?php if(is_null($row['circle_name'])){ ?>

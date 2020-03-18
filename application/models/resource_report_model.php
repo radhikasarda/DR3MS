@@ -102,7 +102,7 @@
 			}
 			log_message('info','##########INSIDE GET REPORT DATA:: selected_gp '.$selected_gp);
 			$selected_resource = $this->input->post('resource_id');
-
+			log_message('info','##########INSIDE GET REPORT DATA:: selected_resource '.$selected_resource);
 				$query = $this->get_gp_details($c_s_no,$b_s_no,$gp_no,$limit_start,$offset);
 				$gp_details = $query->result();
 				$gp_num_rows = $query->num_rows();

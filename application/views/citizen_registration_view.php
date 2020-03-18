@@ -57,12 +57,10 @@
 					$email_id = '';
 			}
 		?>
-		<div class = "row" style="margin-top:30px;">
-		<div class = "col-sm-2">
-		</div>
-		<div class = "col-sm-8">
+		<div class = "row">
+		<div class = "col-sm-10">
 			<div class="guest-incident-report">
-				<div class="container">
+				<div class="container" style="margin-top:50px;">
 					<form class="well form-horizontal" id="citizen_registration_form">
 						<fieldset>
 						<?php 
@@ -171,7 +169,7 @@
 								<?php 
 									} ?>								
 								</form>
-								<form action="<?php echo base_url("Login/load_guest_report_view");?>" method="POST" >
+								<form action="<?php echo base_url("Common_Dashboard/load_guest_report_view");?>" method="POST" >
 								<div  class="report-incident-btn-div"  id="report-incident-btn-div" style="display:none;">
 									<div class="form-group">
 									  <label class="col-md-4 control-label"></label>
@@ -397,7 +395,7 @@
 														iqwerty.toast.Toast('Data Updated Successfully !!');
 													}else
 													{
-														iqwerty.toast.Toast('Internal server error ...Please TRY again!!');
+														iqwerty.toast.Toast('Updation Failed :: Probable reasons - 1. No fields changed by the User OR 2. Internal Server Error');
 														return;
 													}
 												

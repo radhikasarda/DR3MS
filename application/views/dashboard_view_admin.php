@@ -51,10 +51,26 @@
 		<script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-select/1.12.2/js/bootstrap-select.min.js"></script>
 		<script type="text/javascript" src="<?php echo base_url().'assets/js/Chart.js'?>"></script>				
 		<script type="text/javascript" src="<?php echo base_url().'assets/js/toast.js'?>"></script>
-		
-		<div class= "header-container" id = "header-container" >
-			<div class = "header">
-				<?php $this->load->view('header_view');?>
+		<div class="row">
+				<?php $this->load->view('dr3ms_header_view');?>		
+		</div>
+		<div class = "row" style="margin-right:0px;">
+			<div class = "col-sm-6" style = "text-align: left; background-color: #FFB700;height: 25px;">
+				<i class="glyphicon glyphicon-user"></i>
+					<font color="#000000" size="4">
+						"You are logged in as : <?php echo $this->session->userdata('userid'); ?>" 
+						&ensp;
+						<i class="glyphicon glyphicon-bell" aria-hidden="true"></i>
+						Last Login Time : 	
+						<?php foreach((array)$last_login as $last_login){	 
+							 echo $last_login->last_login_time;
+						}?>
+					</font>					
+			</div>
+			<div class = "col-sm-6" style = "text-align: right;  height: 25px;background-color: #FFB700;">
+				<form action="<?php echo base_url("login/logout");?>">				
+					<input type="submit" class="logoutbutton" value="LOGOUT">
+				</form>
 			</div>
 		</div>
 		<div id="navbar-view">
@@ -81,6 +97,56 @@
 							</canvas>
 						</div>
 						<div class="col-md-6" style="border:solid black;height:500px;overflow-x:auto;overflow-y:auto;">
+							<h4 style="text-align:center;"><b><u>Recent Incidents</u></b></h4>	
+							<h4><font color="red">Click on Rows for Details !!</font></h4> 
+							<table class="table table-bordered table-hover"  id="all-incidents-table">	
+								<thead style="background-color:black;color:white;">													
+									<tr>
+										<th style="display:none;"><strong>INCIDENT ID</strong></th>
+										<th><strong>INCIDENT DATE</strong></th>
+										<th><strong>INCIDENT TIME</strong></th>
+										<th><strong>LOCATION</strong></th>
+										<th><strong>SUBJECT</strong></th>
+									</tr> 
+								</thead>
+								<tbody>	
+									<?php foreach($incident as $incident):?>
+										<tr>
+											<td class= "incident_id" name ="incident_id" id ="incident_id" style="display:none;"><?=$incident->incident_id;?></td>
+											<td class ="incident_date"><?=$incident->incident_date;?></td>
+											<td class ="incident_time"><?=$incident->incident_time;?></td>
+											<td class ="location"><?=$incident->location_village_name;?></td>
+											<td class ="subject"><?=$incident->subject;?></td>
+										</tr>
+									<?php endforeach; ?>
+								</tbody>
+							</table>
+						</div>
+					</div>
+					<div class ="row" style="border:solid black;">
+						<div class="col-md-6" style="border:solid black;height:500px;overflow-x:auto;overflow-y:auto;">
+							<h4 style="text-align:center;"><b><u>INBOX</u></b></h4>
+							<h4><font color="red">Click on Rows for Details !!</font></h4> 
+							<table class="table table-bordered table-hover"  id="all-messages-table">	
+								<thead style="background-color:black;color:white;">													
+									<tr>
+										<th style="display:none;"><strong>MSG ID</strong></th>
+										<th><strong>FROM</strong></th>
+										<th><strong>SUBJECT</strong></th>
+									</tr> 
+								</thead>
+								<tbody>
+									<?php  foreach((array)$user_msg as $user_msg){?>	
+										<tr>
+											<td class= "msg_id" name ="msg_id" id ="msg_id"  style="display:none;"><?=$user_msg->message_id;?></td>	
+											<td class= "msg_from"><?=$user_msg->msg_from;?></td>
+											<td class= "subject" ><?=$user_msg->subject;?></td>								
+										</tr>
+									<?php }?>
+								</tbody>
+							</table>	
+						</div>
+						<div class="col-md-6" style="border:solid black;height:500px;overflow-x:auto;overflow-y:auto;">
 							<h4 style="text-align:center;"><b><u>No. Of Resources In Each Circle</u></b></h4>			
 							<h4><font color="red">Click on Rows for Details !!</font></h4>     
 							<table class="table table-bordered table-hover"  id="all-resources-table" style="height:407px;">		
@@ -88,7 +154,7 @@
 									<tr>
 										<th><strong>Circle</strong></th>
 											<?php $user=$this->session->userdata('userid');
-												if ($user == "Admin" ||$user == "DC" || $user == "ADC" || $user == "NDRF"){ 
+												if ($user == "Admin" ||$user == "DC" || $user == "ADC" || $user == "NDRF" || $user == "DDMA Monitoring" || $user == "Police Monitoring" || $user == "Health Monitoring"){ 
 													foreach((array)$circle_info as $circle_info){?>
 														<th><strong><?=$circle_info->circle_name;?></strong></th>
 												<?php }																														
@@ -140,56 +206,6 @@
 										<td><?=$inaccessible_info->no_of_inaccessible_area;?></td>
 											<?php }?> 
 									</tr>
-								</tbody>
-							</table>
-						</div>
-					</div>
-					<div class ="row" style="border:solid black;">
-						<div class="col-md-6" style="border:solid black;height:370px;overflow-x:auto;overflow-y:auto;">
-							<h4 style="text-align:center;"><b><u>INBOX</u></b></h4>
-							<h4><font color="red">Click on Rows for Details !!</font></h4> 
-							<table class="table table-bordered table-hover"  id="all-messages-table">	
-								<thead style="background-color:black;color:white;">													
-									<tr>
-										<th style="display:none;"><strong>MSG ID</strong></th>
-										<th><strong>FROM</strong></th>
-										<th><strong>SUBJECT</strong></th>
-									</tr> 
-								</thead>
-								<tbody>
-									<?php  foreach((array)$user_msg as $user_msg){?>	
-										<tr>
-											<td class= "msg_id" name ="msg_id" id ="msg_id"  style="display:none;"><?=$user_msg->message_id;?></td>	
-											<td class= "msg_from"><?=$user_msg->msg_from;?></td>
-											<td class= "subject" ><?=$user_msg->subject;?></td>								
-										</tr>
-									<?php }?>
-								</tbody>
-							</table>	
-						</div>
-						<div class="col-md-6" style="border:solid black;height:370px;overflow-x:auto;overflow-y:auto;">
-							<h4 style="text-align:center;"><b><u>Recent Incidents</u></b></h4>	
-							<h4><font color="red">Click on Rows for Details !!</font></h4> 
-							<table class="table table-bordered table-hover"  id="all-incidents-table">	
-								<thead style="background-color:black;color:white;">													
-									<tr>
-										<th style="display:none;"><strong>INCIDENT ID</strong></th>
-										<th><strong>INCIDENT DATE</strong></th>
-										<th><strong>INCIDENT TIME</strong></th>
-										<th><strong>LOCATION</strong></th>
-										<th><strong>SUBJECT</strong></th>
-									</tr> 
-								</thead>
-								<tbody>	
-									<?php foreach($incident as $incident):?>
-										<tr>
-											<td class= "incident_id" name ="incident_id" id ="incident_id" style="display:none;"><?=$incident->incident_id;?></td>
-											<td class ="incident_date"><?=$incident->incident_date;?></td>
-											<td class ="incident_time"><?=$incident->incident_time;?></td>
-											<td class ="location"><?=$incident->location_village_name;?></td>
-											<td class ="subject"><?=$incident->subject;?></td>
-										</tr>
-									<?php endforeach; ?>
 								</tbody>
 							</table>
 						</div>
@@ -412,7 +428,7 @@
 			
 						function GetSelectedData(target,last_end = null,last_start = null)
 						{
-							alert("hii");
+							//alert("hii");
 							var resource_name = document.getElementById('resource_id').value;	
 							var circle_id =	document.getElementById('circle_id').value;
 							var block_id =	document.getElementById('block_id').value;
@@ -668,10 +684,11 @@
 			{
 				var incident_id = document.getElementById('inc_id').value;
 				var request_from_incident = "false";
+				var request_from_guest = "false";
 				$.ajax({
 											url:"<?php echo site_url('Message/onClickViewIncident');?>",
 											method:"POST",
-											data:{incident_id:incident_id,request_from_incident:request_from_incident},
+											data:{incident_id:incident_id,request_from_incident:request_from_incident,request_from_guest:request_from_guest},
 											type: "POST",
 											cache: false,
 											success: function(data)

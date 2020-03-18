@@ -140,9 +140,9 @@
 		public function panicBtnClicked()
 		{
 			log_message('info','##########INSIDE panicBtnClicked FUNC::');
-			$query = $this->db->query("SELECT * from registered_citizens");
-				
-			$reg_citizens = $query->result();
+			$result = $this->dashboard_model->insert_instant_incident_report();
+			log_message('info','########## insert_to_instant_incident_report::result '.$result);
+			redirect('/DashBoard');	
 		}
 
 	}  

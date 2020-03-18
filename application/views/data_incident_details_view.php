@@ -21,6 +21,7 @@
 			$image_2_path = $row['image_2_path'];
 			$image_3_path = $row['image_3_path'];
 			$request_from_incident = $row['request_from_incident'];
+			$request_from_guest = $row['request_from_guest'];
 			log_message('info','##########INSIDE data_incident_details VIEW :: incident_id:: '.$incident_id);
 			log_message('info','##########INSIDE data_incident_details VIEW :: request_from_incident:: '.$request_from_incident);
 		}
@@ -264,28 +265,36 @@
 									</div>
 								</div>
 							</div>
-							<?php if($request_from_incident == "true"){ ?>
-							<div class="form-group">
-							  <label class="col-md-4 control-label"></label>
-							  <div class="col-md-4"><br>
-								<button type="button" class="btn btn-success form-control" onclick="return onClickSendInstructions();">SEND INSTRUCTIONS<span class="glyphicon glyphicon-send"></span></button>								
-							  </div>
-							</div>
+							<?php if($request_from_guest == "true"){ ?>
 							<div class="form-group">
 							  <label class="col-md-4 control-label"></label>
 							  <div class="col-md-4"><br>						
 								<button type="button" class="btn btn-danger form-control" onclick="return onClickBackToAllIncidents();">BACK</button>
 							  </div>
 							</div>
-							
 							<?php } else { ?>
-							<div class="form-group">
-							  <label class="col-md-4 control-label"></label>
-							  <div class="col-md-4"><br>
-								<button type="button" class="btn btn-success form-control" onclick="return onClickBackToInbox();">BACK TO INBOX</button>
-							  </div>
-							</div>
-							<?php } ?>
+									<?php if($request_from_incident == "true"){ ?>
+									<div class="form-group">
+									  <label class="col-md-4 control-label"></label>
+									  <div class="col-md-4"><br>
+										<button type="button" class="btn btn-success form-control" onclick="return onClickSendInstructions();">SEND INSTRUCTIONS<span class="glyphicon glyphicon-send"></span></button>								
+									  </div>
+									</div>
+									<div class="form-group">
+									  <label class="col-md-4 control-label"></label>
+									  <div class="col-md-4"><br>						
+										<button type="button" class="btn btn-danger form-control" onclick="return onClickBackToAllIncidents();">BACK</button>
+									  </div>
+									</div>
+									
+									<?php } else { ?>
+									<div class="form-group">
+									  <label class="col-md-4 control-label"></label>
+									  <div class="col-md-4"><br>
+										<button type="button" class="btn btn-success form-control" onclick="return onClickBackToInbox();">BACK TO INBOX</button>
+									  </div>
+									</div>
+							<?php } } ?>
 						
 							</fieldset>
 							</form>

@@ -54,7 +54,7 @@
 		<div class = "col-sm-8">
 			<div class="guest-incident-report" id="guest-incident-report">
 				<div class="container">
-					<form class="well form-horizontal" action="<?php echo base_url("Login/load_citizen_registration_view");?>" method="POST">
+					<form class="well form-horizontal" action="<?php echo base_url("Common_DashBoard/load_citizen_registration_view");?>" method="POST">
 						<fieldset>
 							<legend><center><h2><b>Report An Incident</b></h2></center></legend><br>
 							<?php if($user_exist == 1)
@@ -899,8 +899,8 @@
 										  confirmButtonText: "Yes, Register",
 										  cancelButtonClass: "btn-danger",
 										  cancelButtonText: "No, Exit",		 
-										  closeOnCancel: false,
-										   closeOnConfirm: false
+										  closeOnCancel: true,
+										  closeOnConfirm: true
 										},
 										function(isConfirm) {
 										  if (isConfirm) {

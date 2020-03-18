@@ -351,5 +351,34 @@
 			return $c_s_no;
 		}		
 		
+		public function insert_instant_incident_report()
+		{
+			//For Testing purpose Only
+			//Can be changed in future
+			//To be used for  inserting an incident to the instant incident report table on click of panic button.
+			$query = $this->db->query("SELECT * FROM registered_citizens");
+			$registered_citizens = $query->result();
+				foreach($registered_citizens as $reg_citizen)
+				{
+					$citizen_id = $reg_citizen->citizen_id;			
+					$affected_rows = $this->insert_to_instant_incident_report($citizen_id);
+				}
+			return $affected_rows;
+		}
+		
+		public function insert_to_instant_incident_report($citizen_id)
+		{
+			$data = array(
+					'citizen_id' => $citizen_id,
+					'gps_location' => 'gps location',
+					'remarks' => 'remarks'
+			);
+
+			$this->db->insert('instant_incident_report', $data);
+			$affected_rows = 0;
+			$affected_rows =  $this->db->affected_rows();
+			log_message('info','########## insert_to_instant_incident_report::affected_rows '.$affected_rows);
+			return $affected_rows ;
+		}
    }
 ?>
